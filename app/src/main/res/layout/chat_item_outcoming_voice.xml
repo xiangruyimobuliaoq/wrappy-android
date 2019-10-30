@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginTop="8dp">
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/messageTime"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:flexDirection="row_reverse"
+        app:flexWrap="nowrap">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/voiceContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:cardBackgroundColor="@color/outcomingBubble"
+            app:cardCornerRadius="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/voicePlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:tag="Stopped"
+                    android:src="@drawable/ic_play_circle_filled_white_24dp"/>
+
+                <rm.com.audiowave.AudioWaveView
+                    android:id="@+id/voiceWave"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    app:waveColor="@color/white"
+                    app:touchable="false"
+                    app:animateExpansion="false"/>
+
+                <TextView
+                    android:id="@+id/voiceDuration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <TextView
+        android:id="@id/messageTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:gravity="end"
+        android:maxLines="1"
+        app:layout_alignSelf="flex_end"
+        app:layout_flexShrink="0" />
+
+</RelativeLayout>

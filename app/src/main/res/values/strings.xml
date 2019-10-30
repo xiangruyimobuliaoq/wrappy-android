@@ -1,0 +1,620 @@
+<resources>
+    <string name="app_name">Wrappy Messenger</string>
+    <string name="maps_api_key" translatable="false">AIzaSyAFF5dJMBBoYKYd3nyOlE5gjSJyBAc7ky4</string>
+
+    <string name="user_id">User ID</string>
+    <string name="log_in">Login</string>
+    <string name="link_login"><u>Login</u></string>
+    <string name="register">Register</string>
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+    <string name="error_invalid_user_id">Please input User ID</string>
+    <string name="error_invalid_phone_number">Invalid phone number. Please try again.</string>
+    <string name="label_forgot_user_id"><u>Forgot User ID?</u></string>
+    <string name="error_incorrect_password">Invalid password. Please try again.</string>
+    <string name="label_input_new_password">Input new password</string>
+    <string name="label_confirm_password">Confirm password</string>
+    <string name="change_password_guide_pass">*Please set with 6 or more letters. *The symbols you can use are /  ? _ + *</string>
+    <string name="reg_smsver_5_digit_verification">Please check email or your message fill \n your Passcode</string>
+    <string name="reg_smsver_mobile_phone_format">%1$s%2$s</string>
+    <string name="reg_smsver_incorrect_verification_code_please_try_again">Wrong code. Please try again</string>
+    <string name="reg_question_choose_security_question">Choose your security question</string>
+    <string name="reg_password_input_password">Input your password</string>
+    <string name="reg_password_confirm_password">Confirm password</string>
+    <string name="home_chat_welcome">Time to start using Wrappy</string>
+
+    <string name="status_online">Online</string>
+    <string name="status_offline">Offline</string>
+
+    <string name="select_security_question">Select security question</string>
+    <string name="question1">What is your mother\'s maiden name?</string>
+    <string name="question2">What is your favorite food?</string>
+    <string name="question3">What town are you born?</string>
+    <string name="reg_question_your_answer">Input your answer (must be 1 to 8 character)</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile</string>
+    <string name="email">Email</string>
+    <string name="your_email">your_email@example.com</string>
+    <string name="password">Password</string>
+    <string name="reg_smsver_toolbar_title">SMS Verification</string>
+    <string name="reg_toolbar_title">Register</string>
+    <string name="registration">Registration</string>
+    <string name="reg_profile_toolbar_title">Profile</string>
+    <string name="login_toolbar_title">@string/log_in</string>
+    <string name="forgot_toolbar_title">Forgot Password</string>
+    <string name="welcome_label_start">Start Messaging</string>
+    <string name="welcome_label_terms">Terms and Condition</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="reg_smsver_send_again">Send SMS to phone number</string>
+    <string name="reg_smsver_title">We have sent a message to</string>
+    <string name="reg_smsver_auth_note">*SMS authenticaton code can be issued up to three times per day</string>
+    <string name="reg_password_error">Invalid password. Please try again.</string>
+    <string name="forgot_reset_password">Reset Password</string>
+    <string name="forgot_security_title">Answer your secret question</string>
+    <string name="forgot_answer_label">Forgot your answer?</string>
+    <string name="forgot_attempt_note">Account will be locked if you make mistake three times</string>
+    <string name="home_nav_button_contacts">Contacts</string>
+    <string name="home_nav_button_chat">Chats</string>
+    <string name="home_nav_button_profile">My Page</string>
+    <string name="choose_question">Select security question</string>
+    <string name="select_region">Select Region</string>
+
+    <string name="reg_profile_email_label">Email*</string>
+    <string name="reg_profile_mobile_label">Mobile phone*</string>
+    <string name="reg_profile_user_id_label">User ID*</string>
+    <string name="reg_profile_name_label">Name*</string>
+    <string name="reg_profile_name_label_hint">(Please enter from 1 to 8 characters)</string>
+    <string name="reg_profile_user_id_label_hint">(Please enter from 6 to 48 alphanumeric characters)</string>
+    <string name="forgot_username_send_button">Send</string>
+    <string name="home_profile_edit_button">Open Profile</string>
+    <string name="forgot_answer_text_description">Please enter the currently registered email \naddress. Send email for reconfiguration to the \nemail you sent.</string>
+    <string name="forgot_answer_button_text_submit">Get Email for Reconfiguration</string>
+    <string name="forgot_answer_edittext_hint_email">Input your registered Email address</string>
+    <string name="forgot_answer_text_error">Invalid email address</string>
+    <string name="menu_stock_image_gallery_choose">Choose</string>
+
+    <string name="about_faq_title">FAQ</string>
+    <string name="about_faq_url">http://help.wrappy.net/en/</string>
+    <string name="about_support_title">Contact to Support</string>
+    <string name="about_support_url">https://help.wrappy.net/feedback/</string>
+
+    <string name="email_regex" translatable="false">^[A-Z0-9a-z\\._+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$</string>
+
+    <string-array name="login_spinner_country_list" translatable="false">
+        <item>JP</item>
+        <item>CN</item>
+        <item>PH</item>
+        <item>KR</item>
+        <item>TW</item>
+    </string-array>
+
+    <string-array name="intro_page_image" translatable="false">
+        <item>logo</item>
+        <item>intro2</item>
+        <item>intro3</item>
+        <item>intro4</item>
+        <item>intro5</item>
+        <item>intro8</item>
+        <item>intro9</item>
+        <item>intro10</item>
+        <item>intro11</item>
+    </string-array>
+
+    <string-array name="intro_page_title">
+        <item />
+        <item>Free</item>
+        <item>Cloud</item>
+        <item>Safety</item>
+        <item>Convenience</item>
+        <item>Privacy</item>
+        <item>Ecology</item>
+        <item>Wallet</item>
+        <item>Revolution</item>
+    </string-array>
+
+    <string-array name="intro_page_description">
+        <item>Flattening the World. \nThis is the next-generation SNS platform.</item>
+        <item>Wrappy is free to use voice calls, \nvideo calls and TV conference.</item>
+        <item>Wrappy allows you to access your \nmessages from multiple devices</item>
+        <item>The message is fully encrypted and \ncan self destruct.</item>
+        <item>Easy to send and receive Cryptocurrencies \nbetween friends and family</item>
+        <item>Security using the encryption system</item>
+        <item>A simple cryptocurrency ecosystem</item>
+        <item>The Cryptocurrencies can be used anytime, \nin any countries</item>
+        <item>A pioneer in an innovative &amp; constantly \nevolving era</item>
+    </string-array>
+
+    <string name="misc_dialog_welcome_message1">Welcome to Wrappy</string>
+    <string name="misc_dialog_welcome_message2">Enjoy Wrappy</string>
+
+    <string name="done">Done</string>
+
+    <string name="reg_question_hint_label1">*Required. Please enter from 1 to 8 characters.</string>
+    <string name="security_forgot_password_logout_message">You\'ll be logged out, are you sure?</string>
+    <string name="about_text_description">Flattening the World.\nThis is the next-generation SNS platform.</string>
+    <string name="security_label_change_secret_question">Change Security Question</string>
+    <string name="security_label_change_password">Change Text Password</string>
+    <string name="security_label_pattern_switch">Pattern Input</string>
+    <string name="security_label_register_pattern">Register Pattern</string>
+    <string name="security_label_blocked_users">Block List</string>
+    <string name="welcome_dialog_title_terms">Terms and Conditions</string>
+    <string name="forgot_answer_button_text_back_top">Back to TOP</string>
+    <string name="forgot_answer_email_sent_desc">We sent a reconfiguration message to \nthe email address you\'ve provided. Please \n reconfigure it from the URL address we sent.</string>
+    <string name="qr_button_label">QR code reader</string>
+    <string name="pattern_error_incorrect">Incorrect pattern. Please try again.</string>
+    <string name="permission_dialog_image_crop_title">Needs Permissions</string>
+    <string name="permission_dialog_image_crop_desc">To use this feature, allow Wrappy to access your device\'s camera, photos, media and files.</string>
+    <string name="permission_dialog_go_to_settings">Go to settings</string>
+    <string name="security_page_title_block_list">Block List</string>
+    <string name="security_dialog_msg_unblock_success">Successfully unblocked.</string>
+    <string name="security_dialog_title_unblock">Are you sure you want to unblock this user?</string>
+    <string name="no_internet_connection">No internet connection.</string>
+    <string name="login_hint_phone_number">Phone number</string>
+    <string name="forgot_userid_text_description">Please enter your email and your\n phone number</string>
+    <string name="dialog_retry">Retry</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_accept">Accept</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="forgot_userid_label_phone_number">Phone No.</string>
+    <string name="forgot_userid_title">Forgot User ID</string>
+    <string name="forgot_userid_dialog_text_sent">Message has sent to your mobile and email</string>
+    <string name="login_title_password">@string/password</string>
+    <string name="login_password_field_hint">@string/password</string>
+    <string name="login_password_error_try_again">Your account was locked. Please try again later.</string>
+    <string name="login_password_error_locked">%1$s. Please contact our customer service.</string>
+    <string name="reg_label_question_1">Question 1*</string>
+    <string name="reg_label_question_2">Question 2</string>
+    <string name="reg_label_question_3">Question 3</string>
+    <string name="reg_profile_image_dialog_choose_avatar">Choose from Avatar</string>
+    <string name="reg_profile_image_dialog_select">Select Photo</string>
+    <string name="reg_profile_image_dialog_new">Take a New Photo</string>
+    <string name="image_crop_submit">Submit</string>
+    <string name="home_contact_add_friend">Add Friends</string>
+    <string name="home_contact_add_friend_hint">Tap to Add friend</string>
+    <string name="home_contact_div_title">Wrappy Contacts</string>
+    <string name="home_contact_search_id">Search ID</string>
+    <string name="home_contact_read_qr">Read QR code</string>
+    <string name="home_contact_show_qr">Show my QR code</string>
+    <string name="qr_title">My QR Code</string>
+    <string name="contact_add_friend_title">Add Friends</string>
+    <string name="contact_add_send_request">Send friend request</string>
+    <string name="contact_add_already_sent">You\'ve already sent a friend request</string>
+    <string name="contact_add_received_request">This user sent you friend request</string>
+    <string name="contact_add_already_friend">This user is already your friend</string>
+    <string name="contact_add_not_exist">There\'s no user exist.</string>
+    <string name="contact_edit_remove_confirm">We won\'t tell %1$s they were removed from your friends list.</string>
+    <string name="contact_edit_block_confirm_title">Block User</string>
+    <string name="contact_edit_block_success">You\'ve successfully blocked %1$s.</string>
+    <string name="contact_edit_delete_success">You\'ve successfully removed %1$s from your friends list.</string>
+    <string name="chat_message_input_new">Message...</string>
+    <string name="chat_message_toolbar_setting">Setting</string>
+    <string name="search">Search</string>
+    <string name="chat_setting_label_notification">Notification</string>
+    <string name="chat_setting_label_change_bg">Change Background</string>
+    <string name="chat_setting_label_language">Translation</string>
+    <string name="chat_setting_label_members">Members</string>
+    <string name="chat_setting_dialog_confirm_bg_select">Are you sure you selected this Background?</string>
+    <string name="chat_setting_dialog_bg_select_yes">OK</string>
+    <string name="chat_setting_dialog_bg_select_no">Cancel</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_delete">Delete</string>
+    <string name="chat_group_detail_label_name">Group Name</string>
+    <string name="chat_group_detail_btn_save">Save Name</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
+    <string name="link_register"><u>Register</u></string>
+    <string name="input_your_password">Input your password</string>
+    <string name="link_forgot_password"><u>Forgot Password</u></string>
+    <string name="input_your_answer">Input your answer</string>
+    <string name="link_forgot_your_answer"><u>Forgot your answer?</u></string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="terms_and_condition_link"><u>Terms and Condition</u></string>
+    <string name="hold_to_talk">Hold to Talk</string>
+    <string name="link_pattern_register"><u>Pattern Registration</u></string>
+    <string name="link_pattern_register_disabled">Pattern Registration</string>
+    <string name="create_a_password">Create a password</string>
+    <string name="add">Add</string>
+    <string name="to_use_this_feature_allow_wrappy_to_access_your_device_s_location_data">To use this feature, allow Wrappy to access your device\'s location data.</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="to_use_this_feature_please_enable_location_services_in_your_device_s_settings">To use this feature, please enable Location Services in your device\'s settings.</string>
+    <string name="enable_location_services">Enable Location Services</string>
+    <string name="photo">PHOTO</string>
+    <string name="camera">CAMERA</string>
+    <string name="location">LOCATION</string>
+    <string name="take_a_new_photo">Take a new Photo</string>
+    <string name="select_photo">Select Photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="name_of_group">Name of Group</string>
+    <string name="slide_up_to_cancel">Slide up to cancel</string>
+    <string name="add_friends">Add Friends</string>
+    <string name="this_user_is_already_your_friend">This user is already your friend</string>
+    <string name="block_user">Block User</string>
+    <string name="messages">Messages</string>
+    <string name="groups">Groups</string>
+    <string name="there_s_no_user_exist">There\'s no user exist.</string>
+    <string name="my_qr_code">My QR Code</string>
+    <string name="security">Security</string>
+    <string name="about_us">About Us</string>
+    <string name="logout">Logout</string>
+    <string name="share_wrappy">Share Wrappy</string>
+    <string name="faq">FAQ</string>
+    <string name="contact_to_support">Contact to Support</string>
+    <string name="user_id_label">User ID*</string>
+    <string name="mobile_phone_label">Mobile phone*</string>
+    <string name="email_label">Email*</string>
+    <string name="no_blocked_users">No blocked users.</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="outgoing_friend_request">Outgoing friend request</string>
+    <string name="update">Update</string>
+    <string name="my_page">My Page</string>
+    <string name="confirm_logout">Are you sure you want to logout?</string>
+    <string name="please_choose_your_avatar">Please choose your avatar.</string>
+    <string name="dialog_blocked_user_message">Blocked user will no longer be able to call you or send you messages.</string>
+    <string name="remove_friend">Remove Friend</string>
+    <string name="unblock_user">Unblock User</string>
+    <string name="unblock">Unblock</string>
+    <string name="dialog_security_question_error_message">Please check all questions and answers.</string>
+    <string name="you_have_been_logged_out">You have been logged out.</string>
+    <string name="message_has_sent_to_your_mobile_and_email">Message has sent to your mobile and email</string>
+    <string name="please_enter_valid_email">Please enter a valid email address</string>
+    <string name="enter_new_pattern">Draw your pattern lock</string>
+    <string name="login_password_lock_time">in %1$s seconds</string>
+    <string name="preview_photo">Photo</string>
+    <string name="preview_voice">Voice</string>
+    <string name="preview_location">Location</string>
+    <string name="preview_stamp">Stamp</string>
+    <string name="chat_no_reponse_message">Connection server timed out, please kindly check the network.</string>
+    <string name="group_chat">Group Chat</string>
+    <string name="languages">Languages</string>
+    <string name="translation">Translation</string>
+    <string name="about_toolbar_title">About</string>
+    <string name="confirm_pattern">Confirm your pattern lock</string>
+    <string name="release_to_stop">Release to stop</string>
+    <string name="release_to_cancel">Release to cancel</string>
+    <string name="dialog_msg_confirm_delete">Are you sure to delete this message?</string>
+    <string name="chat_setting_dialog_confirm_remove_member">Are you sure you want to remove this member?</string>
+    <string name="chat_setting_dialog_remove_success">You’ve successfully removed member from this group.</string>
+    <string name="about_dialog_copy_content_success">Content successfully copied to clipboard.</string>
+    <string name="dialog_loading">Loading</string>
+    <string name="edit_my_page">Edit Profile</string>
+    <string name="chat_group_detail_dialog_group_name">New group name</string>
+    <string name="action_translate">Translate</string>
+    <string name="gallery_download_success">Already added to the system album</string>
+    <string name="gallery_download_failed">Save failed</string>
+    <string name="contact_error_group_exist">Group chat already exist.</string>
+
+    <string-array name="chat_language_list">
+        <item>English</item>
+        <item>French</item>
+        <item>Spanish</item>
+        <item>Portuguese</item>
+        <item>German</item>
+        <item>Japanese</item>
+        <item>Traditional Chinese</item>
+        <item>Simplified Chinese</item>
+        <item>Korean</item>
+        <item>Tagalog</item>
+        <item>Cebuano</item>
+        <item>Thai</item>
+        <item>Vietnamese</item>
+        <item>Myanmar</item>
+        <item>Khmer (Cambodia)</item>
+        <item>Lao language (Laos)</item>
+        <item>Indonesian</item>
+        <item>Malay</item>
+        <item>Bengali (Bangladesh)</item>
+        <item>Hindi (India)</item>
+        <item>Nepali</item>
+        <item>Persian</item>
+        <item>Arabic</item>
+        <item>Turkish</item>
+        <item>Russian</item>
+        <item>Estonian</item>
+    </string-array>
+
+    <string-array name="chat_iso_language_list" translatable="false">
+        <item>en</item>
+        <item>fr</item>
+        <item>es</item>
+        <item>pt</item>
+        <item>de</item>
+        <item>ja</item>
+        <item>zh-TW</item>
+        <item>zh</item>
+        <item>ko</item>
+        <item>tl</item>
+        <item>ceb</item>
+        <item>th</item>
+        <item>vi</item>
+        <item>my</item>
+        <item>km</item>
+        <item>lo</item>
+        <item>id</item>
+        <item>ms</item>
+        <item>bn</item>
+        <item>hi</item>
+        <item>ne</item>
+        <item>fa</item>
+        <item>ar</item>
+        <item>tr</item>
+        <item>ru</item>
+        <item>et</item>
+    </string-array>
+
+    <string-array name="chat_bg_name" translatable="false">
+        <item></item>
+        <item>bg1</item>
+        <item>bg2</item>
+        <item>bg3</item>
+        <item>bg4</item>
+        <item>bg5</item>
+        <item>bg6</item>
+        <item>bg7</item>
+        <item>bg8</item>
+        <item>bg9</item>
+        <item>bg10</item>
+        <item>bg11</item>
+        <item>bg12</item>
+        <item>bg13</item>
+        <item>bg14</item>
+        <item>bg15</item>
+        <item>bg16</item>
+        <item>bg17</item>
+        <item>bg18</item>
+        <item>bg19</item>
+        <item>bg20</item>
+        <item>bg21</item>
+        <item>bg22</item>
+        <item>bg23</item>
+        <item>bg24</item>
+        <item>bg25</item>
+        <item>bg26</item>
+        <item>bg27</item>
+        <item>bg28</item>
+        <item>bg29</item>
+        <item>bg30</item>
+        <item>bg31</item>
+        <item>bg32</item>
+        <item>bg33</item>
+        <item>bg34</item>
+        <item>bg35</item>
+        <item>bg36</item>
+        <item>bg37</item>
+        <item>bg38</item>
+        <item>bg39</item>
+        <item>bg40</item>
+        <item>bg41</item>
+        <item>bg42</item>
+        <item>bg43</item>
+        <item>bg44</item>
+    </string-array>
+
+    <string-array name="chat_sticker_name" translatable="false">
+        <item>bunny_1.png</item>
+        <item>bunny_2.png</item>
+        <item>bunny_3.png</item>
+        <item>bunny_4.png</item>
+        <item>bunny_5.png</item>
+        <item>bunny_6.png</item>
+        <item>bunny_7.png</item>
+        <item>bunny_8.png</item>
+        <item>bunny_9.png</item>
+        <item>bunny_10.png</item>
+        <item>bunny_11.png</item>
+        <item>bunny_12.png</item>
+        <item>bunny_13.png</item>
+        <item>bunny_14.png</item>
+        <item>bunny_15.png</item>
+        <item>bunny_16.png</item>
+        <item>bunny_17.png</item>
+        <item>bunny_18.png</item>
+        <item>bunny_19.png</item>
+        <item>bunny_20.png</item>
+        <item>bunny_21.png</item>
+        <item>bunny_22.png</item>
+        <item>bunny_23.png</item>
+        <item>bunny_24.png</item>
+        <item>bunny_25.png</item>
+        <item>bunny_26.png</item>
+        <item>bunny_27.png</item>
+        <item>bunny_28.png</item>
+        <item>bunny_29.png</item>
+        <item>bunny_30.png</item>
+        <item>bunny_31.png</item>
+        <item>bunny_32.png</item>
+        <item>bunny_33.png</item>
+        <item>bunny_34.png</item>
+        <item>bunny_35.png</item>
+        <item>bunny_36.png</item>
+        <item>bunny_37.png</item>
+        <item>bunny_38.png</item>
+        <item>bunny_39.png</item>
+        <item>bunny_40.png</item>
+        <item>duck_1.png</item>
+        <item>duck_2.png</item>
+        <item>duck_3.png</item>
+        <item>duck_4.png</item>
+        <item>duck_5.png</item>
+        <item>duck_6.png</item>
+        <item>duck_7.png</item>
+        <item>duck_8.png</item>
+        <item>duck_9.png</item>
+        <item>duck_10.png</item>
+        <item>duck_11.png</item>
+        <item>duck_12.png</item>
+        <item>duck_13.png</item>
+        <item>duck_14.png</item>
+        <item>duck_15.png</item>
+        <item>duck_16.png</item>
+        <item>duck_17.png</item>
+        <item>duck_18.png</item>
+        <item>duck_19.png</item>
+        <item>duck_20.png</item>
+        <item>duck_21.png</item>
+        <item>duck_22.png</item>
+        <item>duck_23.png</item>
+        <item>duck_24.png</item>
+        <item>duck_25.png</item>
+        <item>duck_26.png</item>
+        <item>duck_27.png</item>
+        <item>duck_28.png</item>
+        <item>duck_29.png</item>
+        <item>duck_30.png</item>
+        <item>duck_31.png</item>
+        <item>duck_32.png</item>
+        <item>duck_33.png</item>
+        <item>duck_34.png</item>
+        <item>duck_35.png</item>
+        <item>duck_36.png</item>
+        <item>duck_37.png</item>
+        <item>duck_38.png</item>
+        <item>duck_39.png</item>
+        <item>duck_40.png</item>
+        <item>duck_41.png</item>
+        <item>duck_42.png</item>
+        <item>emoji_1.png</item>
+        <item>emoji_2.png</item>
+        <item>emoji_3.png</item>
+        <item>emoji_4.png</item>
+        <item>emoji_5.png</item>
+        <item>emoji_6.png</item>
+        <item>emoji_7.png</item>
+        <item>emoji_8.png</item>
+        <item>emoji_9.png</item>
+        <item>emoji_10.png</item>
+        <item>emoji_11.png</item>
+        <item>emoji_12.png</item>
+        <item>emoji_13.png</item>
+        <item>emoji_14.png</item>
+        <item>emoji_15.png</item>
+        <item>emoji_16.png</item>
+        <item>emoji_17.png</item>
+        <item>emoji_18.png</item>
+        <item>emoji_19.png</item>
+        <item>emoji_20.png</item>
+        <item>emoji_21.png</item>
+        <item>emoji_22.png</item>
+        <item>emoji_23.png</item>
+        <item>emoji_24.png</item>
+        <item>emoji_25.png</item>
+        <item>emoji_26.png</item>
+        <item>emoji_27.png</item>
+        <item>emoji_28.png</item>
+        <item>emoji_29.png</item>
+        <item>emoji_30.png</item>
+        <item>emoji_31.png</item>
+        <item>emoji_32.png</item>
+        <item>emoji_33.png</item>
+        <item>emoji_34.png</item>
+        <item>emoji_35.png</item>
+        <item>emoji_36.png</item>
+        <item>emoji_37.png</item>
+        <item>emoji_38.png</item>
+        <item>emoji_39.png</item>
+        <item>emoji_40.png</item>
+        <item>emoji_41.png</item>
+        <item>emoji_42.png</item>
+        <item>emoji_43.png</item>
+        <item>emoji_44.png</item>
+        <item>emoji_45.png</item>
+        <item>emoji_46.png</item>
+        <item>emoji_47.png</item>
+        <item>emoji_48.png</item>
+        <item>emoji_49.png</item>
+        <item>emoji_50.png</item>
+        <item>emoji_51.png</item>
+        <item>emoji_52.png</item>
+        <item>emoji_53.png</item>
+        <item>emoji_54.png</item>
+        <item>funny_1.png</item>
+        <item>funny_2.png</item>
+        <item>funny_3.png</item>
+        <item>funny_4.png</item>
+        <item>funny_5.png</item>
+        <item>funny_6.png</item>
+        <item>funny_7.png</item>
+        <item>funny_8.png</item>
+        <item>funny_9.png</item>
+        <item>funny_10.png</item>
+        <item>funny_11.png</item>
+        <item>funny_12.png</item>
+        <item>funny_13.png</item>
+        <item>funny_14.png</item>
+        <item>funny_15.png</item>
+        <item>funny_16.png</item>
+        <item>funny_17.png</item>
+        <item>funny_18.png</item>
+        <item>funny_19.png</item>
+        <item>funny_20.png</item>
+        <item>funny_21.png</item>
+        <item>funny_22.png</item>
+        <item>funny_23.png</item>
+        <item>funny_24.png</item>
+        <item>funny_25.png</item>
+        <item>funny_26.png</item>
+        <item>funny_27.png</item>
+        <item>sticker_2.png</item>
+        <item>sticker_3.png</item>
+        <item>sticker_4.png</item>
+        <item>sticker_5.png</item>
+        <item>sticker_6.png</item>
+        <item>sticker_10.png</item>
+        <item>sticker_11.png</item>
+        <item>sticker_12.png</item>
+        <item>sticker_13.png</item>
+        <item>sticker_14.png</item>
+        <item>sticker_15.png</item>
+        <item>sticker_16.png</item>
+        <item>sticker_17.png</item>
+        <item>sticker_18.png</item>
+        <item>sticker_19.png</item>
+        <item>sticker_20.png</item>
+        <item>sticker_21.png</item>
+        <item>sticker_22.png</item>
+        <item>sticker_23.png</item>
+        <item>sticker_24.png</item>
+        <item>buta_1.png</item>
+        <item>buta_2.png</item>
+        <item>buta_3.png</item>
+        <item>buta_4.png</item>
+        <item>buta_5.png</item>
+        <item>buta_6.png</item>
+        <item>buta_7.png</item>
+        <item>buta_8.png</item>
+        <item>inu_1.png</item>
+        <item>inu_2.png</item>
+        <item>inu_3.png</item>
+        <item>inu_4.png</item>
+        <item>inu_5.png</item>
+        <item>inu_6.png</item>
+        <item>inu_7.png</item>
+        <item>inu_8.png</item>
+        <item>mallow_1.png</item>
+        <item>mallow_2.png</item>
+        <item>mallow_3.png</item>
+        <item>mallow_4.png</item>
+        <item>mallow_5.png</item>
+        <item>mallow_6.png</item>
+        <item>mallow_7.png</item>
+        <item>mallow_8.png</item>
+        <item>namakemono_1.png</item>
+        <item>namakemono_2.png</item>
+        <item>namakemono_3.png</item>
+        <item>namakemono_4.png</item>
+        <item>namakemono_5.png</item>
+        <item>namakemono_6.png</item>
+        <item>namakemono_7.png</item>
+        <item>namakemono_8.png</item>
+        <item>neko_1.png</item>
+        <item>neko_2.png</item>
+        <item>neko_3.png</item>
+        <item>neko_4.png</item>
+        <item>neko_5.png</item>
+        <item>neko_6.png</item>
+        <item>neko_7.png</item>
+        <item>neko_8.png</item>
+    </string-array>
+
+</resources>

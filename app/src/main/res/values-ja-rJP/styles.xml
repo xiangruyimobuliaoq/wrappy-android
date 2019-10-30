@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="searchView">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@color/searchViewBackground</item>
+        <item name="queryBackground">@color/transparent</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">@string/search</item>
+    </style>
+</resources>

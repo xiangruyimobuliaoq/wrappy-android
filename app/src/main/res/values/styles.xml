@@ -1,0 +1,207 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="android:buttonStyle">@style/ButtonTextStyle</item>-->
+        <!--<item name="buttonStyle">@style/ButtonTextStyle</item>-->
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="actionMenuTextColor">@color/main_action_color</item>
+        <item name="buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
+    </style>
+
+    <style name="AlertDialogButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@null</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored</item>
+    </style>
+
+    <style name="ImageFullViewTheme" parent="AppTheme">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Toolbar" parent="AppTheme">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:colorControlNormal">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.Splash" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+    <style name="commonTextView">
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="smsVerficationEditText">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">number</item>
+        <item name="android:imeOptions">actionNone</item>
+        <item name="android:longClickable">false</item>
+        <item name="android:background">@drawable/reg_smsver_edittext_auth_bg</item>
+    </style>
+
+    <style name="passwordLabel">
+        <item name="android:padding">15dp</item>
+        <item name="android:background">@color/colorBackgroundView</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="passwordEditText">
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:drawableEnd">@drawable/ic_show</item>
+    </style>
+
+    <style name="errorTextView">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="chooseQuestion">
+        <item name="android:textColor">?attr/editTextColor</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="answerQuestion">
+        <item name="android:textColorHint">?attr/editTextColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">8</item>
+        <item name="android:imeOptions">actionDone</item>
+    </style>
+
+    <style name="forgotPasswordQuestion">
+        <item name="android:inputType">textEmailAddress</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:maxLength">8</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="regLabelQuestion">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@color/colorBackgroundView</item>
+    </style>
+
+    <style name="regProfile">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textSize">@dimen/reg_profile_text_size</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:layout_marginEnd">18dp</item>
+    </style>
+
+    <style name="regProfileLabel" parent="regProfile">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="homeProfileInfos">
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_marginStart">18dp</item>
+        <item name="android:layout_marginEnd">18dp</item>
+        <item name="android:background">@android:color/white</item>
+    </style>
+
+    <style name="homeProfileMenus">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="profileSecurityButtons">
+        <item name="android:padding">12dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:layout_marginTop">1dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">left</item>
+        <item name="android:drawableEnd">@drawable/ic_arrow</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="aboutPageButtons">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:background">@drawable/common_rounded_edittext_bg</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="regProfileDialog">
+        <item name="android:textColor">@color/main_button_color</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="fullWidthButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="mainButton" parent="fullWidthButton">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:backgroundTint">@color/main_button_color</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
+    <style name="mainButtonCaps" parent="mainButton">
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="countryCodePicker">
+        <item name="ccp_autoDetectCountry">true</item>
+        <item name="ccp_autoFormatNumber">false</item>
+        <item name="ccp_countryAutoDetectionPref">SIM_ONLY</item>
+        <item name="ccp_defaultNameCode">JP</item>
+        <item name="ccp_showNameCode">false</item>
+    </style>
+
+    <style name="searchView">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@color/searchViewBackground</item>
+        <item name="queryBackground">@color/transparent</item>
+        <item name="iconifiedByDefault">false</item>
+        <item name="queryHint">@string/search</item>
+    </style>
+
+    <style name="searchContactView" parent="searchView">
+        <item name="android:digits">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+</resources>

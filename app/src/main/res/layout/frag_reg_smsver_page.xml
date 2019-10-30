@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/reg_smsver_textview_label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textSize="15dp"
+        android:text="@string/reg_smsver_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_smsver_edittext_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="@color/background"
+        android:imeOptions="actionDone"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:maxLines="1"
+        android:textColor="@color/link"
+        app:layout_constraintEnd_toEndOf="@+id/reg_smsver_textview_label1"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@id/reg_smsver_country_code_picker"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_textview_label1" />
+
+    <ImageView
+        android:id="@+id/reg_smsver_mobile_edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAlignBottom="true"
+        android:src="@drawable/page_1"
+        app:layout_constraintBaseline_toBaselineOf="@id/reg_smsver_edittext_mobile"
+        app:layout_constraintEnd_toEndOf="@+id/reg_smsver_textview_label2" />
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/reg_smsver_country_code_picker"
+        style="@style/countryCodePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="1dp"
+        android:visibility="visible"
+        app:ccp_showFlag="false"
+        app:layout_constraintBottom_toBottomOf="@id/reg_smsver_edittext_mobile"
+        app:layout_constraintEnd_toStartOf="@id/reg_smsver_edittext_mobile"
+        app:layout_constraintStart_toStartOf="@id/reg_smsver_textview_label1"
+        app:layout_constraintTop_toTopOf="@id/reg_smsver_edittext_mobile"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/reg_smsver_textview_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:text="@string/reg_smsver_5_digit_verification"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_edittext_mobile" />
+
+    <TextView
+        android:id="@+id/reg_smsver_textview_sms_auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/reg_smsver_auth_note"
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_textview_label2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <com.wrappy.android.common.ui.SmsCodeEditText
+        android:id="@+id/reg_smsver_edittext_auth1"
+        style="@style/smsVerficationEditText"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/reg_smsver_edittext_auth2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_smsver_textview_sms_auth" />
+
+    <com.wrappy.android.common.ui.SmsCodeEditText
+        android:id="@+id/reg_smsver_edittext_auth2"
+        style="@style/smsVerficationEditText"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/reg_smsver_edittext_auth3"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/reg_smsver_edittext_auth1"
+        app:layout_constraintTop_toTopOf="@+id/reg_smsver_edittext_auth1" />
+
+    <com.wrappy.android.common.ui.SmsCodeEditText
+        android:id="@+id/reg_smsver_edittext_auth3"
+        style="@style/smsVerficationEditText"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/reg_smsver_edittext_auth4"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/reg_smsver_edittext_auth2"
+        app:layout_constraintTop_toTopOf="@+id/reg_smsver_edittext_auth2" />
+
+    <com.wrappy.android.common.ui.SmsCodeEditText
+        android:id="@+id/reg_smsver_edittext_auth4"
+        style="@style/smsVerficationEditText"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/reg_smsver_edittext_auth5"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/reg_smsver_edittext_auth3"
+        app:layout_constraintTop_toTopOf="@+id/reg_smsver_edittext_auth3" />
+
+    <com.wrappy.android.common.ui.SmsCodeEditText
+        android:id="@+id/reg_smsver_edittext_auth5"
+        style="@style/smsVerficationEditText"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/reg_smsver_edittext_auth4"
+        app:layout_constraintTop_toTopOf="@+id/reg_smsver_edittext_auth4" />
+
+    <TextView
+        android:id="@+id/reg_smsver_textview_error"
+        style="@style/errorTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/reg_smsver_button_done"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_edittext_auth1" />
+
+    <Button
+        android:id="@+id/reg_smsver_button_done"
+        style="@style/mainButton"
+        android:layout_width="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="50dp"
+        android:textAllCaps="true"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_edittext_auth1" />
+
+    <TextView
+        android:id="@+id/reg_smsver_textview_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/darker_gray"
+        android:text="@string/reg_smsver_send_again"
+        app:layout_constraintTop_toBottomOf="@id/reg_smsver_button_done"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,293 @@
+<resources>
+    <string name="app_name">Wrappy Messenger</string>
+
+    <string name="user_id">用户ID</string>
+    <string name="log_in">登录</string>
+    <string name="link_login"><u>登录</u></string>
+    <string name="register">注册</string>
+    <string name="next">下一步</string>
+    <string name="save">保存</string>
+    <string name="error_invalid_user_id">请输入用户ID</string>
+    <string name="error_invalid_phone_number">电话号码无效，请再试一次。</string>
+    <string name="label_forgot_user_id"><u>忘记用户名?</u></string>
+    <string name="error_incorrect_password">密码错误，请再试一次。</string>
+    <string name="label_input_new_password">输入新的密码</string>
+    <string name="label_confirm_password">确认密码</string>
+    <string name="change_password_guide_pass">*密码设置至少是6个字母以上. *您可以使用的符号是：/\\？_+*</string>
+    <string name="reg_smsver_5_digit_verification">请查看您的消息并填写您的验证码</string>
+    <string name="reg_smsver_mobile_phone_format">%1$s%2$s</string>
+    <string name="reg_smsver_incorrect_verification_code_please_try_again">Wrong code. Please try again</string>
+    <string name="reg_question_choose_security_question">选择您的安全问题</string>
+    <string name="reg_password_input_password">输入您的密码</string>
+    <string name="reg_password_confirm_password">确认密码</string>
+    <string name="home_chat_welcome">是时候开始使用”Wrappy”了</string>
+
+    <string name="status_online">在线</string>
+    <string name="status_offline">离线</string>
+
+    <string name="select_security_question">选择安全问题</string>
+    <string name="question1">What is your mother\'s maiden name?</string>
+    <string name="question2">What is your favorite food?</string>
+    <string name="question3">What town are you born?</string>
+    <string name="reg_question_your_answer">输入您的答案（请输入1到8个字符）</string>
+    <string name="name">呢称</string>
+    <string name="mobile">手机号码</string>
+    <string name="email">Email</string>
+    <string name="your_email">your_email@example.com</string>
+    <string name="password">密码</string>
+    <string name="reg_smsver_toolbar_title">短信验证</string>
+    <string name="reg_toolbar_title">注册</string>
+    <string name="registration">注册</string>
+    <string name="reg_profile_toolbar_title">个人资料</string>
+    <string name="login_toolbar_title">@string/log_in</string>
+    <string name="forgot_toolbar_title">忘记密码</string>
+    <string name="welcome_label_start">发送信息</string>
+    <string name="forgot_password">忘记密码?</string>
+    <string name="reg_smsver_send_again">发送短信到手机号码</string>
+    <string name="reg_smsver_title">我们发了一条消息给</string>
+    <string name="reg_smsver_auth_note">*SMS authenticaton code can be issued up to three times per day</string>
+    <string name="reg_password_error">密码不匹配,请再试一次</string>
+    <string name="forgot_reset_password">重设密码</string>
+    <string name="forgot_security_title">回答您的安全问题</string>
+    <string name="forgot_answer_label">忘了您的答案？</string>
+    <string name="forgot_attempt_note">*如果您输错三次，您的账户将被锁定。</string>
+    <string name="home_nav_button_contacts">通讯录</string>
+    <string name="home_nav_button_chat">聊天</string>
+    <string name="home_nav_button_profile">我的资料</string>
+    <string name="choose_question">选择安全问题</string>
+
+    <string name="reg_profile_email_label">Email*</string>
+    <string name="reg_profile_mobile_label">手机号码*</string>
+    <string name="reg_profile_user_id_label">用户ID*</string>
+    <string name="reg_profile_name_label">呢称*</string>
+    <string name="reg_profile_name_label_hint">（请输入1到8个字符）</string>
+    <string name="reg_profile_user_id_label_hint">（请输入6到48个字母、数字字符）</string>
+    <string name="forgot_username_send_button">发送</string>
+    <string name="home_profile_edit_button">打开资料</string>
+    <string name="forgot_answer_text_description">请输入当前注册的电子邮件地址。 将重新配置的电子邮件发送到您发送的电子邮件。</string>
+    <string name="forgot_answer_button_text_submit">获取重新配置的电子邮件 </string>
+    <string name="forgot_answer_edittext_hint_email">输入您注册的电子邮件地址</string>
+    <string name="forgot_answer_text_error">Invalid email address</string>
+    <string name="menu_stock_image_gallery_choose">Choose</string>
+
+    <string name="about_faq_title">常见问题</string>
+    <string name="about_faq_url">http://help.wrappy.net/hk/</string>
+    <string name="about_support_title">联系支持</string>
+    <string name="about_support_url">https://help.wrappy.net/feedback/</string>
+
+    <string-array name="intro_page_title">
+        <item />
+        <item>免费</item>
+        <item>云端</item>
+        <item>安全性</item>
+        <item>方便快捷</item>
+        <item>隐私</item>
+        <item>生态</item>
+        <item>钱包</item>
+        <item>革命</item>
+    </string-array>
+
+    <string-array name="intro_page_description">
+        <item>Flattening the World.\n这是下一代SNS平台。</item>
+        <item>Wrappy提供免费语音通话，视频通话和视频会议系统</item>
+        <item>可从多个终端访问自己的Wrappy信息</item>
+        <item>信息完全加密并可自毁</item>
+        <item>朋友与家人之间可方便快捷地收发加密货币</item>
+        <item>具加密技术的隐私保护系统</item>
+        <item>简练的加密货币生态系统</item>
+        <item>加密货币可以在任何时候、任何国家使用</item>
+        <item>一个创新变革发展时代的先驱</item>
+    </string-array>
+
+    <string name="misc_dialog_welcome_message1">欢迎来到Wrappy</string>
+    <string name="misc_dialog_welcome_message2">请享用Wrappy</string>
+
+    <string name="done">完成</string>
+
+    <string name="reg_question_hint_label1">（请输入1到8个字符）</string>
+    <string name="security_forgot_password_logout_message">您将退出登录,确定吗</string>
+    <string name="about_text_description">"Flattening the World.\n这是下一代SNS平台。"</string>
+    <string name="security_label_change_secret_question">更改安全问题</string>
+    <string name="security_label_change_password">更改文本密码</string>
+    <string name="security_label_pattern_switch">图案输入</string>
+    <string name="security_label_register_pattern">Register Pattern</string>
+    <string name="security_label_blocked_users">黑名单</string>
+    <string name="welcome_dialog_title_terms">条款和条件</string>
+    <string name="forgot_answer_button_text_back_top">返回首页</string>
+    <string name="forgot_answer_email_sent_desc">我们向您提供的电子邮件地址发送了重新配置消息。\n请从我们发送的URL地址重新配置它。</string>
+    <string name="qr_button_label">识别二维码</string>
+    <string name="pattern_error_incorrect">图案不正确，请再试一次。</string>
+    <string name="permission_dialog_image_crop_title">Needs Permissions</string>
+    <string name="permission_dialog_image_crop_desc">To use this feature, allow Wrappy to access your device\'s camera, photos, media and files.</string>
+    <string name="permission_dialog_go_to_settings">Go to settings</string>
+    <string name="security_page_title_block_list">黑名单</string>
+    <string name="security_dialog_msg_unblock_success">成功解禁。</string>
+    <string name="security_dialog_title_unblock">您确定解禁这个用户吗</string>
+    <string name="no_internet_connection">No internet connection.</string>
+    <string name="login_hint_phone_number">手机号码</string>
+    <string name="forgot_userid_text_description">请输入您的电子邮件和电话号码</string>
+    <string name="dialog_retry">重试</string>
+    <string name="dialog_ok">是</string>
+    <string name="dialog_accept">接受</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_no">否</string>
+    <string name="forgot_userid_label_phone_number">手机号码</string>
+    <string name="forgot_userid_title">忘记用户名</string>
+    <string name="forgot_userid_dialog_text_sent">信息已经发送到您的手机和电子邮箱</string>
+    <string name="login_title_password">@string/password</string>
+    <string name="login_password_field_hint">@string/password</string>
+    <string name="login_password_error_try_again">您的帐号已经被锁定，请稍后在试</string>
+    <string name="login_password_error_locked">%1$s. 请联系我们的客服</string>
+    <string name="reg_label_question_1">问题 1 *</string>
+    <string name="reg_label_question_2">问题 2</string>
+    <string name="reg_label_question_3">问题 3</string>
+    <string name="reg_profile_image_dialog_choose_avatar">选择系统图片</string>
+    <string name="reg_profile_image_dialog_select">从相册中选择</string>
+    <string name="reg_profile_image_dialog_new">拍摄新照片</string>
+    <string name="image_crop_submit">提交</string>
+    <string name="home_contact_add_friend">添加朋友</string>
+    <string name="home_contact_add_friend_hint">点击添加朋友</string>
+    <string name="home_contact_div_title">Wrappy通讯录</string>
+    <string name="home_contact_search_id">搜索ID</string>
+    <string name="home_contact_read_qr"> 读取二维码</string>
+    <string name="home_contact_show_qr">展示我的二维码</string>
+    <string name="qr_title">我的二维码</string>
+    <string name="contact_add_friend_title">添加朋友</string>
+    <string name="contact_add_send_request">发送朋友请求</string>
+    <string name="contact_add_already_sent">您已经发送了好友请求</string>
+    <string name="contact_add_received_request">这个用户向您发送了一个朋友请求</string>
+    <string name="contact_add_already_friend">这个用户已经是您的朋友</string>
+    <string name="contact_add_not_exist">没有用户存在</string>
+    <string name="contact_edit_remove_confirm">我们不会告诉%1$s他（她）已经从您的朋友列表中删除</string>
+    <string name="contact_edit_block_confirm_title">禁用用户</string>
+    <string name="contact_edit_block_success">您已经成功的禁用了 %1$s。</string>
+    <string name="contact_edit_delete_success">您已成功从朋友列表中删除了%1$s。</string>
+    <string name="chat_message_input_new">信息…</string>
+    <string name="chat_message_toolbar_setting">设置</string>
+    <string name="search">搜索</string>
+    <string name="chat_setting_label_notification">通知</string>
+    <string name="chat_setting_label_change_bg">更改背景</string>
+    <string name="chat_setting_label_language">翻译</string>
+    <string name="chat_setting_label_members">会员</string>
+    <string name="chat_setting_dialog_confirm_bg_select">您确定要选择此项为背景？</string>
+    <string name="chat_setting_dialog_bg_select_yes">是</string>
+    <string name="chat_setting_dialog_bg_select_no">取消</string>
+    <string name="action_copy">复制</string>
+    <string name="action_delete">删除</string>
+    <string name="chat_group_detail_label_name">组名</string>
+    <string name="chat_group_detail_btn_save">保存名称</string>
+    <string name="already_have_an_account">已经有账号？</string>
+    <string name="don_t_have_an_account_yet">还没有账号？</string>
+    <string name="link_register"><u>注册</u></string>
+    <string name="input_your_password">请输入您的密码</string>
+    <string name="link_forgot_password"><u>忘记密码</u></string>
+    <string name="input_your_answer">输入您的答案</string>
+    <string name="link_forgot_your_answer"><u>忘了您的答案？</u></string>
+    <string name="confirm_new_password">确认新的密码</string>
+    <string name="terms_and_condition_link"><u>条款与条件</u></string>
+    <string name="hold_to_talk">按住说话</string>
+    <string name="link_pattern_register"><u>图案注册</u></string>
+    <string name="link_pattern_register_disabled">图案注册</string>
+    <string name="create_a_password">创建一个密码</string>
+    <string name="add">增加</string>
+    <string name="to_use_this_feature_allow_wrappy_to_access_your_device_s_location_data">To use this feature, allow Wrappy to access your device\'s location data.</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="to_use_this_feature_please_enable_location_services_in_your_device_s_settings">To use this feature, please enable Location Services in your device\'s settings.</string>
+    <string name="enable_location_services">Enable Location Services</string>
+    <string name="photo">照片</string>
+    <string name="camera">相机</string>
+    <string name="location">位置</string>
+    <string name="take_a_new_photo">拍摄新照片</string>
+    <string name="select_photo">从相册中选择</string>
+    <string name="cancel">取消</string>
+    <string name="name_of_group">群组名称</string>
+    <string name="slide_up_to_cancel">向上滑动取消</string>
+    <string name="add_friends">添加朋友</string>
+    <string name="this_user_is_already_your_friend">这个用户已经是您的朋友</string>
+    <string name="block_user">禁用用户</string>
+    <string name="messages">消息</string>
+    <string name="groups">群组</string>
+    <string name="there_s_no_user_exist">没有用户存在</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="security">安全</string>
+    <string name="about_us">关于我们</string>
+    <string name="logout">退出</string>
+    <string name="share_wrappy">分享Wrappy</string>
+    <string name="faq">常见问题</string>
+    <string name="contact_to_support">联系支持</string>
+    <string name="user_id_label">用户ID*</string>
+    <string name="mobile_phone_label">手机号码*</string>
+    <string name="email_label">Email*</string>
+    <string name="no_blocked_users">没有禁用的用户</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="outgoing_friend_request">朋友请求添加</string>
+    <string name="update">更新</string>
+    <string name="my_page">我的资料</string>
+    <string name="confirm_logout">您确定要退出吗？</string>
+    <string name="please_choose_your_avatar">请选择您的头像</string>
+    <string name="dialog_blocked_user_message">被禁用的用户将无法再打电话给您或向您发送消息。</string>
+    <string name="remove_friend">删除朋友</string>
+    <string name="unblock_user">解禁用户</string>
+    <string name="unblock">解禁</string>
+    <string name="dialog_security_question_error_message">请检查所有问题和答案</string>
+    <string name="you_have_been_logged_out">您已退出登录</string>
+    <string name="message_has_sent_to_your_mobile_and_email">信息已经发送到您的手机和电子邮箱</string>
+    <string name="please_enter_valid_email">请输入有效的邮件地址</string>
+    <string name="enter_new_pattern">绘制图案锁</string>
+    <string name="login_password_lock_time">in %1$s 秒</string>
+    <string name="preview_photo">照片</string>
+    <string name="preview_voice">语音</string>
+    <string name="preview_location">位置</string>
+    <string name="preview_stamp">表情</string>
+    <string name="chat_no_reponse_message">Connection server timed out, please kindly check the network.</string>
+    <string name="select_region">Select Region</string>
+    <string name="welcome_label_terms">条款与条件</string>
+    <string name="group_chat">群组聊天</string>
+    <string name="languages">语言文字</string>
+    <string name="translation">翻译</string>
+    <string name="confirm_pattern">确认您的图案锁</string>
+    <string name="about_toolbar_title">关于</string>
+    <string name="release_to_cancel">发布取消</string>
+    <string name="release_to_stop">发布停止</string>
+    <string name="dialog_msg_confirm_delete">您确定删除这个信息吗</string>
+    <string name="chat_setting_dialog_confirm_remove_member">您确定要删除此成员吗？</string>
+    <string name="chat_setting_dialog_remove_success">你已经成功地从这个小组中删除了成员</string>
+    <string name="about_dialog_copy_content_success">内容已成功复制到剪贴板</string>
+    <string name="dialog_loading">加载中</string>
+    <string name="edit_my_page">个人资料编辑</string>
+    <string name="chat_group_detail_dialog_group_name">新的群组名称</string>
+    <string name="action_translate">翻译</string>
+
+    <string-array name="chat_language_list">
+        <item>英语</item>
+        <item>法语</item>
+        <item>西班牙语</item>
+        <item>葡萄牙语</item>
+        <item>德语</item>
+        <item>日语</item>
+        <item>中文（繁体）</item>
+        <item>中文（简体）</item>
+        <item>朝鲜语</item>
+        <item>他加禄语</item>
+        <item>宿务语</item>
+        <item>泰语</item>
+        <item>越南</item>
+        <item>缅甸语</item>
+        <item>高棉（柬埔寨）</item>
+        <item>老挝语（老挝）</item>
+        <item>印度尼西亚</item>
+        <item>马来语</item>
+        <item>孟加拉语（孟加拉国）</item>
+        <item>印地语（印度）</item>
+        <item>尼泊尔语</item>
+        <item>波斯语</item>
+        <item>阿拉伯语</item>
+        <item>土耳其语</item>
+        <item>俄语</item>
+        <item>爱沙尼亚语</item>
+    </string-array>
+    <string name="gallery_download_success">已添加到系统相册</string>
+    <string name="gallery_download_failed">保存失败</string>
+    <string name="contact_error_group_exist">已经存在群组聊天</string>
+</resources>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/regProfileBackground">
+
+    <ImageView
+        android:id="@+id/reg_profile_imageview_banner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/regProfileBannerBackground"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/reg_profile_edittext_name"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <requestFocus />
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/reg_profile_imageview_change_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:src="@drawable/ic_camera_profile"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/reg_profile_imageview_profile_pic"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="18dp"
+        android:foreground="@drawable/profile_image_bg"
+        android:background="@drawable/empty_profile_picture"
+        android:src="@drawable/avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/reg_profile_imageview_change_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/profile_image_bg"
+        android:background="@drawable/camera_1"
+        app:layout_constraintBottom_toBottomOf="@+id/reg_profile_imageview_profile_pic"
+        app:layout_constraintEnd_toEndOf="@+id/reg_profile_imageview_profile_pic" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_name"
+        style="@style/regProfileLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:labelFor="@id/reg_profile_edittext_name"
+        android:text="@string/reg_profile_name_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_imageview_change_pic" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_name_hint"
+        style="@style/regProfileLabel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:gravity="center_vertical"
+        android:padding="0dp"
+        android:text="@string/reg_profile_name_label_hint"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_textview_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reg_profile_textview_name"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_name" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_profile_edittext_name"
+        style="@style/regProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLength="48"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_profile_textview_name" />
+
+    <TextView
+        android:id="@+id/reg_profile_name_error"
+        style="@style/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_edittext_name" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_user_id"
+        style="@style/regProfileLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/reg_profile_edittext_user_id"
+        android:text="@string/reg_profile_user_id_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_name_error" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_user_id_hint"
+        style="@style/regProfileLabel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:gravity="center_vertical"
+        android:padding="0dp"
+        android:text="@string/reg_profile_user_id_label_hint"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_textview_user_id"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/reg_profile_textview_user_id"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_user_id" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_profile_edittext_user_id"
+        style="@style/regProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        android:hint="@string/user_id"
+        android:imeOptions="actionNext"
+        android:inputType="text"
+        android:maxLength="48"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_profile_textview_user_id" />
+
+    <TextView
+        android:id="@+id/reg_profile_user_id_error"
+        style="@style/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_edittext_user_id" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_mobile"
+        style="@style/regProfileLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/reg_profile_edittext_mobile"
+        android:text="@string/reg_profile_mobile_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_user_id_error" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_profile_edittext_mobile"
+        style="@style/regProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:enabled="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="@string/mobile"
+        android:inputType="phone"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_profile_textview_mobile" />
+
+    <TextView
+        android:id="@+id/reg_profile_mobile_error"
+        style="@style/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_edittext_mobile" />
+
+    <TextView
+        android:id="@+id/reg_profile_textview_email"
+        style="@style/regProfileLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/reg_profile_edittext_email"
+        android:text="@string/reg_profile_email_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_mobile_error" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_profile_edittext_email"
+        style="@style/regProfile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/your_email"
+        android:imeOptions="actionDone"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_profile_textview_email" />
+
+    <TextView
+        android:id="@+id/reg_profile_email_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        style="@style/errorTextView"
+        app:layout_constraintTop_toBottomOf="@id/reg_profile_edittext_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/reg_profile_button_next"
+        style="@style/mainButton"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:textAllCaps="true"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_profile_email_error" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/colorBackgroundView"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_edittext_name"
+        app:layout_constraintEnd_toEndOf="@id/reg_profile_edittext_name"
+        app:layout_constraintStart_toStartOf="@id/reg_profile_edittext_name"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_name"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/colorBackgroundView"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_edittext_user_id"
+        app:layout_constraintEnd_toEndOf="@id/reg_profile_edittext_user_id"
+        app:layout_constraintStart_toStartOf="@id/reg_profile_edittext_user_id"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_user_id"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/colorBackgroundView"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_edittext_mobile"
+        app:layout_constraintEnd_toEndOf="@id/reg_profile_edittext_mobile"
+        app:layout_constraintStart_toStartOf="@id/reg_profile_edittext_mobile"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_mobile"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/colorBackgroundView"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/reg_profile_edittext_email"
+        app:layout_constraintEnd_toEndOf="@id/reg_profile_edittext_email"
+        app:layout_constraintStart_toStartOf="@id/reg_profile_edittext_email"
+        app:layout_constraintTop_toTopOf="@id/reg_profile_textview_email"/>
+
+</android.support.constraint.ConstraintLayout>

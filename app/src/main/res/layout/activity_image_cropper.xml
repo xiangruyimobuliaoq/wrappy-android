@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ImageCropperActivity">
+
+
+    <com.steelkiwi.cropiwa.CropIwaView
+        android:id="@+id/image_cropper_cropiwview_cropper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:ci_draw_grid="false"
+        app:ci_scale_enabled="true"
+        app:ci_dynamic_aspect_ratio="false"
+        app:ci_corner_width="3dp"
+        app:ci_corner_color="@color/colorPrimary">
+    </com.steelkiwi.cropiwa.CropIwaView>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/image_cropper_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:contentInsetStart="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/image_cropper_button_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:drawableStart="@drawable/ic_action_arrow_back"
+                android:background="@null"
+                android:text="@string/dialog_cancel"/>
+
+            <Button
+                android:id="@+id/image_cropper_button_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:textColor="@android:color/white"
+                android:text="@string/image_crop_submit"/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+</android.support.constraint.ConstraintLayout>

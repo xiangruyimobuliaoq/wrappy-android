@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/searchViewBackground">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="64dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/home_profile_fields"
+                layout="@layout/frag_profile_fields"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/home_profile_button_show_qr"
+                style="@style/homeProfileMenus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/ic_add_member"
+                android:text="@string/my_qr_code"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/home_profile_fields" />
+
+            <Button
+                android:id="@+id/home_profile_button_security"
+                style="@style/homeProfileMenus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_menutab_setting"
+                android:text="@string/security"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/home_profile_button_show_qr" />
+
+            <Button
+                android:id="@+id/home_profile_button_about_wrappy"
+                style="@style/homeProfileMenus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_menutab_aboutus"
+                android:text="@string/about_us"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/home_profile_button_security" />
+
+            <Button
+                android:id="@+id/home_profile_button_logout"
+                style="@style/homeProfileMenus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:drawableStart="@drawable/ic_menutab_logout"
+                android:text="@string/logout"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/home_profile_button_about_wrappy" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

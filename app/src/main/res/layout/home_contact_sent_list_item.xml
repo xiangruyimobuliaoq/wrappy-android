@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp">
+
+
+
+    <ImageView
+        android:id="@+id/contact_list_imageview_outgoing"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="8dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/waiting_2x" />
+
+    <ImageView
+        android:id="@+id/contact_list_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/contact_list_imageview_outgoing"
+        android:layout_centerVertical="true"
+        android:layout_marginVertical="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/avatar" />
+
+    <TextView
+        android:id="@+id/contact_list_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@id/contact_list_avatar"
+        android:textSize="18dp"
+        android:text="User ID/Username"/>
+
+    <TextView
+        android:id="@+id/contact_list_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_below="@id/contact_list_user_id"
+        android:layout_toRightOf="@id/contact_list_avatar"
+        android:textSize="14dp"
+        android:textColor="#999999"
+        android:text="@string/outgoing_friend_request"/>
+
+    <ImageButton
+        android:id="@+id/contact_list_cancel_request"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/icon_cancel" />
+
+    <View
+        android:id="@+id/end_border"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/regSmsVerAuthBackgroundBorder"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/contact_list_avatar"/>
+
+    <View
+        android:id="@+id/end_border_full"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/regSmsVerAuthBackgroundBorder"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

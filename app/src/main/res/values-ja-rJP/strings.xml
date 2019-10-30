@@ -1,0 +1,295 @@
+<resources>
+    <string name="app_name">Wrappy Messenger</string>
+
+    <string name="user_id">ユーザーID</string>
+    <string name="log_in">ログイン</string>
+    <string name="link_login"><u>ログイン</u></string>
+    <string name="register">新規登録</string>
+    <string name="next">進む</string>
+    <string name="save">保存</string>
+    <string name="error_invalid_user_id">IDを入力してください。</string>
+    <string name="error_invalid_phone_number">入力した電話番号は存在しません、もう一度試してください。</string>
+    <string name="label_forgot_user_id">ユーザーＩＤを忘れた場合?</string>
+    <string name="error_incorrect_password">パスワードエラーです、正しいパスワードを入力して下さい。</string>
+    <string name="label_input_new_password">新しいパスワードを入力</string>
+    <string name="label_confirm_password">パスワードの確認</string>
+    <string name="change_password_guide_pass">*6文字以上で設定してください. *記号は使用可能: / \\ ? _ + *</string>
+    <string name="reg_smsver_5_digit_verification">5桁の認証コードをこちらの電話番号に送信しました。 メッセージボックスを確認し、コードを入力して下さい。</string>
+    <string name="reg_smsver_mobile_phone_format">%1$s%2$s</string>
+    <string name="reg_smsver_incorrect_verification_code_please_try_again">Wrong code. Please try again</string>
+    <string name="reg_question_choose_security_question">秘密の質問を選択し、\n回答して下さい。</string>
+    <string name="reg_password_input_password">新しいパスワードを入力</string>
+    <string name="reg_password_confirm_password">パスワードの確認</string>
+    <string name="home_chat_welcome">Wrappyを使ってみよう！</string>
+
+    <string name="status_online">オンライン</string>
+    <string name="status_offline">オフライン</string>
+
+    <string name="select_security_question">セキュリティに関する質問を選択してください</string>
+    <string name="question1">What is your mother\'s maiden name?</string>
+    <string name="question2">What is your favorite food?</string>
+    <string name="question3">What town are you born?</string>
+    <string name="reg_question_your_answer">答えを入力してください（1〜8までの文字）</string>
+    <string name="name">名前</string>
+    <string name="mobile">携帯電話番号</string>
+    <string name="password">パスワードを入力してください</string>
+    <string name="reg_smsver_toolbar_title">SMS認証</string>
+    <string name="reg_toolbar_title">登録</string>
+    <string name="registration">登録</string>
+    <string name="reg_profile_toolbar_title">プロフィール</string>
+    <string name="login_toolbar_title">@string/log_in</string>
+    <string name="forgot_toolbar_title">パスワードを忘れた場合</string>
+    <string name="welcome_label_start">開始します</string>
+    <string name="welcome_label_terms">利用規約</string>
+    <string name="forgot_password">パスワードを忘れた場合</string>
+    <string name="reg_smsver_send_again">認証コードを再送する</string>
+    <string name="reg_smsver_title">携帯電話番号</string>
+    <string name="reg_smsver_auth_note">*SMS authenticaton code can be issued up to three times per day</string>
+    <string name="reg_password_error">パスワードが一致しません, もう一度やり直してください。</string>
+    <string name="forgot_reset_password">パスワードを再設定して下さい</string>
+    <string name="forgot_security_title">秘密の質問に答えてください</string>
+    <string name="forgot_answer_label">回答を忘れた場合</string>
+    <string name="forgot_attempt_note">3回間違えるとアカウントがロックされます。</string>
+    <string name="home_nav_button_contacts">連絡先</string>
+    <string name="home_nav_button_chat">チャット</string>
+    <string name="home_nav_button_profile">マイページ</string>
+    <string name="choose_question">質問を選んでください</string>
+    <string name="select_region">Select Region</string>
+
+    <string name="reg_profile_email_label">Email*</string>
+    <string name="reg_profile_mobile_label">携帯電話番号*</string>
+    <string name="reg_profile_user_id_label">ユーザーID*</string>
+    <string name="reg_profile_name_label">名前*</string>
+    <string name="reg_profile_name_label_hint">（1文字以上、48文字以下で入力して下さい。）</string>
+    <string name="reg_profile_user_id_label_hint">（半角英数のみ、6桁以上、8桁以下で入力して下さい。）</string>
+    <string name="forgot_username_send_button">送信</string>
+    <string name="home_profile_edit_button">オープンプロフィール</string>
+    <string name="forgot_answer_text_description">現在登録されているメールアドレスを入力してください。入力されたメールアドレスに再設定メールを送信します。</string>
+    <string name="forgot_answer_button_text_submit">メールを送信する</string>
+    <string name="forgot_answer_edittext_hint_email">登録したメールアドレスを入力してください</string>
+    <string name="forgot_answer_text_error">Invalid email address</string>
+    <string name="menu_stock_image_gallery_choose">Choose</string>
+
+    <string name="about_faq_title">よくある質問</string>
+    <string name="about_faq_url">http://help.wrappy.net/ja/</string>
+    <string name="about_support_title">お問合せ</string>
+    <string name="about_support_url">https://help.wrappy.net/feedback/</string>
+
+    <string-array name="intro_page_title">
+        <item />
+        <item>無料</item>
+        <item>クラウド</item>
+        <item>安全性</item>
+        <item>利便性</item>
+        <item>プライバシー</item>
+        <item>エコロジー</item>
+        <item>ウォレット</item>
+        <item>レボリューション</item>
+    </string-array>
+
+    <string-array name="intro_page_description">
+        <item>Flattening the World.\n次世代型ＳＮＳプラットフォーム</item>
+        <item>Wrappyでは無料通話やビデオ通話、\nテレビ会議などを気軽に利用できます。</item>
+        <item>Wrappyメッセージは、\n複数の端末からアクセス可能</item>
+        <item>メッセージは完全暗号化され、\n時限式の自動削除メッセージが可能</item>
+        <item>友達や家族と簡単に暗号通貨の送受信が可能</item>
+        <item>暗号化システムを採用したセキュリティの実現</item>
+        <item>シンプルな暗号通貨エコシステム</item>
+        <item>暗号通貨はいつでも、どの国でも使用できる</item>
+        <item>革新的で絶えず進化する時代のパイオニア</item>
+    </string-array>
+
+    <string name="misc_dialog_welcome_message1">Wrappyへようこそ</string>
+    <string name="misc_dialog_welcome_message2">楽しくWrappyへ</string>
+
+    <string name="done">完了</string>
+
+    <string name="reg_question_hint_label1">（1文字以上、8文字以下で入力して下さい。）</string>
+    <string name="security_forgot_password_logout_message">ログアウトして、よろしいですか？</string>
+    <string name="about_text_description">Flattening the World.　\n次世代型ＳＮＳプラットフォーム</string>
+
+    <string name="security_label_change_secret_question">秘密の質問を変更</string>
+    <string name="security_label_change_password">パスワードの変更</string>
+    <string name="security_label_pattern_switch">パターンを有効にする</string>
+    <string name="security_label_register_pattern">Register Pattern</string>
+    <string name="security_label_blocked_users">ブロックリスト</string>
+
+    <string name="welcome_dialog_title_terms">利用規約</string>
+    <string name="forgot_answer_button_text_back_top">トップに戻る</string>
+    <string name="forgot_answer_email_sent_desc">メッセージを送信しました。送信したURLから再設定をして下さい。</string>
+    <string name="qr_button_label">QRコードリーダー</string>
+    <string name="pattern_error_incorrect">パターンロックエラーです、もう一度試してください。</string>
+    <string name="permission_dialog_image_crop_title">Needs Permissions</string>
+    <string name="permission_dialog_image_crop_desc">To use this feature, allow Wrappy to access your device\'s camera, photos, media and files.</string>
+    <string name="permission_dialog_go_to_settings">Go to settings</string>
+    <string name="security_page_title_block_list">ブロックリスト</string>
+    <string name="security_dialog_msg_unblock_success">ブロック解除されました。</string>
+    <string name="security_dialog_title_unblock">このユーザーのブロックを解除されますか？</string>
+    <string name="no_internet_connection">No internet connection.</string>
+    <string name="login_hint_phone_number">携帯電話番号</string>
+    <string name="forgot_userid_text_description">Wrappyに登録したEメールアドレスと電話番号を入力してください。</string>
+    <string name="dialog_retry">再送信</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_accept">応答</string>
+    <string name="dialog_cancel">キャンセル</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="forgot_userid_label_phone_number">電話番号</string>
+    <string name="forgot_userid_title">User IDを忘れた場合</string>
+    <string name="forgot_userid_dialog_text_sent">メッセージが送信されました。</string>
+    <string name="login_title_password">パスワードを入力してください</string>
+    <string name="login_password_field_hint">パスワードを入力して下さい</string>
+    <string name="login_password_error_try_again">アカウントがロックされました。しばらくしてから、再度お試しください。</string>
+    <string name="login_password_error_locked">%1$s. カスタマーサービスに連絡してください。</string>
+    <string name="reg_label_question_1">質問 1</string>
+    <string name="reg_label_question_2">質問 2</string>
+    <string name="reg_label_question_3">質問 3</string>
+    <string name="reg_profile_image_dialog_choose_avatar">アバターから選択する</string>
+    <string name="reg_profile_image_dialog_select">写真を選択する</string>
+    <string name="reg_profile_image_dialog_new">写真を撮影する</string>
+    <string name="image_crop_submit">送信</string>
+    <string name="home_contact_add_friend">友達追加</string>
+    <string name="home_contact_add_friend_hint">追加する</string>
+    <string name="home_contact_div_title">Wrappyコンタクト</string>
+    <string name="home_contact_search_id">検索</string>
+    <string name="home_contact_read_qr">QRコード読み取り</string>
+    <string name="home_contact_show_qr">QRコード表示</string>
+    <string name="qr_title">QRコード</string>
+    <string name="contact_add_friend_title">友達追加</string>
+    <string name="contact_add_send_request">友達リクエストを送信</string>
+    <string name="contact_add_received_request">このユーザーはあなたに友達リクエストを送りました。</string>
+    <string name="contact_add_already_friend">このユーザーはすでにあなたの友達です。</string>
+    <string name="contact_add_not_exist">ユーザーは存在しません。</string>
+    <string name="contact_edit_remove_confirm">友達リストから削除されたため、%1$s と話すことはできません。</string>
+    <string name="contact_edit_block_confirm_title">ブロックしますか？</string>
+    <string name="contact_edit_block_success">%1$sをブロックしました。</string>
+    <string name="contact_edit_delete_success">%1$sをあなたの友達リストから削除しました。</string>
+    <string name="chat_message_input_new">メッセージ…</string>
+    <string name="chat_message_toolbar_setting">設定</string>
+    <string name="search">検索</string>
+    <string name="chat_setting_label_notification">通知</string>
+    <string name="chat_setting_label_change_bg">背景の変更</string>
+    <string name="chat_setting_label_language">翻訳</string>
+    <string name="chat_setting_label_members">メンバー</string>
+    <string name="chat_setting_dialog_confirm_bg_select">選択した背景の変更します。</string>
+    <string name="chat_setting_dialog_bg_select_yes">@string/dialog_yes</string>
+    <string name="chat_setting_dialog_bg_select_no">@string/dialog_no</string>
+    <string name="action_copy">コピー</string>
+    <string name="action_delete">削除</string>
+    <string name="chat_group_detail_label_name">グループ名</string>
+    <string name="chat_group_detail_btn_save">保存</string>
+    <string name="already_have_an_account">既にアカウントをお持ちの場合はこちら？</string>
+    <string name="don_t_have_an_account_yet">アカウントをお持ちでない場合はこちら？</string>
+    <string name="link_register"><u>新規登録</u></string>
+    <string name="input_your_password">パスワードを入力して下さい</string>
+    <string name="link_forgot_password"><u>パスワードを忘れた場合</u></string>
+    <string name="input_your_answer">回答を入力してください</string>
+    <string name="link_forgot_your_answer"><u>回答を忘れた場合?</u></string>
+    <string name="confirm_new_password">パスワードの確認</string>
+    <string name="terms_and_condition_link"><u>利用規約</u></string>
+    <string name="hold_to_talk">通話を保持</string>
+    <string name="link_pattern_register"><u>パターン登録</u></string>
+    <string name="link_pattern_register_disabled">パターン登録</string>
+    <string name="create_a_password">新しいパスワードを入力して下さい</string>
+    <string name="add">追加</string>
+    <string name="about_us">Wrappyとは？</string>
+    <string name="add_friends">友達追加</string>
+    <string name="block_user">ブロックする</string>
+    <string name="camera">カメラ</string>
+    <string name="cancel">キャンセル</string>
+    <string name="confirm_password">パスワードの確認</string>
+    <string name="contact_to_support">お問合せ</string>
+    <string name="email_label">Email*</string>
+    <string name="enable_location_services">Enable Location Services</string>
+    <string name="faq">よくある質問</string>
+    <string name="location">ログイン</string>
+    <string name="logout">ログアウト</string>
+    <string name="messages">メッセージ</string>
+    <string name="mobile_phone_label">携帯電話番号*</string>
+    <string name="my_qr_code">QRコード</string>
+    <string name="name_of_group">グループ名</string>
+    <string name="no_blocked_users">ブロックされたユーザーはいません。</string>
+    <string name="outgoing_friend_request">友達をリクエストする</string>
+    <string name="photo">写真</string>
+    <string name="remove_friend">友達削除</string>
+    <string name="security">セキュリティ</string>
+    <string name="select_photo">写真を選択する</string>
+    <string name="share_wrappy">Wrappy をシェアする</string>
+    <string name="slide_up_to_cancel">上にスライドして キャンセル</string>
+    <string name="take_a_new_photo">写真を撮影する</string>
+    <string name="there_s_no_user_exist">ユーザーは存在しません。</string>
+    <string name="to_use_this_feature_allow_wrappy_to_access_your_device_s_location_data">To use this feature, allow Wrappy to access your device\\\'s location data.</string>
+    <string name="to_use_this_feature_please_enable_location_services_in_your_device_s_settings">To use this feature, please enable Location Services in your device\'s settings.</string>
+    <string name="this_user_is_already_your_friend">このユーザーはすでにあなたの友達です。</string>
+    <string name="user_id_label">ユーザーID*</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="groups">グループ</string>
+    <string name="confirm_logout">ログアウトしてよろしいですか？</string>
+    <string name="dialog_blocked_user_message">ブロックされたユーザーはあなたに電話したり、メッセージを送ったりする事が出来ません。</string>
+    <string name="dialog_security_question_error_message">選択した質問に全て回答してください。</string>
+    <string name="enter_new_pattern">パターンロックを入力して下さい。</string>
+    <string name="message_has_sent_to_your_mobile_and_email">メッセージが送信されました。</string>
+    <string name="my_page">マイページ</string>
+    <string name="please_choose_your_avatar">アバターを選んでください。</string>
+    <string name="please_enter_valid_email">有効なメールアドレスを入力してください。</string>
+    <string name="unblock_user">ブロックを解除する</string>
+    <string name="unblock">解除する</string>
+    <string name="update">更新</string>
+    <string name="you_have_been_logged_out">ログアウトしました</string>
+    <string name="chat_no_reponse_message">Connection server timed out, please kindly check the network.</string>
+    <string name="preview_location">ロケーション</string>
+    <string name="preview_photo">写真</string>
+    <string name="preview_stamp">表情</string>
+    <string name="preview_voice">音声</string>
+    <string name="login_password_lock_time">in %1$s 秒</string>
+    <string name="email">Email</string>
+    <string name="your_email">your_email@example.com</string>
+    <string name="contact_add_already_sent">既に友達リクエストを送信しています。</string>
+    <string name="group_chat">グループチャット</string>
+    <string name="languages">言語</string>
+    <string name="translation">翻訳</string>
+    <string name="confirm_pattern">パターンロックの確認</string>
+    <string name="about_toolbar_title">Wrappy</string>
+    <string name="release_to_cancel">キャンセルを解除</string>
+    <string name="release_to_stop">停止を解除</string>
+    <string name="dialog_msg_confirm_delete">このメッセージを削除してもよろしいですか？</string>
+    <string name="chat_setting_dialog_confirm_remove_member">このメンバーを削除してよろしいですか？</string>
+    <string name="chat_setting_dialog_remove_success">このグループから削除しました。</string>
+    <string name="about_dialog_copy_content_success">コンテンツがクリップボードにコピーされました。</string>
+    <string name="dialog_loading">ロード中</string>
+    <string name="edit_my_page">プロフィール編集</string>
+    <string name="chat_group_detail_dialog_group_name">新しいグループの名前</string>
+    <string name="action_translate">翻訳</string>
+
+    <string-array name="chat_language_list">
+        <item>英語</item>
+        <item>フランス語</item>
+        <item>スペイン語</item>
+        <item>ポルトガル語</item>
+        <item>ドイツ語</item>
+        <item>日本語</item>
+        <item>中国語（繁体字）</item>
+        <item>中国語（簡体字）</item>
+        <item>韓国語</item>
+        <item>タガログ語</item>
+        <item>セブアノ語</item>
+        <item>タイ語</item>
+        <item>ベトナム語</item>
+        <item>ミャンマー語</item>
+        <item>クメール語（カンボジア）</item>
+        <item>ラオ語（ラオス）</item>
+        <item>インドネシア語</item>
+        <item>マレー語</item>
+        <item>ベンガル語（バングラデシュ）</item>
+        <item>ヒンディー語（インド）</item>
+        <item>ネパール語</item>
+        <item>ペルシャ語</item>
+        <item>アラビア語</item>
+        <item>トルコ語</item>
+        <item>ロシア語</item>
+        <item>エストニア語</item>
+    </string-array>
+    <string name="gallery_download_success">システムアルバムに追加済み</string>
+    <string name="gallery_download_failed">保存できませんでした</string>
+    <string name="contact_error_group_exist">グループチャットは既に存在します。</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e8667c</color>
+    <color name="colorPrimaryDark">#ffffff</color>
+    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="background">#fafafa</color>
+    <color name="colorBackgroundView">#f2f2f2</color>
+    <color name="regProfileBackground">#f2f2f2</color>
+    <color name="regProfileBannerBackground">#e8e8e8</color>
+    <color name="regSmsVerAuthBackground">#f2f2f2</color>
+    <color name="regSmsVerAuthBackgroundBorder">#cacaca</color>
+    <color name="searchViewBackground">#f2f2f4</color>
+    <color name="homeContactsLabelBackground">#d2d2d2</color>
+    <color name="welcomeViewPagerUnselected">#b9b9b9</color>
+    <color name="rejectButton">#e50022</color>
+    <color name="acceptButton">#cee0c0</color>
+    <color name="link">#2E8AE6</color>
+    <color name="ic_launcher_background">@android:color/white</color>
+    <color name="selected_contact">#fbf5ec</color>
+    <color name="error_edit_text_background">#f7ebd7</color>
+    <color name="blue_button_text">#3e99ee</color>
+    <color name="chatInputBackground">#f9f9f9</color>
+    <color name="chat_attach_photo">#0faf4b</color>
+    <color name="chat_attach_location">#d92929</color>
+    <color name="status_online">#279A4A</color>
+    <color name="status_offline">#7F7F7F</color>
+    <color name="incomingBubble">#D6D6D6</color>
+    <color name="outcomingBubble">#333332</color>
+    <color name="questionSelected">#EBEBED</color>
+    <color name="last_message_preview">#747474</color>
+    <color name="button_pressed_tint">#7F7F7F</color>
+</resources>

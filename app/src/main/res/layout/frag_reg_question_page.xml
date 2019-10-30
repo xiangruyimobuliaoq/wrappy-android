@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/reg_question_textview_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="@string/reg_question_choose_security_question"
+        android:textSize="18dp"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <requestFocus />
+    </TextView>
+
+    <TextView
+        android:id="@+id/reg_question_textview_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="This will be used when you forgot your password"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_textview_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/reg_question_textview_label1"
+        style="@style/regLabelQuestion"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/reg_label_question_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_textview_guide" />
+
+    <TextView
+        android:id="@+id/reg_question_required_label1"
+        style="@style/errorTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/colorBackgroundView"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="@string/reg_question_hint_label1"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/reg_question_textview_label1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/reg_question_textview_label1"
+        app:layout_constraintTop_toTopOf="@id/reg_question_textview_label1" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/reg_question_spinner_question1"
+        style="@style/chooseQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_security_question"
+        android:spinnerMode="dialog"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_textview_label1" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_question_edittext_answer1"
+        style="@style/answerQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@android:color/darker_gray"
+        android:hint="@string/reg_question_your_answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_spinner_question1" />
+
+    <TextView
+        android:id="@+id/reg_question_textview_label2"
+        style="@style/regLabelQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reg_label_question_2"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_edittext_answer1" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/reg_question_spinner_question2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_security_question"
+        android:spinnerMode="dialog"
+        style="@style/chooseQuestion"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_textview_label2" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_question_edittext_answer2"
+        style="@style/answerQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColorHint="@android:color/darker_gray"
+        android:hint="@string/reg_question_your_answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_spinner_question2" />
+
+    <TextView
+        android:id="@+id/reg_question_textview_label3"
+        style="@style/regLabelQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reg_label_question_3"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_edittext_answer2" />
+
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/reg_question_spinner_question3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_security_question"
+        android:spinnerMode="dialog"
+        style="@style/chooseQuestion"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_textview_label3" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/reg_question_edittext_answer3"
+        style="@style/answerQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/reg_question_your_answer"
+        android:textColorHint="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/reg_question_spinner_question3" />
+
+    <Button
+        android:id="@+id/reg_question_button_next"
+        style="@style/mainButton"
+        android:layout_marginTop="40dp"
+        android:textAllCaps="true"
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_question_edittext_answer3" />
+
+</android.support.constraint.ConstraintLayout>

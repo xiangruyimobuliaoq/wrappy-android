@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="8dp">
+
+    <ImageView
+        android:id="@+id/security_unblock_list_imageview_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/profile_image_bg"
+        android:src="@drawable/avatar"/>
+
+    <ImageButton
+        android:id="@+id/security_unblock_list_imagebutton_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/security_unblock_list_imageview_avatar"
+        android:layout_alignBottom="@id/security_unblock_list_imageview_avatar"
+        android:background="@drawable/close2"/>
+
+    <TextView
+        android:id="@+id/security_unblock_list_textview_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/security_unblock_list_imageview_avatar"
+        android:layout_alignStart="@+id/security_unblock_list_imageview_avatar"
+        android:layout_alignEnd="@id/security_unblock_list_imageview_avatar"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+</RelativeLayout>

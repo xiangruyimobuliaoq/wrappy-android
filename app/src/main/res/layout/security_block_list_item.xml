@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/security_block_list_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <ImageView
+        android:id="@+id/security_block_list_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/checkbox"/>
+
+    <ImageView
+        android:id="@+id/security_block_list_avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@id/security_block_list_check_box"
+        android:src="@drawable/avatar"/>
+
+    <ImageView
+        android:id="@+id/security_block_list_imageview_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/security_block_list_avatar"
+        android:layout_alignRight="@id/security_block_list_avatar"
+        android:src="@drawable/status_disable"/>
+
+    <TextView
+        android:id="@+id/security_block_list_user_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/security_block_list_avatar"
+        android:text="User Id/Username"/>
+
+    <TextView
+        android:id="@+id/security_block_list_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/security_block_list_user_id"
+        android:layout_toRightOf="@id/security_block_list_avatar"
+        android:textColor="#ACACAC"
+        android:text="@string/status_offline"/>
+
+</RelativeLayout>

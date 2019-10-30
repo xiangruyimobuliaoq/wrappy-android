@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitEnd"
+        android:src="@drawable/intro_background" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/welcome_viewpager_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v4.view.ViewPager>
+
+    <Button
+        android:id="@+id/welcome_button_start"
+        style="@style/mainButton"
+        android:text="@string/welcome_label_start"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.70" />
+
+    <TextView
+        android:id="@+id/welcome_textview_terms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/terms_and_condition_link"
+        android:textColor="@color/link"
+        app:layout_constraintEnd_toEndOf="@+id/welcome_button_start"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="@+id/welcome_button_start"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_button_start"
+        app:layout_constraintBottom_toTopOf="@id/welcome_page_indicator"/>
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/welcome_page_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        app:piv_animationType="scale"
+        app:piv_dynamicCount="true"
+        app:piv_interactiveAnimation="true"
+        app:piv_selectedColor="@color/colorPrimary"
+        app:piv_unselectedColor="@color/welcomeViewPagerUnselected"
+        app:piv_viewPager="@id/welcome_viewpager_intro" />
+
+</android.support.constraint.ConstraintLayout>

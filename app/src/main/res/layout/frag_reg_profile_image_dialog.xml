@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/reg_profile_image_textview_take"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/regProfileDialog"
+        android:text="@string/reg_profile_image_dialog_new"/>
+
+    <TextView
+        android:id="@+id/reg_profile_image_textview_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/regProfileDialog"
+        android:text="@string/reg_profile_image_dialog_select"/>
+
+    <TextView
+        android:id="@+id/reg_profile_image_textview_select_stock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/regProfileDialog"
+        android:text="@string/reg_profile_image_dialog_choose_avatar"/>
+
+    <TextView
+        android:id="@+id/reg_profile_image_textview_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/regProfileDialog"
+        android:text="@string/action_delete"/>
+
+    <TextView
+        android:id="@+id/reg_profile_image_textview_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/regProfileDialog"
+        android:text="@string/dialog_cancel"/>
+
+</LinearLayout>

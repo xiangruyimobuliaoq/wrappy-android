@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/login_imageview_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.20" />
+
+    <com.wrappy.android.common.ui.WrappyFilteredEditText
+        android:id="@+id/login_edittext_userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
+        android:drawableStart="@drawable/ic_menu_info_normal"
+        android:drawablePadding="4dp"
+        android:hint="@string/user_id"
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_imageview_logo"/>
+
+    <TextView
+        android:id="@+id/login_textview_error_userid"
+        style="@style/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toTopOf="@+id/login_button_login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_edittext_userid" />
+
+    <TextView
+        android:id="@+id/login_textview_forget_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/link"
+        android:text="@string/label_forgot_user_id"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button_login"
+        app:layout_constraintVertical_bias="0.26" />
+
+    <Button
+        android:id="@+id/login_button_login"
+        style="@style/mainButton"
+        android:layout_width="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/log_in"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_edittext_userid" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="32dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="32dp"
+        android:paddingBottom="8dp"
+        app:alignItems="baseline"
+        app:dividerDrawableVertical="@drawable/flexbox_divider"
+        app:flexWrap="wrap"
+        app:justifyContent="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button_login"
+        app:layout_constraintVertical_bias="0.65999997"
+        app:showDividerVertical="middle">
+
+        <TextView
+            android:id="@+id/login_textview_register_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/don_t_have_an_account_yet" />
+
+        <TextView
+            android:id="@+id/login_textview_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/link_register"
+            android:textColor="@color/link" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <TextView
+        android:id="@+id/login_textview_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Version"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

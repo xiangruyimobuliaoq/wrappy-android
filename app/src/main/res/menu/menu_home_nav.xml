@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_button_contacts"
+        android:title="@string/home_nav_button_contacts"
+        android:icon="@drawable/contact1"/>
+    <item android:id="@+id/nav_button_chat"
+        android:title="@string/home_nav_button_chat"
+        android:icon="@drawable/chat1" />
+    <item android:id="@+id/nav_button_profile"
+        android:title="@string/home_nav_button_profile"
+        android:icon="@drawable/ic_menu_info_normal" />
+</menu>

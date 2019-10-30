@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.itsxtt.patternlock.PatternLockView
+        android:id="@+id/login_patternlockview_pattern"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:plv_selectedDotColor="@color/colorPrimary"
+        app:plv_regularLineColor="@color/colorPrimary">
+
+    </com.itsxtt.patternlock.PatternLockView>
+
+    <TextView
+        android:id="@+id/login_pattern_forgot_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textColor="@color/link"
+        android:text="@string/link_forgot_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_patternlockview_pattern" />
+
+    <TextView
+        android:id="@+id/login_pattern_error_text"
+        style="@style/errorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/login_patternlockview_pattern" />
+
+</android.support.constraint.ConstraintLayout>

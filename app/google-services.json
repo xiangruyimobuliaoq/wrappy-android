@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1015951514351",
+    "firebase_url": "https://wrappy-im.firebaseio.com",
+    "project_id": "wrappy-im",
+    "storage_bucket": "wrappy-im.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015951514351:android:5794655024b1b860",
+        "android_client_info": {
+          "package_name": "com.net.wrappy.im"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1015951514351-vdtc84fgfpktkpspheoh8prfv7qkq1ba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPcZ28eYwDqU1vRDjzfjmYFshqp_CxOzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1015951514351-vdtc84fgfpktkpspheoh8prfv7qkq1ba.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1015951514351-79j0c3q0q0n7j1cdoo1blj6n0uitjfnn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cyscorpions.wrappy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

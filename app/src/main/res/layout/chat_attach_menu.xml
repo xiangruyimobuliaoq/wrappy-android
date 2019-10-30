@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:background="@color/chatInputBackground"
+    android:paddingTop="16dp">
+
+    <ImageButton
+        android:id="@+id/chat_attach_select_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_attach_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/chat_attach_take_photo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/chat_attach_select_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/photo"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/chat_attach_select_image"
+        app:layout_constraintStart_toStartOf="@+id/chat_attach_select_image"
+        app:layout_constraintTop_toBottomOf="@+id/chat_attach_select_image" />
+
+    <ImageButton
+        android:id="@+id/chat_attach_take_photo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_attach_camera"
+        app:layout_constraintEnd_toStartOf="@+id/chat_attach_location"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chat_attach_select_image"
+        app:layout_constraintTop_toTopOf="@+id/chat_attach_select_image" />
+
+    <TextView
+        android:id="@+id/chat_attach_take_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/camera"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/chat_attach_take_photo"
+        app:layout_constraintStart_toStartOf="@+id/chat_attach_take_photo"
+        app:layout_constraintTop_toBottomOf="@+id/chat_attach_take_photo" />
+
+    <ImageButton
+        android:id="@+id/chat_attach_location"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/btn_attach_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chat_attach_take_photo"
+        app:layout_constraintTop_toTopOf="@+id/chat_attach_select_image" />
+
+    <TextView
+        android:id="@+id/chat_attach_location_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/location"
+        android:textColor="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@+id/chat_attach_location"
+        app:layout_constraintStart_toStartOf="@+id/chat_attach_location"
+        app:layout_constraintTop_toBottomOf="@+id/chat_attach_location" />
+
+</android.support.constraint.ConstraintLayout>

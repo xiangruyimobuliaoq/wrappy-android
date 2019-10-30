@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contact_add_search_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/searchViewBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.wrappy.android.common.ui.WrappyFilteredEditText
+            android:id="@+id/contact_add_searchview_search"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
+            android:background="@color/searchViewBackground"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+            android:hint="@string/search"
+            android:imeOptions="actionSearch"
+            android:inputType="textPersonName"
+            android:maxLength="48"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:padding="4dp"
+            android:drawableLeft="@drawable/ic_search_m"
+            android:drawablePadding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/contact_add_imagebutton_clear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/contact_add_imagebutton_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/searchViewBackground"
+            android:padding="8dp"
+            android:visibility="invisible"
+            android:src="@drawable/ic_close_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/contact_add_textview_noexist"
+        style="@style/commonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/contact_add_not_exist"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_add_search_container"
+        app:layout_constraintVertical_bias="0.056" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/contact_add_constraintlayout_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/searchViewBackground"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_add_search_container">
+
+        <ImageView
+            android:id="@+id/contact_add_avatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:minHeight="140dp"
+            android:minWidth="140dp"
+            android:src="@drawable/avatar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.108" />
+
+        <TextView
+            android:id="@+id/contact_add_textview_user_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="30dp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_add_avatar"
+            app:layout_constraintVertical_bias="0.051" />
+
+        <Button
+            android:id="@+id/contact_add_button_add_friend"
+            style="@style/mainButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="true"
+            android:text="@string/contact_add_send_request"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_add_textview_user_id"
+            app:layout_constraintVertical_bias="0.103" />
+
+        <TextView
+            android:id="@+id/contact_add_textview_added_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textColor="#303030"
+            android:text="@string/this_user_is_already_your_friend"
+            android:textSize="17dp"
+            android:textStyle="normal"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_add_textview_user_id"
+            app:layout_constraintVertical_bias="0.18" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

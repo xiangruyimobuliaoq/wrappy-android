@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/contact_list_menu_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/acceptButton"
+        android:src="@drawable/slide_edit_button"/>
+
+
+</RelativeLayout>

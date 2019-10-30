@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/contact_edit_imageview_banner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/regProfileBannerBackground"
+        app:layout_constraintBottom_toTopOf="@+id/contact_edit_textview_user_id"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/contact_edit_imageview_avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="18dp"
+        android:src="@drawable/avatar"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:layout_constraintBottom_toBottomOf="@+id/contact_edit_imageview_banner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_edit_textview_user_id"
+        style="@style/commonTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="180dp"
+        android:text="ID: User ID"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/contact_edit_textview_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:text="User Name"
+        style="@style/commonTextView"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_edit_textview_user_id" />
+
+    <LinearLayout
+        android:id="@+id/nickname_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:background="@drawable/background_outline"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_edit_textview_user_name">
+
+        <TextView
+            android:id="@+id/contact_edit_textview_label_name"
+            style="@style/regProfileLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:labelFor="@id/contact_edit_edittext_name"
+            android:text="@string/username_text" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_height="1dp"
+            android:background="@color/warm_grey_four"/>
+
+        <com.wrappy.android.common.ui.WrappyFilteredEditText
+            android:id="@+id/contact_edit_edittext_name"
+            style="@style/regProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:drawableRight="@drawable/write"
+            android:drawableTint="@color/gray"
+            android:inputType="textEmailAddress"
+            android:maxLength="48"
+            android:maxLines="1"
+            app:layout_constraintBottom_toTopOf="@+id/contact_edit_button_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/contact_edit_textview_label_name" />
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/contact_edit_button_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/contacts_save_button_bg"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14dp"
+        android:text="@string/save"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nickname_container" />
+
+    <Button
+        android:id="@+id/contact_edit_button_block"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/contacts_save_button_bg"
+        android:backgroundTint="#f7c789"
+        android:text="@string/block_user"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_edit_button_save" />
+
+    <Button
+        android:id="@+id/contact_edit_button_delete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/contacts_save_button_bg"
+        android:backgroundTint="#e50022"
+        android:text="@string/remove_friend"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contact_edit_button_block" />
+
+</android.support.constraint.ConstraintLayout>
