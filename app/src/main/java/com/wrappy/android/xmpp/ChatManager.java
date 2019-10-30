@@ -184,7 +184,8 @@ public class ChatManager {
                                     TranslateSetting translateSetting = mAppDatabase.chatBackgroundDao().getTranslateSetting(chatId);
                                     if (translateSetting.isAutoTranslate()) {
                                         translateText(message.getStanzaId(),
-                                                decryptMessage(message.getBody()),
+                                                message.getBody(),
+//                                                decryptMessage(message.getBody()),
                                                 translateSetting.getLanguage());
                                     }
                                 }
@@ -338,7 +339,8 @@ public class ChatManager {
                                                     TranslateSetting translateSetting = mAppDatabase.chatBackgroundDao().getTranslateSetting(chatId);
                                                     if (translateSetting.isAutoTranslate()) {
                                                         translateText(message.getStanzaId(),
-                                                                decryptMessage(message.getBody()),
+//                                                                decryptMessage(message.getBody()),
+                                                                message.getBody(),
                                                                 translateSetting.getLanguage());
                                                     }
                                                 }
@@ -593,7 +595,8 @@ public class ChatManager {
                     Message messageXMPP = (Message) forwarded.getForwardedStanza();
 
                     String subject = "";
-                    String message = decryptMessage(messageXMPP.getBody());
+//                    String message = decryptMessage(messageXMPP.getBody());
+                    String message = messageXMPP.getBody();
                     String timestamp = forwarded.getDelayInformation().getStamp().toString();
 
                     if(messageXMPP.getSubject() != null) {
@@ -737,7 +740,8 @@ public class ChatManager {
                             }
                         } else {
 
-                            String messageBody = decryptMessage(messageXMPP.getBody());
+                            String messageBody = messageXMPP.getBody();
+//                            String messageBody = decryptMessage(messageXMPP.getBody());
                             Log.d("MESSAGE_BODY", ""+messageBody);
                             try {
                                 if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
@@ -813,7 +817,8 @@ public class ChatManager {
                             continue;
                         } else {
 
-                            String messageBody = decryptMessage(messageXMPP.getBody());
+//                            String messageBody = decryptMessage(messageXMPP.getBody());
+                            String messageBody = messageXMPP.getBody();
                             Log.d("MESSAGE_BODY", messageBody);
 
                             try {
@@ -1098,7 +1103,8 @@ public class ChatManager {
                             } else {
                                 isEmpty = false;
 
-                                String messageBody = decryptMessage(messageXMPP.getBody());
+//                                String messageBody = decryptMessage(messageXMPP.getBody());
+                                String messageBody = messageXMPP.getBody();
                                 Log.d("MESSAGE_BODY", messageBody);
 
                                 try {
@@ -1176,7 +1182,8 @@ public class ChatManager {
                                 continue;
                             } else {
 
-                                String messageBody = decryptMessage(messageXMPP.getBody());
+                                String messageBody = messageXMPP.getBody();
+//                                String messageBody = decryptMessage(messageXMPP.getBody());
                                 Log.d("MESSAGE_BODY", messageBody);
 
                                 try {
@@ -1457,7 +1464,8 @@ public class ChatManager {
                             }
                         } else {
 
-                            String messageBody = decryptMessage(messageXMPP.getBody());
+//                            String messageBody = decryptMessage(messageXMPP.getBody());
+                            String messageBody = messageXMPP.getBody();
                             Log.d("MESSAGE_BODY", messageBody);
 
                             try {
@@ -1513,7 +1521,8 @@ public class ChatManager {
                             continue;
                         } else {
 
-                            String messageBody = decryptMessage(messageXMPP.getBody());
+//                            String messageBody = decryptMessage(messageXMPP.getBody());
+                            String messageBody = messageXMPP.getBody();
                             Log.d("MESSAGE_BODY", messageBody);
 
                             try {
@@ -2264,7 +2273,8 @@ public class ChatManager {
         MutableLiveData mld = new MutableLiveData<Resource<String>>();
         Message messageXMPP = new Message();
         messageXMPP.setFrom(mXMPPManager.getConnection().getUser().asBareJid());
-        messageXMPP.setBody(encryptMessage(message));
+//        messageXMPP.setBody(encryptMessage(message));
+        messageXMPP.setBody(message);
         messageXMPP.setSubject(subject);
         messageXMPP.addExtension(new DeliveryReceiptRequest());
         try {
@@ -2320,7 +2330,8 @@ public class ChatManager {
             MessageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_GROUP;
         }
 
-        String messageBody = decryptMessage(message.getBody());
+//        String messageBody = decryptMessage(message.getBody());
+        String messageBody = message.getBody();
         Log.d("MESSAGE_BODY", messageBody);
 
         try {
@@ -2808,21 +2819,21 @@ public class ChatManager {
         mAESKey = aesKey;
     }
 
-    private String encryptMessage(String message) {
-        try {
-            message = mCryptLib.encryptPlainTextWithRandomIV(message, mAESKey);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
+//    private String encryptMessage(String message) {
+//        try {
+//            message = mCryptLib.encryptPlainTextWithRandomIV(message, mAESKey);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return message;
+//    }
 
-    public String decryptMessage(String message) {
-        try {
-            message = mCryptLib.decryptCipherTextWithRandomIV(message, mAESKey);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
+//    public String decryptMessage(String message) {
+//        try {
+//            message = mCryptLib.decryptCipherTextWithRandomIV(message, mAESKey);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return message;
+//    }
 }
