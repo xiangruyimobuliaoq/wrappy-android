@@ -149,6 +149,7 @@
     <orderEntry type="library" name="Gradle: org.jxmpp:jxmpp-jid:0.6.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jxmpp:jxmpp-core:0.6.3@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.jxmpp:jxmpp-util-cache:0.6.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.Str4tocaster:otr4j:custom-SNAPSHOT@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.bouncycastle:bcprov-jdk15on:1.57@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.amazonaws:aws-android-sdk-cognitoidentityprovider-asf:1.0.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api:gax:1.45.0@jar" level="project" />
