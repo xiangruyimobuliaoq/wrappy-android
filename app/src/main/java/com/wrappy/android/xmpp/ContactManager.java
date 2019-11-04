@@ -605,7 +605,8 @@ public class ContactManager {
                                     from = messageXMPP.getFrom().asBareJid().toString();
                                 }
 
-                                String messageBody = decryptMessage(messageXMPP.getBody());
+//                                String messageBody = decryptMessage(messageXMPP.getBody());
+                                String messageBody = messageXMPP.getBody();
                                 Log.d("MESSAGE_BODY", messageBody);
 
                                 try {
@@ -717,7 +718,8 @@ public class ContactManager {
                                     from = messageXMPP.getFrom().asBareJid().toString();
                                 }
 
-                                String messageBody = decryptMessage(messageXMPP.getBody());
+                                String messageBody = messageXMPP.getBody();
+//                                String messageBody = decryptMessage(messageXMPP.getBody());
                                 Log.d("MESSAGE_BODY", messageBody);
 
                                 try {
@@ -1328,12 +1330,12 @@ public class ContactManager {
         mAESKey = aesKey;
     }
 
-    public String decryptMessage(String message) {
-        try {
-            message = mCryptLib.decryptCipherTextWithRandomIV(message, mAESKey);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return message;
-    }
+//    public String decryptMessage(String message) {
+//        try {
+//            message = mCryptLib.decryptCipherTextWithRandomIV(message, mAESKey);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return message;
+//    }
 }
