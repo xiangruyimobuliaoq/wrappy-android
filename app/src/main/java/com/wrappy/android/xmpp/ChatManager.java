@@ -6,6 +6,7 @@ import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.content.SharedPreferences;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amazonaws.HttpMethod;
@@ -31,6 +32,7 @@ import com.wrappy.android.db.entity.Delete;
 import com.wrappy.android.db.entity.DeleteAll;
 import com.wrappy.android.db.entity.MessageView;
 import com.wrappy.android.db.entity.TranslateSetting;
+import com.wrappy.android.otr.OtrManager;
 import com.wrappy.android.server.ServerConstants;
 import com.wrappy.android.xmpp.aws.AWSCertificate;
 import com.wrappy.android.xmpp.aws.IQAWSCertificate;
@@ -133,11 +135,13 @@ public class ChatManager {
 
     private String mGoogleTranslateKey;
     private String mAESKey;
+    private final OtrManager mOtrManager;
 
     public ChatManager(AppDatabase appDatabase,
                        AppExecutors appExecutors,
                        XMPPManager xmppManager,
                        SharedPreferences sharedPreferences,
+                       OtrManager otrManager,
                        CryptLib cryptLib) {
 
         mAppDatabase = appDatabase;
@@ -145,9 +149,8 @@ public class ChatManager {
         mXMPPManager = xmppManager;
         mSharedPreferences = sharedPreferences;
         mCryptLib = cryptLib;
-
+        mOtrManager = otrManager;
         mMamManager = mXMPPManager.getMamManager();
-
         mXMPPManager.getMUCManager().setAutoJoinOnReconnect(true);
 
         ProviderManager.addExtensionProvider("message", "jabber:client", new MessageElementProvider());
@@ -170,10 +173,9 @@ public class ChatManager {
                         }
                     } else if (message.hasExtension(MamElements.MamResultExtension.ELEMENT, "urn:xmpp:mam:1")) {
                         Log.d("FORWARDED", message.getStanzaId());
-                    }
-                    else {
+                    } else {
                         final String chatId = message.getFrom().asBareJid().toString();
-                        if(message.hasExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE)) {
+                        if (message.hasExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE)) {
                             DelayInformation delayInformation = message.getExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE);
                             addMessage(from, message, chatId, delayInformation.getStamp(), 2);
                         } else {
@@ -240,12 +242,13 @@ public class ChatManager {
                         }
                     } else {
                         try {
-                            addMessage(mXMPPManager.getConnection().getUser().asEntityBareJid(),
-                                    message,
-                                    chat.getXmppAddressOfChatPartner().asBareJid().toString(),
-                                    getServerTime(),
-                                    1);
-                            ackStanza(message.getStanzaId());
+                            if (!message.getBody().startsWith("?OTR"))
+                                addMessage(mXMPPManager.getConnection().getUser().asEntityBareJid(),
+                                        message,
+                                        chat.getXmppAddressOfChatPartner().asBareJid().toString(),
+                                        getServerTime(),
+                                        1);
+//                            ackStanza(message.getStanzaId());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -261,7 +264,6 @@ public class ChatManager {
                 joinGroup(room);
             }
         });
-
 
 
         mXMPPManager.getConnection().addAsyncStanzaListener(new StanzaListener() {
@@ -281,7 +283,7 @@ public class ChatManager {
                     ChatStateExtension composing = new ChatStateExtension(ChatState.composing);
                     ChatStateExtension paused = new ChatStateExtension(ChatState.paused);
                     if (mMUC != null) {
-                        if(message1.getFrom().asBareJid().equals(mMUC.getRoom().asBareJid()) &&
+                        if (message1.getFrom().asBareJid().equals(mMUC.getRoom().asBareJid()) &&
                                 !message1.getFrom().getResourceOrEmpty().equals(Resourcepart.EMPTY) &&
                                 !message1.getFrom().getResourceOrEmpty().toString().equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
                             if (message1.hasExtension(composing.getElementName(), composing.getNamespace())) {
@@ -293,7 +295,7 @@ public class ChatManager {
                             }
                         }
                     }
-                    if (((Message) packet).getBody() != null ) {
+                    if (((Message) packet).getBody() != null) {
                         if (!((Message) packet).getBody().equals("") ||
                                 packet.getFrom() != null) {
 
@@ -301,7 +303,7 @@ public class ChatManager {
                             Log.d("MUCMESSAGE", message.getBody());
                             EntityBareJid from;
                             if (packet.getFrom().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
-                                from = packet.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? toEntityBareJidMUC(packet.getFrom().getResourceOrEmpty().toString()) : toEntityBareJidMUC(packet.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER);
+                                from = packet.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER) ? toEntityBareJidMUC(packet.getFrom().getResourceOrEmpty().toString()) : toEntityBareJidMUC(packet.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER);
                             } else {
                                 from = toEntityBareJidMUC(packet.getFrom().asBareJid().toString());
                             }
@@ -327,13 +329,13 @@ public class ChatManager {
                                     Log.d("FORWARDED", message.getStanzaId() + Forwarded.NAMESPACE);
                                 } else {
                                     final String chatId = message.getFrom().asBareJid().toString();
-                                    if(message.hasExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE)) {
+                                    if (message.hasExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE)) {
                                         DelayInformation delayInformation = message.getExtension(DelayInformation.ELEMENT, DelayInformation.NAMESPACE);
                                         addMessage(from, message, chatId, delayInformation.getStamp(), 2);
                                     } else {
                                         try {
                                             addMessage(from, message, chatId, getServerTime(), 2);
-                                            if(!JidCreate.bareFrom(message.getFrom().getResourceOrEmpty()).asBareJid().equals(mXMPPManager.getConnection().getUser().asBareJid())) {
+                                            if (!JidCreate.bareFrom(message.getFrom().getResourceOrEmpty()).asBareJid().equals(mXMPPManager.getConnection().getUser().asBareJid())) {
                                                 mAppDatabase.chatDao().increaseChatUnreadCount(chatId);
                                                 if (message.getSubject() == null) {
                                                     TranslateSetting translateSetting = mAppDatabase.chatBackgroundDao().getTranslateSetting(chatId);
@@ -374,63 +376,62 @@ public class ChatManager {
         });
 
         /**mXMPPManager.getConnection().addAsyncStanzaListener(new StanzaListener() {
-            @Override
-            public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                EventElement event = EventElement.from(packet);
+        @Override public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
+        EventElement event = EventElement.from(packet);
 
-                if (event.getEventType().equals(EventElementType.items)) {
-                    ItemsExtension items = (ItemsExtension) event.getEvent();
-                    String nodeName = items.getNode();
-                    if (nodeName.equals("urn:xmpp:mucsub:nodes:messages")) {
-                        Message message = ((PayloadItem<MessageExtensionElement>) items.getItems().get(0))
-                                .getPayload()
-                                .getMessage();
-                        Log.d("MUCSUB", message.getBody());
-                        EntityBareJid from = toEntityBareJidMUC(message.getFrom().getResourceOrEmpty().toString());
-                        ChatStateExtension composing = new ChatStateExtension(ChatState.composing);
-                        ChatStateExtension paused = new ChatStateExtension(ChatState.paused);
-                        if (message.hasExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE)) {
-                            if (from.asBareJid().equals(mXMPPManager.getConnection().getUser().asBareJid())) {
-                                try {
-                                    MessageCorrectExtension replace = message.getExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE);
-                                    if( null != replace.getIdInitialMessage()) {
-                                        if (message.getSubject().equals("deleted")) {
-                                            mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
-                                        } else if (message.getSubject().equals("deletedall")) {
-                                            mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
-                                        }
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        } else if (message.hasExtension(composing.getElementName(), composing.getNamespace())) {
-                            //istyping.postValue(Resource.success(true));
-                        } else if (message.hasExtension(paused.getElementName(), paused.getNamespace())) {
-                            //istyping.postValue(Resource.success(false));
-                        } else if (mAppDatabase.deleteDao().isExist(message.getStanzaId()) != null || mAppDatabase.deleteAllDao().isExist(message.getStanzaId()) != null) {
+        if (event.getEventType().equals(EventElementType.items)) {
+        ItemsExtension items = (ItemsExtension) event.getEvent();
+        String nodeName = items.getNode();
+        if (nodeName.equals("urn:xmpp:mucsub:nodes:messages")) {
+        Message message = ((PayloadItem<MessageExtensionElement>) items.getItems().get(0))
+        .getPayload()
+        .getMessage();
+        Log.d("MUCSUB", message.getBody());
+        EntityBareJid from = toEntityBareJidMUC(message.getFrom().getResourceOrEmpty().toString());
+        ChatStateExtension composing = new ChatStateExtension(ChatState.composing);
+        ChatStateExtension paused = new ChatStateExtension(ChatState.paused);
+        if (message.hasExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE)) {
+        if (from.asBareJid().equals(mXMPPManager.getConnection().getUser().asBareJid())) {
+        try {
+        MessageCorrectExtension replace = message.getExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE);
+        if( null != replace.getIdInitialMessage()) {
+        if (message.getSubject().equals("deleted")) {
+        mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
+        } else if (message.getSubject().equals("deletedall")) {
+        mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
+        }
+        }
+        } catch (Exception e) {
+        e.printStackTrace();
+        }
+        }
+        } else if (message.hasExtension(composing.getElementName(), composing.getNamespace())) {
+        //istyping.postValue(Resource.success(true));
+        } else if (message.hasExtension(paused.getElementName(), paused.getNamespace())) {
+        //istyping.postValue(Resource.success(false));
+        } else if (mAppDatabase.deleteDao().isExist(message.getStanzaId()) != null || mAppDatabase.deleteAllDao().isExist(message.getStanzaId()) != null) {
 
-                        } else {
-                            addMessage(from, message, message.getFrom().asBareJid().toString(), new Date(), 2);
-                        }
-                    } else if (nodeName.equals("urn:xmpp:mucsub:nodes:presences")) {**/
-                        /* subscription update (user add, leave)*/
-                    /**} else if (nodeName.equals("urn:xmpp:mucsub:nodes:subscribers")) {
+        } else {
+        addMessage(from, message, message.getFrom().asBareJid().toString(), new Date(), 2);
+        }
+        } else if (nodeName.equals("urn:xmpp:mucsub:nodes:presences")) {**/
+        /* subscription update (user add, leave)*/
+        /**} else if (nodeName.equals("urn:xmpp:mucsub:nodes:subscribers")) {
 
-                    } else {
-                        Log.d("NodeName", nodeName);
-                    }
-                }
+         } else {
+         Log.d("NodeName", nodeName);
+         }
+         }
 
-            }
-        }, (stanza) ->
-                stanza.hasExtension(PubSubElementType.ITEM_EVENT.getNamespace().getXmlns()));**/
+         }
+         }, (stanza) ->
+         stanza.hasExtension(PubSubElementType.ITEM_EVENT.getNamespace().getXmlns()));**/
 
         mXMPPManager.getConnection().addAsyncStanzaListener(new StanzaListener() {
             @Override
             public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                if(packet.getFrom().getResourceOrEmpty().toString().equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
-                    if(mMUC!=null) {
+                if (packet.getFrom().getResourceOrEmpty().toString().equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
+                    if (mMUC != null) {
                         if (packet.getFrom().asBareJid().equals(mMUC.getRoom())) {
                             istypingMUC.postValue(Resource.serverError("You are kicked from the group", null));
                         }
@@ -468,7 +469,7 @@ public class ChatManager {
             e.printStackTrace();
         } catch (XMPPException.XMPPErrorException e) {
             e.printStackTrace();
-            if(e.getStanzaError().getCondition()== StanzaError.Condition.bad_request) {
+            if (e.getStanzaError().getCondition() == StanzaError.Condition.bad_request) {
                 //joinGroup(room);
             }
 
@@ -484,12 +485,12 @@ public class ChatManager {
         AmazonS3Client amazonS3Client = new AmazonS3Client(new AWSCredentials() {
             @Override
             public String getAWSAccessKeyId() {
-                return awsCertificate.getAccessKey() ;
+                return awsCertificate.getAccessKey();
             }
 
             @Override
             public String getAWSSecretKey() {
-                return awsCertificate.getSecretID() ;
+                return awsCertificate.getSecretID();
             }
         });
 
@@ -554,7 +555,7 @@ public class ChatManager {
                 } else {
                     Log.d("MUCJID", chatJid.toString());
                     MultiUserChat muc = mXMPPManager.getMUCManager().getMultiUserChat(chatJid);
-                    if(!muc.isJoined()) {
+                    if (!muc.isJoined()) {
                         muc.join(Resourcepart.from(whoIs));
                     }
                     //mamQueryResult = MamManager.getInstanceFor(muc).mostRecentPage(chatJid,20);
@@ -581,7 +582,7 @@ public class ChatManager {
                     //Collections.reverse(forwardedList);
                 }
 
-                if(!mamResultExtensionList.isEmpty()) {
+                if (!mamResultExtensionList.isEmpty()) {
                     Collections.sort(mamResultExtensionList, new Comparator<MamElements.MamResultExtension>() {
                         @Override
                         public int compare(MamElements.MamResultExtension o1, MamElements.MamResultExtension o2) {
@@ -591,7 +592,7 @@ public class ChatManager {
                 }
 
                 Log.d("CHAT_JID", chatJid.toString());
-                for(Forwarded forwarded : forwardedList) {
+                for (Forwarded forwarded : forwardedList) {
                     Message messageXMPP = (Message) forwarded.getForwardedStanza();
 
                     String subject = "";
@@ -599,7 +600,7 @@ public class ChatManager {
                     String message = messageXMPP.getBody();
                     String timestamp = forwarded.getDelayInformation().getStamp().toString();
 
-                    if(messageXMPP.getSubject() != null) {
+                    if (messageXMPP.getSubject() != null) {
                         subject = messageXMPP.getSubject();
                     } else {
                         subject = "TEXT";
@@ -608,7 +609,7 @@ public class ChatManager {
                     Log.d(subject, message + " : " + timestamp);
                 }
 
-                for(Forwarded forwarded : forwardedList) {
+                for (Forwarded forwarded : forwardedList) {
 
                     Stanza stanza = forwarded.getForwardedStanza();
                     Log.d("Delete", stanza.toString());
@@ -617,7 +618,7 @@ public class ChatManager {
 
                     String from;
                     if (messageXMPP.getFrom().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
-                        from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                        from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER) ? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
                     } else {
                         from = messageXMPP.getFrom().asBareJid().toString();
                     }
@@ -662,11 +663,11 @@ public class ChatManager {
                         Log.d("Subject", messageXMPP.getSubject());
                     }
 
-                    if(type.equals("chat")) {
-                        if(messageXMPP.getType().equals(Message.Type.groupchat))
+                    if (type.equals("chat")) {
+                        if (messageXMPP.getType().equals(Message.Type.groupchat))
                             continue;
                     } else {
-                        if(messageXMPP.getType().equals(Message.Type.chat)) {
+                        if (messageXMPP.getType().equals(Message.Type.chat)) {
                             continue;
                         }
                     }
@@ -679,7 +680,7 @@ public class ChatManager {
 
                     String from;
                     if (messageXMPP.getFrom().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
-                        from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                        from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER) ? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
                     } else {
                         from = messageXMPP.getFrom().asBareJid().toString();
                     }
@@ -712,22 +713,22 @@ public class ChatManager {
 
 
                     /**if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
-                        break;
-                    }
+                     break;
+                     }
 
-                    if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
-                        continue;
-                    }**/
+                     if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                     continue;
+                     }**/
 
                     int messageType = 0;
 
-                    if(messageXMPP.getType().equals(Message.Type.chat)) {
+                    if (messageXMPP.getType().equals(Message.Type.chat)) {
                         messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_CHAT;
                     } else if (messageXMPP.getType().equals(Message.Type.groupchat)) {
                         messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_GROUP;
                     }
 
-                    if(messageXMPP.getSubject() != null) {
+                    if (messageXMPP.getSubject() != null) {
                         if (messageXMPP.getSubject().equals("deleted") || messageXMPP.getSubject().equals("deletedall")
                                 || mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null
                                 || mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
@@ -742,7 +743,7 @@ public class ChatManager {
 
                             String messageBody = messageXMPP.getBody();
 //                            String messageBody = decryptMessage(messageXMPP.getBody());
-                            Log.d("MESSAGE_BODY", ""+messageBody);
+                            Log.d("MESSAGE_BODY", "" + messageBody);
                             try {
                                 if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
                                     String remove = messageBody.substring(0, 10);
@@ -760,7 +761,7 @@ public class ChatManager {
                                     messageBody = messageBody.replace(remove, "");
                                     messageBody = messageBody.replace(":map%", "");
                                 } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
-                                    String remove = messageBody.substring(0,10);
+                                    String remove = messageBody.substring(0, 10);
                                     Log.d("REMOVE", remove);
                                     messageBody = messageBody.replace(remove, "");
                                     messageBody = messageBody.replace(":stamp%", "");
@@ -889,7 +890,7 @@ public class ChatManager {
                 }
                 mAppExecutors.diskIO().execute(() -> {
                     if (mamQuery.getMessageCount() == 0 && type.equals("groupchat")) {
-                        if(start) {
+                        if (start) {
                             try {
                                 mAppDatabase.chatDao().changeChatLastMessage(" ", getServerTime(), chatJid.asBareJid().toString());
                             } catch (IOException e) {
@@ -1616,19 +1617,19 @@ public class ChatManager {
             } else {
                 mMUC = mXMPPManager.getMUCManager().getMultiUserChat(toEntityBareJidMUC(userJid));
                 try {
-                    if(!mMUC.isJoined()) {
+                    if (!mMUC.isJoined()) {
                         mMUC.join(Resourcepart.from(mXMPPManager.getConnection().getUser().asBareJid().toString()));
                     }
                     /**for (Affiliate affiliate : mMUC.getOwners()) {
-                        Log.d("MEMBERS", affiliate.getJid().toString());
-                    }**/
+                     Log.d("MEMBERS", affiliate.getJid().toString());
+                     }**/
 
                     String roomname = mMUC.getConfigurationForm().getField("muc#roomconfig_roomname").getFirstValue();
                     mAppDatabase.chatDao().changeChatName(roomname, mMUC.getRoom().asBareJid().toString());
                     istypingMUC.postValue(Resource.success(false));
                     setInitialMessage(mMUC.getRoom(), chatName, type, 30, whoIs);
                 } catch (SmackException.NoResponseException e) {
-                    mld.postValue(Resource.serverError(e.getMessage(),null));
+                    mld.postValue(Resource.serverError(e.getMessage(), null));
                     e.printStackTrace();
                 } catch (XMPPException.XMPPErrorException e) {
                     e.printStackTrace();
@@ -1648,7 +1649,6 @@ public class ChatManager {
                 mld.postValue(Resource.success(mAppDatabase.chatDao().getChat(userJid)));
             });
         });
-
 
 
         //chat = mAppDatabase.chatDao().getChat(userJid);
@@ -1679,7 +1679,7 @@ public class ChatManager {
                 FormField formField = new FormField("muc#roomconfig_roomname");
                 formField.setLabel("房间名称");
                 formField.setType(FormField.Type.text_single);
-                Log.d("ROOMCONF_ROOMNAME",mMUC.getConfigurationForm().getField("muc#roomconfig_roomname").toString());
+                Log.d("ROOMCONF_ROOMNAME", mMUC.getConfigurationForm().getField("muc#roomconfig_roomname").toString());
                 answer.getField("muc#roomconfig_persistentroom").addValue("1");
                 answer.getField("muc#roomconfig_membersonly").addValue("0");
                 answer.setAnswer("muc#roomconfig_roomname", getNameMUC(getIdMUC(userJids)));
@@ -1727,8 +1727,8 @@ public class ChatManager {
         for (RoomMUCExtend subscription : iqMucGetSubscriptions.getSubscriptions()) {
             Log.d("MUC_" + subscription.toString(), subscription.toString());
             /**if(!subscription.getNickname().toString().equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
-                continue;
-            }**/
+             continue;
+             }**/
             Log.d("MUCJID", subscription.toString());
             MultiUserChat muc = mXMPPManager.getMUCManager().getMultiUserChat(subscription.getRoomJid().asEntityBareJidOrThrow());
             try {
@@ -1738,7 +1738,7 @@ public class ChatManager {
                 setMUCSubscriptions(stanza);
             } catch (XMPPException.XMPPErrorException e) {
                 e.printStackTrace();
-                if(e.getStanzaError().getCondition().equals(StanzaError.Condition.conflict)) {
+                if (e.getStanzaError().getCondition().equals(StanzaError.Condition.conflict)) {
                     e.printStackTrace();
                     try {
                         Log.d("LEAVE", muc.getRoom().toString());
@@ -1779,18 +1779,18 @@ public class ChatManager {
                             iqGroupListPushFlag
                             , mXMPPManager.getConnection())
                     , new StanzaListener() {
-                @Override
-                public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                    mAppExecutors.diskIO().execute(() -> {
-                        Log.d("GROUPLISTPUSHFLAG", packet.getStanzaId());
-                        IQGroupListPushFlag iqGroupListPushFlag1 = (IQGroupListPushFlag) packet;
-                        for(GroupPushFlag groupPushFlag : iqGroupListPushFlag1.getGroupPushFlags()) {
-                            Log.d("GROUPPUSHFLAG", groupPushFlag.getGroupJid() + ":" + groupPushFlag.isPushFlag());
-                            mAppDatabase.chatDao().toggleNotif(groupPushFlag.isPushFlag(), groupPushFlag.getGroupJid().asBareJid().toString());
+                        @Override
+                        public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
+                            mAppExecutors.diskIO().execute(() -> {
+                                Log.d("GROUPLISTPUSHFLAG", packet.getStanzaId());
+                                IQGroupListPushFlag iqGroupListPushFlag1 = (IQGroupListPushFlag) packet;
+                                for (GroupPushFlag groupPushFlag : iqGroupListPushFlag1.getGroupPushFlags()) {
+                                    Log.d("GROUPPUSHFLAG", groupPushFlag.getGroupJid() + ":" + groupPushFlag.isPushFlag());
+                                    mAppDatabase.chatDao().toggleNotif(groupPushFlag.isPushFlag(), groupPushFlag.getGroupJid().asBareJid().toString());
+                                }
+                            });
                         }
                     });
-                }
-            });
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -1844,11 +1844,11 @@ public class ChatManager {
                 roomMUCExtends.add(subscription);
 
             } catch (XMPPException.XMPPErrorException e) {
-                if(e.getStanzaError().getCondition().equals(StanzaError.Condition.conflict)) {
+                if (e.getStanzaError().getCondition().equals(StanzaError.Condition.conflict)) {
                     e.printStackTrace();
                     subscription.setRoomStatus("Conflict - 409");
                     roomMUCExtends.add(subscription);
-                } else if(e.getStanzaError().getCondition().equals(StanzaError.Condition.forbidden)) {
+                } else if (e.getStanzaError().getCondition().equals(StanzaError.Condition.forbidden)) {
                     e.printStackTrace();
                     subscription.setRoomStatus("Forbidden - 403");
                     roomMUCExtends.add(subscription);
@@ -1873,7 +1873,7 @@ public class ChatManager {
     }
 
     public void joinMUC(MultiUserChat muc, String roomName) throws XmppStringprepException, XMPPException.XMPPErrorException, SmackException.NotConnectedException, InterruptedException, SmackException.NoResponseException, MultiUserChatException.NotAMucServiceException {
-        if(!muc.isJoined()) {
+        if (!muc.isJoined()) {
             muc.join(Resourcepart.from(mXMPPManager.getConnection().getUser().asBareJid().toString()));
         }
         setInitialMessage(muc.getRoom(), roomName, "groupchat", 1, mXMPPManager.getConnection().getUser().asBareJid().toString());
@@ -1895,29 +1895,28 @@ public class ChatManager {
         iq.setStanzaId();
         try {
             /**iqMucGetSubscriptions.setTo(JidCreate.domainBareFrom(ServerConstants.XMPP_MUC_DOMAIN.substring(1)));
-            mXMPPManager.getConnection().addAsyncStanzaListener(new StanzaListener() {
-                @Override
-                public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                    try {
-                        setMUCSubscriptions(packet);
-                        mXMPPManager.getConnection().removeAsyncStanzaListener(this);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+             mXMPPManager.getConnection().addAsyncStanzaListener(new StanzaListener() {
+            @Override public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
+            try {
+            setMUCSubscriptions(packet);
+            mXMPPManager.getConnection().removeAsyncStanzaListener(this);
+            } catch (Exception e) {
+            e.printStackTrace();
+            }
 
-                }
+            }
             }, new IQResultReplyFilter(iqMucGetSubscriptions, mXMPPManager.getConnection()));**/
             mXMPPManager.getConnection().sendStanzaWithResponseCallback(iq,
                     new IQResultReplyFilter(iq, mXMPPManager.getConnection()),
                     new StanzaListener() {
-                @Override
-                public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                    setMUCSubscriptions(packet);
-                    //mMUCRooms.postValue(Resource.success(getMUCRoom(packet)));
-                    mXMPPManager.getConnection().removeAsyncStanzaListener(this);
-                    Log.d("MUCGETSUBSCRIPTION", "DONE");
-                }
-            });
+                        @Override
+                        public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
+                            setMUCSubscriptions(packet);
+                            //mMUCRooms.postValue(Resource.success(getMUCRoom(packet)));
+                            mXMPPManager.getConnection().removeAsyncStanzaListener(this);
+                            Log.d("MUCGETSUBSCRIPTION", "DONE");
+                        }
+                    });
             Log.d("MUCGETSUBSCRIPTION", "YES");
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
@@ -1940,7 +1939,7 @@ public class ChatManager {
         MutableLiveData<Resource<Boolean>> mld = new MutableLiveData<>();
         mld.postValue(Resource.loading(null));
         mAppExecutors.networkIO().execute(() -> {
-            if(chatType.equals("chat")) {
+            if (chatType.equals("chat")) {
                 IQJidSetPushFlag iqJidSetPushFlag = new IQJidSetPushFlag(isNotif ? 1 : 0, ContactManager.toBareJid(chatId));
                 try {
                     mXMPPManager.getConnection().sendStanzaWithResponseCallback(iqJidSetPushFlag, new IQResultReplyFilter(iqJidSetPushFlag, mXMPPManager.getConnection()),
@@ -1968,7 +1967,7 @@ public class ChatManager {
                     e.printStackTrace();
                 }
             } else {
-                IQGroupSetPushFlag iqGroupSetPushFlag = new IQGroupSetPushFlag(ContactManager.toBareJid(chatId), isNotif? 1 : 0);
+                IQGroupSetPushFlag iqGroupSetPushFlag = new IQGroupSetPushFlag(ContactManager.toBareJid(chatId), isNotif ? 1 : 0);
                 try {
                     mXMPPManager.getConnection().sendStanzaWithResponseCallback(iqGroupSetPushFlag, new IQResultReplyFilter(iqGroupSetPushFlag, mXMPPManager.getConnection()),
                             new StanzaListener() {
@@ -2025,7 +2024,7 @@ public class ChatManager {
 
     public void addMember(String userJid) {
         try {
-            if(!userJid.equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
+            if (!userJid.equals(mXMPPManager.getConnection().getUser().asBareJid().toString())) {
                 Log.d("INVITED", userJid);
                 mMUC.invite(toEntityBareJidMUC(userJid), "");
                 Log.d("GRANT_OWNER", userJid);
@@ -2104,7 +2103,7 @@ public class ChatManager {
 
     public boolean removeMember(String userJid) {
         boolean isSelf = false;
-        if(toEntityBareJidMUC(userJid).equals(mXMPPManager.getConnection().getUser().asEntityBareJid())) {
+        if (toEntityBareJidMUC(userJid).equals(mXMPPManager.getConnection().getUser().asEntityBareJid())) {
             isSelf = true;
         } else {
             try {
@@ -2274,31 +2273,46 @@ public class ChatManager {
         Message messageXMPP = new Message();
         messageXMPP.setFrom(mXMPPManager.getConnection().getUser().asBareJid());
 //        messageXMPP.setBody(encryptMessage(message));
-        messageXMPP.setBody(message);
+
+
         messageXMPP.setSubject(subject);
         messageXMPP.addExtension(new DeliveryReceiptRequest());
         try {
             if (chatType.equals("chat")) {
                 messageXMPP.setType(Message.Type.chat);
                 messageXMPP.addExtension(new NickNameElement(chatName));
+                messageXMPP.setStanzaId();
+                String otrMsg = mOtrManager.transformSending(mChat.getXmppAddressOfChatPartner().asEntityBareJidString(), message);
+                messageXMPP.setBody(otrMsg);
                 mChat.send(messageXMPP);
                 mld.postValue(Resource.success(messageXMPP));
+                if (!TextUtils.isEmpty(otrMsg)) {
+                    mAppExecutors.diskIO().execute(()->{
+                    messageXMPP.setBody(message);
+                        try {
+                            addMessage(mXMPPManager.getConnection().getUser().asEntityBareJid(), messageXMPP, mChat.getXmppAddressOfChatPartner().asEntityBareJidString(), getServerTime(), 1);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
             } else {
+                messageXMPP.setBody(message);
                 messageXMPP.setType(Message.Type.groupchat);
                 messageXMPP.addExtension(new NaturalNameElement(chatName));
                 mMUC.sendMessage(messageXMPP);
                 mld.postValue(Resource.success(message));
-                    /**com.wrappy.android.db.entity.Chat chat = new com.wrappy.android.db.entity.Chat();
-                     chat.setChatId(mMUC.getRoom().toString());
-                     chat.setChatType(chatType);
+                /**com.wrappy.android.db.entity.Chat chat = new com.wrappy.android.db.entity.Chat();
+                 chat.setChatId(mMUC.getRoom().toString());
+                 chat.setChatType(chatType);
 
-                     chat.setChatLanguage("English");
-                     chat.setChatNotification(true);
-                     chat.setChatUnreadCount(0);
-                     chat.setChatName(getRoomName());
-                     mAppExecutors.diskIO().execute(() -> {
-                     mAppDatabase.chatDao().insert(chat);
-                     });**/
+                 chat.setChatLanguage("English");
+                 chat.setChatNotification(true);
+                 chat.setChatUnreadCount(0);
+                 chat.setChatName(getRoomName());
+                 mAppExecutors.diskIO().execute(() -> {
+                 mAppDatabase.chatDao().insert(chat);
+                 });**/
             }
         } catch (SmackException.NotConnectedException e) {
             e.printStackTrace();
@@ -2322,9 +2336,9 @@ public class ChatManager {
 
         String messageId;
 
-        int MessageType=0;
+        int MessageType = 0;
 
-        if(message.getType().equals(Message.Type.chat)) {
+        if (message.getType().equals(Message.Type.chat)) {
             MessageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_CHAT;
         } else if (message.getType().equals(Message.Type.groupchat)) {
             MessageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_GROUP;
@@ -2332,6 +2346,12 @@ public class ChatManager {
 
 //        String messageBody = decryptMessage(message.getBody());
         String messageBody = message.getBody();
+        if (messageBody.startsWith("?OTR")) {
+            messageBody = mOtrManager.transformReceiving(from.asEntityBareJidString(), messageBody);
+            if (TextUtils.isEmpty(messageBody)) {
+                return;
+            }
+        }
         Log.d("MESSAGE_BODY", messageBody);
 
         try {
@@ -2352,7 +2372,7 @@ public class ChatManager {
                 messageBody = messageBody.replace(remove, "");
                 messageBody = messageBody.replace(":map%", "");
             } else if (message.getSubject() != null && message.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
-                String remove = messageBody.substring(0,10);
+                String remove = messageBody.substring(0, 10);
                 Log.d("REMOVE", remove);
                 messageBody = messageBody.replace(remove, "");
                 messageBody = messageBody.replace(":stamp%", "");
@@ -2462,9 +2482,9 @@ public class ChatManager {
                     Log.d("OWNERS", affiliate.getJid().toString());
                     participantsContact.add(owner);
                 }
-                for(Affiliate occupant : muc.getMembers()) {
+                for (Affiliate occupant : muc.getMembers()) {
                     Contact member = new Contact(occupant.getJid().asBareJid().toString(), "", ContactManager.getUserName(occupant.getJid().asBareJid().toString()), -1);
-                    Log.d("MEMBER1",occupant.getJid().toString());
+                    Log.d("MEMBER1", occupant.getJid().toString());
                     participantsContact.add(member);
                 }
             } catch (SmackException.NoResponseException e) {
@@ -2505,7 +2525,7 @@ public class ChatManager {
         Log.d("SEARCH", "Start");
         messageSearchList.postValue(Resource.loading(null));
         mAppExecutors.diskIO().execute(() -> {
-            messageSearchList.postValue(Resource.success(mAppDatabase.messageDao().searchMessage(chatJid.toString(), "%"+keyword+"%")));
+            messageSearchList.postValue(Resource.success(mAppDatabase.messageDao().searchMessage(chatJid.toString(), "%" + keyword + "%")));
         });
 
 
@@ -2604,7 +2624,7 @@ public class ChatManager {
 
     public void deleteMessages(String chatId, String type, String from) {
         mAppExecutors.diskIO().execute(() -> {
-            if(type.equals("chat")) {
+            if (type.equals("chat")) {
                 com.wrappy.android.db.entity.Message LatestMessage = mAppDatabase.messageDao().getLatestMessage(chatId);
                 if (LatestMessage == null) {
                     return;
@@ -2701,7 +2721,7 @@ public class ChatManager {
     }
 
     public Date getServerTime() throws IOException {
-        if(!TrueTime.isInitialized()) {
+        if (!TrueTime.isInitialized()) {
             TrueTime.build().initialize();
         }
         return TrueTime.now();

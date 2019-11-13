@@ -1,11 +1,13 @@
 package com.wrappy.android.di;
 
 import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.NoSuchPaddingException;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import com.bumptech.glide.util.LruCache;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +19,7 @@ import com.wrappy.android.common.utils.Base64ImageFile;
 import com.wrappy.android.common.utils.Base64ImageFileAdapter;
 import com.wrappy.android.common.utils.CryptLib;
 import com.wrappy.android.db.AppDatabase;
+import com.wrappy.android.otr.OtrManager;
 import com.wrappy.android.server.AuthRepository;
 import com.wrappy.android.server.AuthorizationService;
 import com.wrappy.android.server.account.AccountRepository;
@@ -103,14 +106,20 @@ public class AppProviderModule {
 
     @Provides
     @AppScope
+    OtrManager provideOtrManager(XMPPManager xmppManager) {
+        return new OtrManager(xmppManager);
+    }
+
+    @Provides
+    @AppScope
     ContactManager provideContactManager(AppDatabase appDatabase, XMPPManager xmppManager, AppExecutors appExecutors, AuthRepository authRepository, CryptLib cryptLib) {
         return new ContactManager(appDatabase, xmppManager, appExecutors, authRepository, cryptLib);
     }
 
     @Provides
     @AppScope
-    ChatManager provideChatManager(AppDatabase appDatabase, XMPPManager xmppManager, AppExecutors appExecutors, SharedPreferences sharedPreferences, CryptLib cryptLib) {
-        return new ChatManager(appDatabase, appExecutors, xmppManager, sharedPreferences, cryptLib);
+    ChatManager provideChatManager(AppDatabase appDatabase, XMPPManager xmppManager, AppExecutors appExecutors, SharedPreferences sharedPreferences, OtrManager otrManager, CryptLib cryptLib) {
+        return new ChatManager(appDatabase, appExecutors, xmppManager, sharedPreferences, otrManager, cryptLib);
     }
 
     @Provides
