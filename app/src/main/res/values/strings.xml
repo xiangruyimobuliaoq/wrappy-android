@@ -22,6 +22,7 @@
     <string name="reg_password_input_password">Input your password</string>
     <string name="reg_password_confirm_password">Confirm password</string>
     <string name="home_chat_welcome">Time to start using Wrappy</string>
+    <string name="delete_account">Delete account</string>
 
     <string name="status_online">Online</string>
     <string name="status_offline">Offline</string>
