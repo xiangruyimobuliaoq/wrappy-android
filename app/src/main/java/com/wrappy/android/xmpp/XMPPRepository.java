@@ -76,6 +76,9 @@ public class XMPPRepository {
 
     private CountDownLatch mKeyLatch;
 
+
+
+
     public enum ConnectionStatus {
         CONNECTING, CONNECTED, AUTHENTICATED, RECONNECTING, DISCONNECTED, NOCONNECTION
     }
@@ -730,5 +733,16 @@ public class XMPPRepository {
 
     public LiveData<Boolean> loadMoreImages(String chatJid, String type, String lastMessageId) {
         return mChatManager.loadMoreImages(chatJid, type, lastMessageId);
+    }
+    public LiveData<Boolean> isOtrEncyption() {
+        return mChatManager.isOtrEncyption() ;
+    }
+
+    public void startOtr() {
+            mChatManager.startOtr();
+    }
+
+    public void endOtr() {
+        mChatManager.endOtr();
     }
 }

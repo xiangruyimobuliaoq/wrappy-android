@@ -1,262 +1,306 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<android.support.constraint.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_group_details"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/chat_settings_imageview_group_avatar"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_group_details"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/avatar"/>
-
-        <TextView
-            android:id="@+id/chat_settings_textview_group_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
             android:padding="8dp"
-            android:layout_toRightOf="@id/chat_settings_imageview_group_avatar"
-            android:layout_toLeftOf="@id/chat_settings_imageview_edit"
-            android:text="@string/chat_group_detail_label_name" />
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/chat_settings_imageview_edit"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/page_1" />
+            <ImageView
+                android:id="@+id/chat_settings_imageview_group_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/avatar" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/chat_settings_textview_group_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/chat_settings_imageview_edit"
+                android:layout_toRightOf="@id/chat_settings_imageview_group_avatar"
+                android:padding="8dp"
+                android:text="@string/chat_group_detail_label_name" />
 
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_search"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="16dp"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_settings_container_group_details">
+            <ImageView
+                android:id="@+id/chat_settings_imageview_edit"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/page_1" />
 
-        <ImageView
-            android:id="@+id/chat_settings_imageview_search"
-            android:layout_width="wrap_content"
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_search"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chat_settings_container_group_details">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/setting_search" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_search"
+                android:text="@string/search" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/border1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/regSmsVerAuthBackgroundBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_settings_container_search" />
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_notification"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/setting_search" />
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/border1">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/setting_sound" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_notification"
+                android:text="@string/chat_setting_label_notification" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/chat_settings_switchcompat_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:checked="false" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/border5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/regSmsVerAuthBackgroundBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_settings_container_notification" />
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_otr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/border5">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_otr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_setting_lock" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_otr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_otr"
+                android:text="@string/chat_setting_label_otr" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/chat_settings_switchcompat_otr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:checked="false" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/border2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/regSmsVerAuthBackgroundBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_settings_container_otr" />
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/border2">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/setting_color" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_background"
+                android:text="@string/chat_setting_label_change_bg" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:id="@+id/border3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/regSmsVerAuthBackgroundBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_settings_container_background" />
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:enabled="false"
+            android:padding="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/border3">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/translate_1" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_language"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_language"
+                android:text="@string/chat_setting_label_language" />
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/border4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/regSmsVerAuthBackgroundBorder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_settings_container_language" />
+
+        <RelativeLayout
+            android:id="@+id/chat_settings_container_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:padding="16dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/border4">
+
+            <ImageView
+                android:id="@+id/chat_settings_imageview_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/setting_add" />
+
+            <TextView
+                android:id="@+id/chat_settings_textview_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@id/chat_settings_imageview_add"
+                android:text="@string/add_friends" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/chat_settings_textview_search"
-            android:layout_width="wrap_content"
+            android:id="@+id/chat_settings_textview_members"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/chat_settings_imageview_search"
-            android:text="@string/search" />
+            android:background="@color/colorBackgroundView"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:text="@string/chat_setting_label_members"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/chat_settings_container_add" />
 
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/border1"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/regSmsVerAuthBackgroundBorder"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_settings_container_search" />
-
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_notification"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/border1">
-
-        <ImageView
-            android:id="@+id/chat_settings_imageview_notification"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_settings_recyclerview_members"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/setting_sound" />
+            app:layout_constraintTop_toBottomOf="@+id/chat_settings_textview_members">
 
-        <TextView
-            android:id="@+id/chat_settings_textview_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/chat_settings_imageview_notification"
-            android:text="@string/chat_setting_label_notification" />
-
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/chat_settings_switchcompat_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:layout_alignParentRight="true"/>
-
-    </RelativeLayout>
+        </android.support.v7.widget.RecyclerView>
 
 
-    <View
-        android:id="@+id/border2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/regSmsVerAuthBackgroundBorder"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_settings_container_notification" />
-
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/border2">
-
-        <ImageView
-            android:id="@+id/chat_settings_imageview_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/setting_color" />
-
-        <TextView
-            android:id="@+id/chat_settings_textview_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/chat_settings_imageview_background"
-            android:text="@string/chat_setting_label_change_bg" />
-
-    </RelativeLayout>
-
-
-    <View
-        android:id="@+id/border3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/regSmsVerAuthBackgroundBorder"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_settings_container_background" />
-
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_language"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:enabled="false"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/border3">
-
-        <ImageView
-            android:id="@+id/chat_settings_imageview_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/translate_1" />
-
-        <TextView
-            android:id="@+id/chat_settings_textview_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/chat_settings_imageview_language"
-            android:text="@string/chat_setting_label_language" />
-
-    </RelativeLayout>
-
-    <View
-        android:id="@+id/border4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/regSmsVerAuthBackgroundBorder"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_settings_container_language" />
-
-    <RelativeLayout
-        android:id="@+id/chat_settings_container_add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:visibility="gone"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintTop_toBottomOf="@+id/border4">
-
-        <ImageView
-            android:id="@+id/chat_settings_imageview_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/setting_add" />
-
-        <TextView
-            android:id="@+id/chat_settings_textview_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/chat_settings_imageview_add"
-            android:text="@string/add_friends" />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/chat_settings_textview_members"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:textStyle="bold"
-        android:textSize="18dp"
-        android:text="@string/chat_setting_label_members"
-        android:background="@color/colorBackgroundView"
-        app:layout_constraintTop_toBottomOf="@+id/chat_settings_container_add" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/chat_settings_recyclerview_members"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/chat_settings_textview_members">
-
-    </android.support.v7.widget.RecyclerView>
-
-
-
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

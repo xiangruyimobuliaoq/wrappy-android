@@ -1,7 +1,10 @@
 package com.wrappy.android.otr;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import com.wrappy.android.common.Resource;
 import com.wrappy.android.entity.NestedMap;
 import com.wrappy.android.xmpp.XMPPManager;
 
@@ -39,19 +42,31 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     XMPPManager mXMPPManager;
 
     private final NestedMap<Session> sessions;
+    private final NestedMap<MutableLiveData<Boolean>> sessionStatus;
 
     public OtrManager(XMPPManager xmppManager) {
         mXMPPManager = xmppManager;
         sessions = new NestedMap<>();
+        sessionStatus = new NestedMap<>();
     }
 
     private Session getSession(String account, String user) {
         Session session = sessions.get(account, user);
         if (null == session) {
             session = new SessionImpl(new SessionID(account, user, "Xmpp"), this);
+            session.addOtrEngineListener(this);
             sessions.put(account, user, session);
         }
         return session;
+    }
+
+    public LiveData<Boolean> isOtrEncyption(String user) {
+        MutableLiveData<Boolean> ld = sessionStatus.get(mXMPPManager.getConnection().getUser().asEntityBareJidString(), user);
+        if (ld == null) {
+            ld = new MutableLiveData<>();
+            sessionStatus.put(mXMPPManager.getConnection().getUser().asEntityBareJidString(), user, ld);
+        }
+        return ld;
     }
 
     @Override
@@ -93,15 +108,15 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     }
 
     public String transformSending(String user, String content) {
+        Log.e("加密前", content);
         try {
             Session session = getSession(mXMPPManager.getConnection().getUser().asEntityBareJidString(), user);
             Log.e("session状态", String.valueOf(session.getSessionStatus()));
             if (session.getSessionStatus() != SessionStatus.ENCRYPTED) {
-                session.startSession();
                 return content;
             }
-            Log.e("session状态", String.valueOf(session.getSessionStatus()));
             String[] strings = session.transformSending(content);
+            Log.e("加密后", strings[0]);
             return strings[0];
         } catch (OtrException e) {
             e.printStackTrace();
@@ -110,8 +125,11 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     }
 
     public String transformReceiving(String from, String content) {
+        Log.e("解密前", content);
         try {
-            return getSession(mXMPPManager.getConnection().getUser().asEntityBareJidString(), from).transformReceiving(content);
+            String s = getSession(mXMPPManager.getConnection().getUser().asEntityBareJidString(), from).transformReceiving(content);
+            Log.e("解密后", s + "");
+            return s;
         } catch (OtrException e) {
             e.printStackTrace();
         }
@@ -230,7 +248,11 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     @Override
     public void sessionStatusChanged(SessionID sessionID) {
         Log.e("sessionStatusChanged", "sessionStatusChanged");
-
+        MutableLiveData<Boolean> mld = sessionStatus.get(sessionID.getAccountID(), sessionID.getUserID());
+        if (null == mld) {
+            mld = new MutableLiveData<>();
+        }
+        mld.postValue(sessions.get(sessionID.getAccountID(), sessionID.getUserID()).getSessionStatus() == SessionStatus.ENCRYPTED);
     }
 
     @Override
@@ -244,4 +266,6 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
         Log.e("outgoingSessionChanged", "outgoingSessionChanged");
 
     }
+
+
 }

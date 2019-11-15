@@ -40,12 +40,15 @@ import com.wrappy.android.R;
 import com.wrappy.android.common.AppExecutors;
 import com.wrappy.android.common.Resource;
 import com.wrappy.android.common.SubFragment;
+import com.wrappy.android.common.chat.DialogViewObject;
 import com.wrappy.android.common.ui.WrappyFilteredEditText;
 import com.wrappy.android.common.utils.InputUtils;
 import com.wrappy.android.db.entity.ChatAndBackground;
 import com.wrappy.android.db.entity.Contact;
 import com.wrappy.android.server.account.body.request.FileBody;
 import com.wrappy.android.xmpp.ContactManager;
+
+import org.jivesoftware.smack.packet.Presence;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -102,12 +105,15 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
     private RelativeLayout mRelativeLayoutBackground;
     private RelativeLayout mRelativeLayoutLanguage;
     private RelativeLayout mRelativeLayoutAdd;
+    private RelativeLayout mRelativeLayoutOtr;
 
     private SwitchCompat mSwitchCompatNotif;
 
     private TextView mTextViewGroupName;
 
     private ChatAndBackground mChat;
+    private SwitchCompat mSwitchCompatOtr;
+    private View border5;
 
     public static ChatSettingsFragment create(String chatJid) {
         ChatSettingsFragment chatSettingsFragment = new ChatSettingsFragment();
@@ -141,10 +147,13 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
         mRelativeLayoutBackground = view.findViewById(R.id.chat_settings_container_background);
         mRelativeLayoutLanguage = view.findViewById(R.id.chat_settings_container_language);
         mRelativeLayoutAdd = view.findViewById(R.id.chat_settings_container_add);
+        mRelativeLayoutOtr = view.findViewById(R.id.chat_settings_container_otr);
 
         mSwitchCompatNotif = view.findViewById(R.id.chat_settings_switchcompat_notification);
+        mSwitchCompatOtr = view.findViewById(R.id.chat_settings_switchcompat_otr);
 
         mTextViewGroupName = view.findViewById(R.id.chat_settings_textview_group_name);
+        border5 = view.findViewById(R.id.border5);
 
         return view;
     }
@@ -170,7 +179,6 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
         mChatViewModel.getChat(getArguments().getString(KEY_JID)).observe(this, chat -> {
             showLoadingDialog(chat);
             switch (chat.status) {
-
                 case SUCCESS:
                     mChat = chat.data;
                     initChatSettings();
@@ -216,18 +224,44 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
             Log.d("NAME", mChat.getChatName());
             Log.d("MemberSize", String.valueOf(mMemberList.size()));
             mMemberListAdapter.setMemberList(mMemberList);
+            mRelativeLayoutOtr.setVisibility(View.VISIBLE);
+            border5.setVisibility(View.VISIBLE);
+            mChatViewModel.isOtrEncyption().observe(getViewLifecycleOwner(), result -> {
+                mSwitchCompatOtr.setChecked(result);
+            });
+            mChatViewModel.getContactStatus(getArguments().getString(KEY_JID))
+                    .observe(getViewLifecycleOwner(), result -> {
+                        if ("available".equals(result)) {
+                            mSwitchCompatOtr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                    if (b) {
+                                        mChatViewModel.startOtr();
+                                    } else {
+                                        mChatViewModel.endOtr();
+                                    }
+                                }
+                            });
+                        } else {
+                            mSwitchCompatOtr.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                                    compoundButton.setChecked(false);
+                                    showAlertDialog("好友不在线,无法开启加密", null);
+                                }
+                            });
+                        }
+                    });
         } else {
+            mRelativeLayoutOtr.setVisibility(View.GONE);
+            border5.setVisibility(View.GONE);
             // TODO: Set Avatar, Banner and Group Name
             mRelativeLayoutGroup.setVisibility(View.VISIBLE);
             mRelativeLayoutAdd.setVisibility(View.VISIBLE);
             mRelativeLayoutAdd.setOnClickListener(this);
-
             mTextViewGroupName.setText(mChat.getChatName());
-
             mMemberList = mChatViewModel.getPariticipants(mChat.getChatId(), mChat.getChatType());
-
             mMemberListAdapter.setMemberList(mMemberList);
-
             InputUtils.loadAvatarImage(
                     getContext(),
                     mImageViewGroupAvatar,
@@ -235,7 +269,6 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
                             FileBody.Type.FILE_TYPE_AVATAR,
                             ContactManager.getUserName(mChat.getChatId()),
                             true));
-
         }
 
         if (mChat.isChatNotification()) {
@@ -252,7 +285,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
                 LiveData<Resource<Boolean>> toggleNotif = mChatViewModel.setChatNotification(isChecked, mChat.getChatId(), mChat.getChatType());
                 toggleNotif.observe(ChatSettingsFragment.this, result -> {
                     showLoadingDialog(result);
-                    switch(result.status) {
+                    switch (result.status) {
 
                         case SUCCESS:
                             break;
@@ -308,7 +341,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
 
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        if(s.length()>0 && !s.toString().trim().isEmpty()) {
+                        if (s.length() > 0 && !s.toString().trim().isEmpty()) {
                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                         } else {
                             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
@@ -350,7 +383,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
                         public void onClick(DialogInterface dialog, int which) {
                             mChatViewModel.setChatBackground(v.getTag().toString(), mChat.getChatId());
                             Log.d("SAVE_TO_DB", v.getTag().toString());
-                            getParentFragment().getChildFragmentManager().popBackStackImmediate(null,0);
+                            getParentFragment().getChildFragmentManager().popBackStackImmediate(null, 0);
                         }
                     });
                     alertDialogBuilder.setNegativeButton(R.string.chat_setting_dialog_bg_select_no, null);
@@ -402,7 +435,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
                             }
                         });
                         mChatViewModel.setChatBackground("file://" + path, mChat.getChatId());
-                        getParentFragment().getChildFragmentManager().popBackStackImmediate(null,0);
+                        getParentFragment().getChildFragmentManager().popBackStackImmediate(null, 0);
                     }
                 });
                 alertDialogBuilder.setNegativeButton(R.string.chat_setting_dialog_bg_select_no, null);
@@ -513,7 +546,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
                             alertDialogBuilder.setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if(mChatViewModel.removeMember(v.getTag().toString())) {
+                                    if (mChatViewModel.removeMember(v.getTag().toString())) {
                                         //mNavigationManager.showHomePage(false);
                                         getParentFragment().getChildFragmentManager().popBackStackImmediate(null, 0);
                                         getParentFragment().getFragmentManager().popBackStackImmediate();

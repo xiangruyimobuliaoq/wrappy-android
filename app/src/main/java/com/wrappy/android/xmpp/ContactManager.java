@@ -720,7 +720,7 @@ public class ContactManager {
 
                                 String messageBody = messageXMPP.getBody();
 //                                String messageBody = decryptMessage(messageXMPP.getBody());
-                                Log.d("MESSAGE_BODY", messageBody);
+//                                Log.d("MESSAGE_BODY", messageBody);
 
                                 try {
 

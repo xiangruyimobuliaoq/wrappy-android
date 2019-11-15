@@ -235,4 +235,16 @@ public class ChatViewModel extends ViewModel {
     public boolean isGalleryShown() {
         return mIsGalleryShown;
     }
+
+    public LiveData<Boolean> isOtrEncyption() {
+        return mXMPPRepository.isOtrEncyption();
+    }
+
+    public void startOtr() {
+        mXMPPRepository.startOtr();
+    }
+
+    public void endOtr() {
+        mXMPPRepository.endOtr();
+    }
 }

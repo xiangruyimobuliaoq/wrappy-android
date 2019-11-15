@@ -21,7 +21,7 @@
     <string name="reg_password_input_password">新しいパスワードを入力</string>
     <string name="reg_password_confirm_password">パスワードの確認</string>
     <string name="home_chat_welcome">Wrappyを使ってみよう！</string>
-
+    <string name="chat_setting_label_otr">encyption</string>
     <string name="status_online">オンライン</string>
     <string name="status_offline">オフライン</string>
 

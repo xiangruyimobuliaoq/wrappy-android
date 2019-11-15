@@ -1568,7 +1568,6 @@ public class ChatManager {
                                     message.setArchiveId(mamResultExtension.getId());
                                 }
                             }
-
                             mAppDatabase.messageDao().upsert(message);
                         }
                     }
@@ -2287,10 +2286,14 @@ public class ChatManager {
                 mChat.send(messageXMPP);
                 mld.postValue(Resource.success(messageXMPP));
                 if (!TextUtils.isEmpty(otrMsg)) {
-                    mAppExecutors.diskIO().execute(()->{
-                    messageXMPP.setBody(message);
+                    mAppExecutors.diskIO().execute(() -> {
+                        Message messageToDB = new Message();
+                        messageToDB.setFrom(mXMPPManager.getConnection().getUser().asBareJid());
+                        messageToDB.setSubject(subject);
+                        messageToDB.addExtension(new DeliveryReceiptRequest());
+                        messageToDB.setBody(message);
                         try {
-                            addMessage(mXMPPManager.getConnection().getUser().asEntityBareJid(), messageXMPP, mChat.getXmppAddressOfChatPartner().asEntityBareJidString(), getServerTime(), 1);
+                            addMessage(mXMPPManager.getConnection().getUser().asEntityBareJid(), messageToDB, mChat.getXmppAddressOfChatPartner().asEntityBareJidString(), getServerTime(), 1);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -2837,6 +2840,18 @@ public class ChatManager {
 
     public void setAESKey(String aesKey) {
         mAESKey = aesKey;
+    }
+
+    public LiveData<Boolean> isOtrEncyption() {
+        return mOtrManager.isOtrEncyption(mChat.getXmppAddressOfChatPartner().asEntityBareJidString());
+    }
+
+    public void startOtr() {
+        mOtrManager.startSession(mChat.getXmppAddressOfChatPartner().asEntityBareJidString());
+    }
+
+    public void endOtr() {
+        mOtrManager.endSession(mChat.getXmppAddressOfChatPartner().asEntityBareJidString());
     }
 
 //    private String encryptMessage(String message) {

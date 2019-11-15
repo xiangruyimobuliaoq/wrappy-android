@@ -31,6 +31,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -1977,8 +1978,11 @@ public class ChatMessageFragment extends SubFragment implements OnLoadMoreListen
         if (position < 0) {
             return;
         }
-
-        View itemView = mMessagesList.getLayoutManager().findViewByPosition(position);
+        RecyclerView.LayoutManager layoutManager = mMessagesList.getLayoutManager();
+        if (layoutManager==null){
+            return;
+        }
+        View itemView = layoutManager.findViewByPosition(position);
         if (itemView != null) {
             itemView.addOnLayoutChangeListener(mScrollAfterLayoutListener);
         }
