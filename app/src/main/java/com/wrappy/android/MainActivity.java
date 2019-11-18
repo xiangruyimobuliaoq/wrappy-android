@@ -307,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements ResourceRequestSc
         builder.show();
     }
 
+
     @Override
     public void onBackPressed() {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.main_container);

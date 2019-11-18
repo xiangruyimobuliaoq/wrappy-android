@@ -86,6 +86,9 @@ public interface AccountService {
     @GET("/api/accounts")
     LiveData<ApiResult<CoreServiceResponse<AccountBody>>> getAccountInfo();
 
+    @POST("/api/accounts/lockouts")
+    LiveData<ApiResult<CoreServiceResponse<AccountBody>>> lockAccount();
+
     @POST("/api/accounts/validatePassword/{password}")
     LiveData<ApiResult<CoreServiceResponse<Boolean>>> validateTextPassword(@Path(value = "password") String password);
 

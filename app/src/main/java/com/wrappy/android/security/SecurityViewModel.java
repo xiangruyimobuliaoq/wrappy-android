@@ -153,4 +153,11 @@ public class SecurityViewModel extends ViewModel {
     public String getContactFileUrl(FileBody.Type fileTypeAvatar, String contactId) {
         return mAccountRepository.getContactFileUrl(fileTypeAvatar, contactId, false);
     }
+
+    public LiveData<Resource<Boolean>> lockAccount() {
+       return mAccountRepository.lockAccount();
+    }
+    public LiveData<Resource<Boolean>> logoutXMPP() {
+        return mXMPPRepository.logoutXMPP();
+    }
 }

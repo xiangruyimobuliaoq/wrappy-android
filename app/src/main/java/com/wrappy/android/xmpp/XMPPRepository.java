@@ -158,7 +158,8 @@ public class XMPPRepository {
                 //mConnectionStatus.postValue(Resource.clientError("You are disconnected from the server",ConnectionStatus.DISCONNECTED));
                 if( e instanceof XMPPException.StreamErrorException) {
                     XMPPException.StreamErrorException asd = (XMPPException.StreamErrorException) e;
-                    if(asd.getStreamError().getCondition().equals(StreamError.Condition.conflict)) {
+                    if(asd.getStreamError().getCondition().equals(StreamError.Condition.conflict)
+                    ||asd.getStreamError().getCondition().equals(StreamError.Condition.not_authorized)) {
                         mUserJid.postValue("");
                         logoutXMPP();
                         mAuthRepository.logout(true);
@@ -209,8 +210,10 @@ public class XMPPRepository {
                 //loginXMPP(username,password);
                 e.printStackTrace();
                 mConnectionStatus.postValue(Resource.clientError("Connection timed out.", ConnectionStatus.DISCONNECTED));
+//                mAuthRepository.logout();
             } catch (SASLErrorException e) {
                 mConnectionStatus.postValue(Resource.serverError(e.getMessage(), ConnectionStatus.DISCONNECTED));
+                mAuthRepository.logout();
                 e.printStackTrace();
             } catch (SmackException.ConnectionException e) {
                 if(mConnectionStatus.getValue()==null || mConnectionStatus.getValue().data != ConnectionStatus.NOCONNECTION) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/settings_button_change_secret_question"
@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:paddingLeft="16dp"
-        android:textSize="14dp"
         android:text="@string/security_label_change_secret_question"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,31 +21,31 @@
         android:id="@+id/border1"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:visibility="gone"
         android:layout_marginHorizontal="12dp"
         android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/settings_button_change_secret_question"/>
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/settings_button_change_secret_question" />
 
 
     <Button
         android:id="@+id/settings_button_change_password"
+        style="@style/profileSecurityButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/security_label_change_password"
         android:textSize="14dp"
-        style="@style/profileSecurityButtons"
-        app:layout_constraintTop_toBottomOf="@id/border1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/border1" />
 
     <View
         android:id="@+id/border2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginHorizontal="12dp"
-        android:visibility="gone"
         android:background="@android:color/darker_gray"
-        app:layout_constraintTop_toBottomOf="@id/settings_button_change_password"/>
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/settings_button_change_password" />
 
     <FrameLayout
         android:id="@+id/settings_switch_pattern_container"
@@ -60,8 +60,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
             android:text="@string/security_label_pattern_switch"
             android:textSize="14dp" />
 
@@ -82,18 +82,32 @@
         android:text="@string/link_pattern_register"
         android:textColor="@color/link_color"
         app:layout_constraintStart_toStartOf="@id/settings_switch_pattern_container"
-        app:layout_constraintTop_toBottomOf="@id/settings_switch_pattern_container"/>
+        app:layout_constraintTop_toBottomOf="@id/settings_switch_pattern_container" />
 
     <Button
         android:id="@+id/settings_button_blocked_users"
+        style="@style/profileSecurityButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="46dp"
-        android:textSize="14dp"
         android:text="@string/security_label_blocked_users"
-        style="@style/profileSecurityButtons"
-        app:layout_constraintTop_toBottomOf="@id/settings_button_change_pattern"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/settings_button_change_pattern" />
+
+    <Button
+        android:id="@+id/settings_button_lock_account"
+        style="@style/mainButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/delete_account"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="@+id/settings_button_blocked_users"
+        app:layout_constraintStart_toStartOf="@+id/settings_button_blocked_users"
+        app:layout_constraintTop_toBottomOf="@id/settings_button_blocked_users" />
 
 </android.support.constraint.ConstraintLayout>

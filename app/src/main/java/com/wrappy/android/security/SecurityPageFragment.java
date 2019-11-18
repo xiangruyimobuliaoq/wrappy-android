@@ -2,11 +2,14 @@ package com.wrappy.android.security;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,9 +19,11 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
+
 import com.wrappy.android.R;
 import com.wrappy.android.common.SubFragment;
 import com.wrappy.android.common.utils.InputUtils;
+import com.wrappy.android.db.entity.Contact;
 
 import javax.inject.Inject;
 
@@ -38,6 +43,7 @@ public class SecurityPageFragment extends SubFragment implements OnClickListener
 
     private SwitchCompat mSwitchPattern;
     private TextView mButtonChangePattern;
+    private Button mButtonLockAccount;
 
     @Nullable
     @Override
@@ -48,6 +54,7 @@ public class SecurityPageFragment extends SubFragment implements OnClickListener
         mButtonChangePassword = view.findViewById(R.id.settings_button_change_password);
         mButtonChangePattern = view.findViewById(R.id.settings_button_change_pattern);
         mButtonBlockedUsers = view.findViewById(R.id.settings_button_blocked_users);
+        mButtonLockAccount = view.findViewById(R.id.settings_button_lock_account);
 
         mSwitchPattern = view.findViewById(R.id.settings_switch_pattern);
 
@@ -66,7 +73,7 @@ public class SecurityPageFragment extends SubFragment implements OnClickListener
         mButtonChangeQuestion.setOnClickListener(this);
         mButtonChangePassword.setOnClickListener(this);
         mButtonBlockedUsers.setOnClickListener(this);
-
+        mButtonLockAccount.setOnClickListener(this);
         mButtonChangePattern.setOnClickListener(this);
 
         InputUtils.enableView(mButtonChangePattern, mSecurityViewModel.getViewPatternPasswordFlag());
@@ -155,6 +162,39 @@ public class SecurityPageFragment extends SubFragment implements OnClickListener
                 break;
             case R.id.settings_button_change_pattern:
                 mSecurityNavigationManager.showCreatePatternPage();
+                break;
+            case R.id.settings_button_lock_account:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setTitle("Delete Account");
+                alertDialogBuilder.setMessage("You will lose all messages, lose all contacts, and can not recover data anymore. And you can not re-use this username anymore. Please make sure if you really want to delete the account.");
+                alertDialogBuilder.setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mSecurityViewModel.logoutXMPP().observe(getViewLifecycleOwner(), result -> {
+                            switch (result.status) {
+                                case SUCCESS:
+                                    dialog.dismiss();
+                                    Log.e("123", "lockAccount执行前");
+                                    mSecurityViewModel.lockAccount().observe(getViewLifecycleOwner(), result1 -> {
+                                        switch (result1.status) {
+                                            case SUCCESS:
+                                                mSecurityViewModel.logoutAccount();
+                                                break;
+                                        }
+                                    });
+                                    break;
+                                case LOADING:
+                                    break;
+                                case CLIENT_ERROR:
+                                    break;
+                                case SERVER_ERROR:
+                                    break;
+                            }
+                        });
+                    }
+                });
+                alertDialogBuilder.setNegativeButton(R.string.dialog_no, null);
+                alertDialogBuilder.show();
                 break;
         }
 

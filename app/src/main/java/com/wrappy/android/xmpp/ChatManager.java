@@ -2252,7 +2252,7 @@ public class ChatManager {
         try {
             // Create MD5 Hash
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(stringBuilder.toString().getBytes());
+            digest.update((stringBuilder.toString() + System.currentTimeMillis()).getBytes());
             byte messageDigest[] = digest.digest();
 
             // Create Hex String

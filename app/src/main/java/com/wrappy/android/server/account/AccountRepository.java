@@ -821,7 +821,7 @@ public class AccountRepository {
         mld.addSource(
                 mAuthRepository.checkAccessToken(
                         mAccountService.getVCardInfo(username),
-                        () ->  mAccountService.getVCardInfo(username)
+                        () -> mAccountService.getVCardInfo(username)
                 ),
                 result -> {
                     if (result.isSuccessful()) {
@@ -846,7 +846,7 @@ public class AccountRepository {
         mld.addSource(
                 mAuthRepository.checkAccessToken(
                         mAccountService.resetUserPassword(resetPassword),
-                        () ->  mAccountService.resetUserPassword(resetPassword)
+                        () -> mAccountService.resetUserPassword(resetPassword)
                 ),
                 result -> {
                     if (result.isSuccessful()) {
@@ -871,7 +871,7 @@ public class AccountRepository {
         mld.addSource(
                 mAuthRepository.checkAccessToken(
                         mAccountService.sendRecoveryEmail(emailRequest),
-                        () ->  mAccountService.sendRecoveryEmail(emailRequest)
+                        () -> mAccountService.sendRecoveryEmail(emailRequest)
                 ),
                 result -> {
                     if (result.isSuccessful()) {
@@ -887,4 +887,31 @@ public class AccountRepository {
         );
         return mld;
     }
+
+    public LiveData<Resource<Boolean>> lockAccount() {
+        MediatorLiveData<Resource<Boolean>> mld = new MediatorLiveData<>();
+        mld.postValue(Resource.loading(null));
+        Log.e("123","lockAccount执行中");
+        mld.addSource(mAuthRepository.checkAccessToken(
+                mAccountService.lockAccount(),
+                () -> mAccountService.lockAccount())
+                ,
+                result -> {
+                    if (result.isSuccessful()) {
+                        if (result.body.isSuccess()) {
+                            mld.postValue(Resource.success(true));
+                            Log.e("123","lockAccount执行后1");
+                        } else {
+                            Log.e("123","lockAccount执行后2");
+                            mld.postValue(Resource.serverError(result.body.getMessage(), false));
+                        }
+                    } else {
+                            Log.e("123","lockAccount执行后3");
+                        mld.postValue(Resource.clientError(result.errorMessage, false));
+                    }
+                }
+        );
+        return mld;
+    }
+
 }

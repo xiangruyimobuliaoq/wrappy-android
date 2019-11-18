@@ -78,6 +78,10 @@ public class LoginUserFragment extends SubFragment implements View.OnClickListen
     }
 
     private void checkAccountStatus(Resource<AccountStatusResponse> result) {
+        if (null == result.data) {
+            mTextViewErrorUser.setText(result.message);
+            return;
+        }
         switch (result.data.status) {
             case AccountStatusResponse.STATUS_NORMAL:
                 mLoginViewModel.setUsername(result.data.username);
@@ -99,7 +103,7 @@ public class LoginUserFragment extends SubFragment implements View.OnClickListen
                 mTextViewErrorUser.setText("");
                 String userId = mEditTextUserId.getText().toString();
                 if (!TextUtils.isEmpty(userId)) {
-                    mLoginViewModel.getAccountStatus(userId).observe(this,
+                    mLoginViewModel.getAccountStatus(userId).observe(getViewLifecycleOwner(),
                             result -> {
                                 showLoadingDialog(result);
                                 switch (result.status) {
