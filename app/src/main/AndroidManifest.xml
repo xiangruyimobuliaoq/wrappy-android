@@ -8,9 +8,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,11 +26,13 @@
         tools:replace="android:allowBackup">
 
         <!-- AMAZON S3 -->
-        <service android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService" android:enabled="true" />
+        <service
+            android:name="com.amazonaws.mobileconnectors.s3.transferutility.TransferService"
+            android:enabled="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/maps_api_key"/>
+            android:value="@string/maps_api_key" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
@@ -59,11 +60,14 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="wrappy"
+
+                <data
                     android:host="app"
-                    android:pathPrefix="/reset" />
+                    android:pathPrefix="/reset"
+                    android:scheme="wrappy" />
             </intent-filter>
         </activity>
         <activity

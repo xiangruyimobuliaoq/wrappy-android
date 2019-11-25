@@ -524,6 +524,7 @@ public class ChatSettingsFragment extends SubFragment implements View.OnClickLis
 
                 mChatViewModel.getContactUpdate(member.getContactId()).observe(ChatSettingsFragment.this, result -> {
                     if (result != null) {
+                        Log.e("123",member.getContactId());
                         textViewChatName.setText(result.getContactName());
                         if (result.getContactPresence().equals("available")) {
                             imageViewStatus.setImageResource(R.drawable.status_active);

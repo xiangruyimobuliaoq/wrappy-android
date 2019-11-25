@@ -112,8 +112,8 @@ public class AppProviderModule {
 
     @Provides
     @AppScope
-    ContactManager provideContactManager(AppDatabase appDatabase, XMPPManager xmppManager, AppExecutors appExecutors, AuthRepository authRepository, CryptLib cryptLib) {
-        return new ContactManager(appDatabase, xmppManager, appExecutors, authRepository, cryptLib);
+    ContactManager provideContactManager(AppDatabase appDatabase, XMPPManager xmppManager, AppExecutors appExecutors, AuthRepository authRepository, OtrManager otrManager,CryptLib cryptLib) {
+        return new ContactManager(appDatabase, xmppManager, appExecutors,otrManager, authRepository, cryptLib);
     }
 
     @Provides

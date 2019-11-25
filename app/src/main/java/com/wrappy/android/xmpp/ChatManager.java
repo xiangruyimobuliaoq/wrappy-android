@@ -180,8 +180,10 @@ public class ChatManager {
                             addMessage(from, message, chatId, delayInformation.getStamp(), 2);
                         } else {
                             try {
-                                addMessage(from, message, chatId, getServerTime(), 2);
-                                mAppDatabase.chatDao().increaseChatUnreadCount(chatId);
+                                int i = addMessage(from, message, chatId, getServerTime(), 2);
+                                if (i != -1) {
+                                    mAppDatabase.chatDao().increaseChatUnreadCount(chatId);
+                                }
                                 if (message.getSubject() == null) {
                                     TranslateSetting translateSetting = mAppDatabase.chatBackgroundDao().getTranslateSetting(chatId);
                                     if (translateSetting.isAutoTranslate()) {
@@ -2326,11 +2328,11 @@ public class ChatManager {
         return mld;
     }
 
-    public void addMessage(EntityBareJid from, Message message, String chatId, Date date, int status) {
+    public int addMessage(EntityBareJid from, Message message, String chatId, Date date, int status) {
         Log.d("Message", message.getBody());
 
         if (mAppDatabase.deleteDao().isExist(message.getStanzaId()) != null) {
-            return;
+            return 0;
         }
 
         StanzaIdElement stanzaIdElement = message.getExtension("stanza-id", "urn:xmpp:sid:0");
@@ -2352,7 +2354,7 @@ public class ChatManager {
         if (messageBody.startsWith("?OTR")) {
             messageBody = mOtrManager.transformReceiving(from.asEntityBareJidString(), messageBody);
             if (TextUtils.isEmpty(messageBody)) {
-                return;
+                return -1;
             }
         }
         Log.d("MESSAGE_BODY", messageBody);
@@ -2425,6 +2427,7 @@ public class ChatManager {
             messageId = message.getStanzaId();
         }
 
+        return 0;
     }
 
     public void ackStanza(String id) {

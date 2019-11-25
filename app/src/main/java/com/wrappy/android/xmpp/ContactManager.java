@@ -16,6 +16,7 @@ import com.wrappy.android.db.entity.ChatBackground;
 import com.wrappy.android.db.entity.Contact;
 import com.wrappy.android.db.entity.Delete;
 import com.wrappy.android.db.entity.DeleteAll;
+import com.wrappy.android.otr.OtrManager;
 import com.wrappy.android.server.AuthRepository;
 import com.wrappy.android.server.ServerConstants;
 import com.wrappy.android.xmpp.badge.IQBadge;
@@ -71,6 +72,7 @@ import java.util.List;
 
 public class ContactManager {
 
+    private final OtrManager mOtrManager;
     private CryptLib mCryptLib;
     private AppDatabase mAppDatabase;
     private AppExecutors mAppExecutors;
@@ -94,6 +96,7 @@ public class ContactManager {
     public ContactManager(AppDatabase appDatabase,
                           XMPPManager xmppManager,
                           AppExecutors appExecutors,
+                          OtrManager otrManager,
                           AuthRepository authRepository,
                           CryptLib cryptLib) {
 
@@ -102,6 +105,7 @@ public class ContactManager {
         this.mXMPPManager = xmppManager;
         this.mAuthRepository = authRepository;
         this.mCryptLib = cryptLib;
+        mOtrManager = otrManager;
         mUserSearchManager = mXMPPManager.getUserSearchManager();
         mRoster = mXMPPManager.getRosterManager();
         mRoster.setSubscriptionMode(Roster.SubscriptionMode.manual);
@@ -137,7 +141,7 @@ public class ContactManager {
                     RosterEntry entry = mRoster.getEntry(jid.asBareJid());
                     Log.d("ENTRY_UPDATED", String.valueOf(entry.isApproved()));
                     Log.d("ENTRY_UPDATED", String.valueOf(entry.getType()));
-                    if(mRoster.getEntry(jid.asBareJid()).getType().equals(RosterPacket.ItemType.both)) {
+                    if (mRoster.getEntry(jid.asBareJid()).getType().equals(RosterPacket.ItemType.both)) {
                         mAppExecutors.diskIO().execute(() -> {
                             addContact(mRoster.getEntry(jid.asBareJid()), mRoster.getPresence(jid.asBareJid()));
                         });
@@ -156,9 +160,8 @@ public class ContactManager {
             @Override
             public void presenceChanged(Presence presence) {
                 Log.d("PRESENCE", presence.getFrom().toString());
-                if(!presence.getFrom().asBareJid().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
+                if (!presence.getFrom().asBareJid().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
                     BareJid jid = presence.getFrom().asBareJid();
-
                     setContactStatus(jid, presence);
                 }
             }
@@ -183,7 +186,6 @@ public class ContactManager {
                         }
                     }
                 }
-
             }
 
             @Override
@@ -193,21 +195,22 @@ public class ContactManager {
                         if (!address.toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
                             Log.d(address.asBareJid().toString(), "unavailable");
                             setContactStatus(address.asBareJid(), presence);
+                            mOtrManager.endSession(address.asBareJid().toString());
                         }
                     } else {
                         /**try {
-                            mXMPPManager.getConnection().disconnect();
-                            mXMPPManager.getConnection().connect();
-                            mXMPPManager.getConnection().login(mAuthRepository.getLocalUsername(), mAuthRepository.getLocalPassword(), Resourcepart.from(mAuthRepository.getLocalUsername()));
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        } catch (SmackException e) {
-                            e.printStackTrace();
-                        } catch (XMPPException e) {
-                            e.printStackTrace();
-                        }**/
+                         mXMPPManager.getConnection().disconnect();
+                         mXMPPManager.getConnection().connect();
+                         mXMPPManager.getConnection().login(mAuthRepository.getLocalUsername(), mAuthRepository.getLocalPassword(), Resourcepart.from(mAuthRepository.getLocalUsername()));
+                         } catch (IOException e) {
+                         e.printStackTrace();
+                         } catch (InterruptedException e) {
+                         e.printStackTrace();
+                         } catch (SmackException e) {
+                         e.printStackTrace();
+                         } catch (XMPPException e) {
+                         e.printStackTrace();
+                         }**/
                     }
                 }
             }
@@ -247,8 +250,6 @@ public class ContactManager {
                 mLoadStatus.postValue(Resource.serverError(exception.toString(), false));
             }
         });
-
-
     }
 
     public LiveData<Resource<Boolean>> loadContacts() {
@@ -291,7 +292,7 @@ public class ContactManager {
 
                     if (rosterEntry.getType().equals(RosterPacket.ItemType.to) ||
                             rosterEntry.getType().equals(RosterPacket.ItemType.none)) {
-                        if(rosterEntry.getType().equals(RosterPacket.ItemType.none)) {
+                        if (rosterEntry.getType().equals(RosterPacket.ItemType.none)) {
                             sendRequest(rosterEntry.getJid().toString());
                             Log.d("TYPE_NONE", rosterEntry.getJid().toString());
                         }
@@ -384,139 +385,124 @@ public class ContactManager {
         chat.setChatType("chat");
 
         //if(mAppDatabase.chatDao().hasMessage(chatJid.asBareJid().toString())==null) {
-        ChatBackground chatBackground = new ChatBackground(chatJid.asBareJid().toString(),mXMPPManager.getConnection().getUser().asBareJid().toString(), null);
+        ChatBackground chatBackground = new ChatBackground(chatJid.asBareJid().toString(), mXMPPManager.getConnection().getUser().asBareJid().toString(), null);
 
-            mAppDatabase.chatDao().insert(chat);
-            mAppDatabase.chatBackgroundDao().insert(chatBackground);
+        mAppDatabase.chatDao().insert(chat);
+        mAppDatabase.chatBackgroundDao().insert(chatBackground);
 
-            boolean isEmpty = true;
-            int initMax = 1;
-            do {
-                try {
-                    Log.d(chatJid.toString(), String.valueOf(initMax));
-                    //MamManager.MamQueryResult mamQueryResult = mMamManager.mostRecentPage(chatJid, initMax);
-                    MamManager.MamQuery mamQuery = mMamManager.queryMostRecentPage(chatJid, initMax);
-                    if (mamQuery.getMessageCount() == 0) {
-                        Log.d("EMPTY", chatJid.toString());
-                        isEmpty = false;
+        boolean isEmpty = true;
+        int initMax = 1;
+        do {
+            try {
+                Log.d(chatJid.toString(), String.valueOf(initMax));
+                //MamManager.MamQueryResult mamQueryResult = mMamManager.mostRecentPage(chatJid, initMax);
+                MamManager.MamQuery mamQuery = mMamManager.queryMostRecentPage(chatJid, initMax);
+                if (mamQuery.getMessageCount() == 0) {
+                    Log.d("EMPTY", chatJid.toString());
+                    isEmpty = false;
+                }
+
+                List<Forwarded> forwardedList = new ArrayList<>(mamQuery.getPage().getForwarded());
+                if (!forwardedList.isEmpty()) {
+                    //Collections.reverse(forwardedList);
+                    Collections.sort(forwardedList, new Comparator<Forwarded>() {
+                        @Override
+                        public int compare(Forwarded o1, Forwarded o2) {
+                            return o2.getDelayInformation().getStamp().compareTo(o1.getDelayInformation().getStamp());
+                        }
+                    });
+                    Collections.reverse(forwardedList);
+                }
+
+                for (Forwarded forwarded : forwardedList) {
+
+                    Stanza stanza = forwarded.getForwardedStanza();
+
+
+                    Message messageXMPP = (Message) forwarded.getForwardedStanza();
+
+                    String from;
+                    if (messageXMPP.getFrom().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
+                        from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER) ? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                    } else {
+                        from = messageXMPP.getFrom().asBareJid().toString();
                     }
 
-                    List<Forwarded> forwardedList = new ArrayList<>(mamQuery.getPage().getForwarded());
-                    if (!forwardedList.isEmpty()) {
-                        //Collections.reverse(forwardedList);
-                        Collections.sort(forwardedList, new Comparator<Forwarded>() {
-                            @Override
-                            public int compare(Forwarded o1, Forwarded o2) {
-                                return o2.getDelayInformation().getStamp().compareTo(o1.getDelayInformation().getStamp());
-                            }
-                        });
-                        Collections.reverse(forwardedList);
-                    }
-
-                    for (Forwarded forwarded : forwardedList) {
-
-                        Stanza stanza = forwarded.getForwardedStanza();
-
-
-                        Message messageXMPP = (Message) forwarded.getForwardedStanza();
-
-                        String from;
-                        if (messageXMPP.getFrom().toString().contains(ServerConstants.XMPP_MUC_DOMAIN)) {
-                            from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
-                        } else {
-                            from = messageXMPP.getFrom().asBareJid().toString();
-                        }
-
-                        if (messageXMPP.getSubject() != null) {
-                            if (messageXMPP.hasExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE)) {
-                                if (from.equals(mXMPPManager.mConnection.getUser().asBareJid().toString())) {
-                                    Log.d("Delete", stanza.toString());
-                                    MessageCorrectExtension replace = messageXMPP.getExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE);
-                                    // TODO: Save to DB
-                                    //if(null != replace.getIdInitialMessage()) {
-                                        if (messageXMPP.getSubject().equals("deletedall")) {
-                                            mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
-                                            Log.d("Deletedall", messageXMPP.getStanzaId());
-                                            //break;
-                                        } else if (messageXMPP.getSubject().equals("deleted")) {
-                                            Log.d("Deleted", messageXMPP.getStanzaId());
-                                            mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
-                                            mAppDatabase.messageDao().deleteMessage(replace.getIdInitialMessage());
-                                            //continue;
-                                        }
-                                    //}
-                                } else {
-                                    continue;
-                                }
-                            }
-                        }
-                    }
-
-                    for (MamElements.MamResultExtension mamResultExtension : mamQuery.getMamResultExtensions()) {
-                        Forwarded forwarded = mamResultExtension.getForwarded();
-                        DelayInformation delayInformation = forwarded.getDelayInformation();
-
-                        Stanza stanza = forwarded.getForwardedStanza();
-                        Log.d("Stanza", stanza.toString());
-
-                        Message messageXMPP = (Message) forwarded.getForwardedStanza();
-
-                        StanzaIdElement stanzaIdElement = messageXMPP.getExtension("stanza-id", "urn:xmpp:sid:0");
-
-
-                        // TODO: Save to Delete/DeleteAllDB
-
-                        if(messageXMPP.getType().equals(Message.Type.groupchat)) {
-                            /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
-                            try {
-                                chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
-                            } catch (XmppStringprepException e) {
-                                e.printStackTrace();
-                            }**/
-                            if(initMax>forwardedList.size()) {
-                                if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
-                                    isEmpty = false;
-                                    break;
-                                }
-                            }
-                            if (initMax == 1) {
-                                initMax = 10;
-                                break;
-                            } else {
-                                initMax = initMax + 5;
-                            }
-                            continue;
-                        }
-
+                    if (messageXMPP.getSubject() != null) {
                         if (messageXMPP.hasExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE)) {
-                            if (messageXMPP.getFrom().asBareJid().equals(mXMPPManager.mConnection.getUser().asBareJid())) {
+                            if (from.equals(mXMPPManager.mConnection.getUser().asBareJid().toString())) {
+                                Log.d("Delete", stanza.toString());
                                 MessageCorrectExtension replace = messageXMPP.getExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE);
                                 // TODO: Save to DB
                                 //if(null != replace.getIdInitialMessage()) {
-                                    if (messageXMPP.getSubject().equals("deletedall")) {
-                                        mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
-                                        isEmpty = false;
-                                        break;
-                                    } else if (messageXMPP.getSubject().equals("deleted")) {
-                                        mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
-                                        mAppDatabase.messageDao().deleteMessage(replace.getIdInitialMessage());
-                                        if (initMax > forwardedList.size()) {
-                                            if (forwardedList.indexOf(forwarded) == forwardedList.size() - 1) {
-                                                isEmpty = false;
-                                                break;
-                                            }
-                                        }
-                                        if (initMax == 1) {
-                                            initMax = 10;
-                                        } else {
-                                            initMax = initMax + 5;
-                                        }
-                                        continue;
-                                    }
-                               // }
+                                if (messageXMPP.getSubject().equals("deletedall")) {
+                                    mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
+                                    Log.d("Deletedall", messageXMPP.getStanzaId());
+                                    //break;
+                                } else if (messageXMPP.getSubject().equals("deleted")) {
+                                    Log.d("Deleted", messageXMPP.getStanzaId());
+                                    mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
+                                    mAppDatabase.messageDao().deleteMessage(replace.getIdInitialMessage());
+                                    //continue;
+                                }
+                                //}
                             } else {
-                                if(initMax>forwardedList.size()) {
-                                    if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
+                                continue;
+                            }
+                        }
+                    }
+                }
+
+                for (MamElements.MamResultExtension mamResultExtension : mamQuery.getMamResultExtensions()) {
+                    Forwarded forwarded = mamResultExtension.getForwarded();
+                    DelayInformation delayInformation = forwarded.getDelayInformation();
+
+                    Stanza stanza = forwarded.getForwardedStanza();
+                    Log.d("Stanza", stanza.toString());
+
+                    Message messageXMPP = (Message) forwarded.getForwardedStanza();
+
+                    StanzaIdElement stanzaIdElement = messageXMPP.getExtension("stanza-id", "urn:xmpp:sid:0");
+
+
+                    // TODO: Save to Delete/DeleteAllDB
+
+                    if (messageXMPP.getType().equals(Message.Type.groupchat)) {
+                        /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                         try {
+                         chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
+                         } catch (XmppStringprepException e) {
+                         e.printStackTrace();
+                         }**/
+                        if (initMax > forwardedList.size()) {
+                            if (forwardedList.indexOf(forwarded) == forwardedList.size() - 1) {
+                                isEmpty = false;
+                                break;
+                            }
+                        }
+                        if (initMax == 1) {
+                            initMax = 10;
+                            break;
+                        } else {
+                            initMax = initMax + 5;
+                        }
+                        continue;
+                    }
+
+                    if (messageXMPP.hasExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE)) {
+                        if (messageXMPP.getFrom().asBareJid().equals(mXMPPManager.mConnection.getUser().asBareJid())) {
+                            MessageCorrectExtension replace = messageXMPP.getExtension(MessageCorrectExtension.ELEMENT, MessageCorrectExtension.NAMESPACE);
+                            // TODO: Save to DB
+                            //if(null != replace.getIdInitialMessage()) {
+                            if (messageXMPP.getSubject().equals("deletedall")) {
+                                mAppDatabase.deleteAllDao().insert(new DeleteAll(replace.getIdInitialMessage()));
+                                isEmpty = false;
+                                break;
+                            } else if (messageXMPP.getSubject().equals("deleted")) {
+                                mAppDatabase.deleteDao().insert(new Delete(replace.getIdInitialMessage()));
+                                mAppDatabase.messageDao().deleteMessage(replace.getIdInitialMessage());
+                                if (initMax > forwardedList.size()) {
+                                    if (forwardedList.indexOf(forwarded) == forwardedList.size() - 1) {
                                         isEmpty = false;
                                         break;
                                     }
@@ -528,288 +514,303 @@ public class ContactManager {
                                 }
                                 continue;
                             }
-                        }
-
-
-                        /**if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
-                            isEmpty = false;
-                            break;
-                        }
-
-                        if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                            // }
+                        } else {
+                            if (initMax > forwardedList.size()) {
+                                if (forwardedList.indexOf(forwarded) == forwardedList.size() - 1) {
+                                    isEmpty = false;
+                                    break;
+                                }
+                            }
                             if (initMax == 1) {
                                 initMax = 10;
                             } else {
                                 initMax = initMax + 5;
                             }
                             continue;
-                        }**/
-
-                        int messageType = 0;
-
-                        if(messageXMPP.getType().equals(Message.Type.chat)) {
-                            messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_CHAT;
-                        } else if (messageXMPP.getType().equals(Message.Type.groupchat)) {
-                            messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_GROUP;
                         }
+                    }
 
-                        if (messageXMPP.getSubject() != null) {
-                            if (messageXMPP.getSubject().equals("deleted") || messageXMPP.getSubject().equals("deletedall")
-                                    || mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null
-                                    || mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
-                                if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
-                                    isEmpty = false;
-                                    break;
-                                }
 
-                                if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
-                                    if(initMax>forwardedList.size()) {
-                                        if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
-                                            isEmpty = false;
-                                            break;
-                                        }
-                                    }
-                                    if (initMax == 1) {
-                                        initMax = 10;
-                                    } else {
-                                        initMax = initMax + 5;
-                                    }
-                                    continue;
-                                }
-                            } else {
-                                if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                    isEmpty = false;
-                                }
-                                String from;
-                                if(messageXMPP.getType().equals(Message.Type.groupchat)) {
-                                    /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
-                                    try {
-                                        chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
-                                    } catch (XmppStringprepException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if(initMax>forwardedList.size()) {
-                                        if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
-                                            isEmpty = false;
-                                            break;
-                                        }
-                                    }
-                                    if (initMax == 1) {
-                                        initMax = 10;
-                                        break;
-                                    } else {
-                                        initMax = initMax + 5;
-                                    }**/
-                                    continue;
-                                } else {
-                                    from = messageXMPP.getFrom().asBareJid().toString();
-                                }
+                    /**if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
+                     isEmpty = false;
+                     break;
+                     }
 
-//                                String messageBody = decryptMessage(messageXMPP.getBody());
-                                String messageBody = messageXMPP.getBody();
-                                Log.d("MESSAGE_BODY", messageBody);
+                     if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                     if (initMax == 1) {
+                     initMax = 10;
+                     } else {
+                     initMax = initMax + 5;
+                     }
+                     continue;
+                     }**/
 
-                                try {
+                    int messageType = 0;
 
-                                    if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
-                                        String remove = messageBody.substring(0, 10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":image%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("voice") && messageBody.contains(ChatMessageFragment.VOICE_PREFIX)) {
-                                        String remove = messageBody.substring(0, 10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":voice%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("location") && messageBody.contains(ChatMessageFragment.MAP_PREFIX)) {
-                                        String remove = messageBody.substring(0, 8);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":map%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
-                                        String remove = messageBody.substring(0,10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":stamp%", "");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                    if (messageXMPP.getType().equals(Message.Type.chat)) {
+                        messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_CHAT;
+                    } else if (messageXMPP.getType().equals(Message.Type.groupchat)) {
+                        messageType = com.wrappy.android.db.entity.Message.MESSAGE_TYPE_GROUP;
+                    }
 
-                                com.wrappy.android.db.entity.Message message =
-                                        new com.wrappy.android.db.entity.Message(messageXMPP.getStanzaId(),
-                                                chatJid.asBareJid().toString(),
-                                                messageType,
-                                                messageBody,
-                                                messageXMPP.getSubject(),
-                                                from,
-                                                delayInformation.getStamp(),
-                                                2);
-                                if (mamResultExtension != null) {
-                                    if (mamResultExtension.getId() != null) {
-                                        message.setArchiveId(mamResultExtension.getId());
-                                    }
-                                }
-                                mAppDatabase.messageDao().upsert(message);
-
-                                if (messageXMPP.getSubject() != null) {
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        mAppDatabase.chatDao().changeChatLastMessage(
-                                                messageXMPP.getSubject(),
-                                                delayInformation.getStamp(),
-                                                chatJid.asBareJid().toString());
-                                    }
-                                    Log.d("HAS_ITEM1", messageXMPP.getFrom().getResourceOrEmpty().toString() );
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        isEmpty = false;
-                                    }
-                                } else {
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        mAppDatabase.chatDao().changeChatLastMessage(messageBody,
-                                                delayInformation.getStamp(),
-                                                chatJid.asBareJid().toString());
-                                    }
-                                    Log.d("HAS_ITEM1", messageXMPP.getFrom().toString());
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        isEmpty = false;
-                                    }
-                                }
-                                Log.d("MAM", messageXMPP.toString());
-
-                            }
-                            Log.d("CHATJID_ONETOONE", chatJid.asBareJid().toString());
-                            Log.d("COUNT", String.valueOf(initMax));
-                        } else {
-                            Log.d("NO_SUBJECT", messageXMPP.getFrom().getResourceOrEmpty().toString());
+                    if (messageXMPP.getSubject() != null) {
+                        if (messageXMPP.getSubject().equals("deleted") || messageXMPP.getSubject().equals("deletedall")
+                                || mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null
+                                || mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
                             if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
                                 isEmpty = false;
                                 break;
-                            } else if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                            }
+
+                            if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                                if (initMax > forwardedList.size()) {
+                                    if (forwardedList.indexOf(forwarded) == forwardedList.size() - 1) {
+                                        isEmpty = false;
+                                        break;
+                                    }
+                                }
                                 if (initMax == 1) {
                                     initMax = 10;
-                                    break;
                                 } else {
                                     initMax = initMax + 5;
                                 }
                                 continue;
+                            }
+                        } else {
+                            if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                isEmpty = false;
+                            }
+                            String from;
+                            if (messageXMPP.getType().equals(Message.Type.groupchat)) {
+                                /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                                 try {
+                                 chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
+                                 } catch (XmppStringprepException e) {
+                                 e.printStackTrace();
+                                 }
+                                 if(initMax>forwardedList.size()) {
+                                 if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
+                                 isEmpty = false;
+                                 break;
+                                 }
+                                 }
+                                 if (initMax == 1) {
+                                 initMax = 10;
+                                 break;
+                                 } else {
+                                 initMax = initMax + 5;
+                                 }**/
+                                continue;
                             } else {
-                                String from;
-                                if(messageXMPP.getType().equals(Message.Type.groupchat)) {
-                                    /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
-                                    try {
-                                        chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
-                                    } catch (XmppStringprepException e) {
-                                        e.printStackTrace();
-                                    }
-                                    if(initMax>forwardedList.size()) {
-                                        if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
-                                            isEmpty = false;
-                                            break;
-                                        }
-                                    }
-                                    if (initMax == 1) {
-                                        initMax = 10;
-                                        break;
-                                    } else {
-                                        initMax = initMax + 5;
-                                    }**/
-                                    continue;
-                                } else {
-                                    from = messageXMPP.getFrom().asBareJid().toString();
-                                }
+                                from = messageXMPP.getFrom().asBareJid().toString();
+                            }
 
-                                String messageBody = messageXMPP.getBody();
+//                                String messageBody = decryptMessage(messageXMPP.getBody());
+                            String messageBody = messageXMPP.getBody();
+                            Log.d("MESSAGE_BODY", messageBody);
+
+                            try {
+
+                                if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":image%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("voice") && messageBody.contains(ChatMessageFragment.VOICE_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":voice%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("location") && messageBody.contains(ChatMessageFragment.MAP_PREFIX)) {
+                                    String remove = messageBody.substring(0, 8);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":map%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":stamp%", "");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            com.wrappy.android.db.entity.Message message =
+                                    new com.wrappy.android.db.entity.Message(messageXMPP.getStanzaId(),
+                                            chatJid.asBareJid().toString(),
+                                            messageType,
+                                            messageBody,
+                                            messageXMPP.getSubject(),
+                                            from,
+                                            delayInformation.getStamp(),
+                                            2);
+                            if (mamResultExtension != null) {
+                                if (mamResultExtension.getId() != null) {
+                                    message.setArchiveId(mamResultExtension.getId());
+                                }
+                            }
+                            mAppDatabase.messageDao().upsert(message);
+
+                            if (messageXMPP.getSubject() != null) {
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    mAppDatabase.chatDao().changeChatLastMessage(
+                                            messageXMPP.getSubject(),
+                                            delayInformation.getStamp(),
+                                            chatJid.asBareJid().toString());
+                                }
+                                Log.d("HAS_ITEM1", messageXMPP.getFrom().getResourceOrEmpty().toString());
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    isEmpty = false;
+                                }
+                            } else {
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    mAppDatabase.chatDao().changeChatLastMessage(messageBody,
+                                            delayInformation.getStamp(),
+                                            chatJid.asBareJid().toString());
+                                }
+                                Log.d("HAS_ITEM1", messageXMPP.getFrom().toString());
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    isEmpty = false;
+                                }
+                            }
+                            Log.d("MAM", messageXMPP.toString());
+
+                        }
+                        Log.d("CHATJID_ONETOONE", chatJid.asBareJid().toString());
+                        Log.d("COUNT", String.valueOf(initMax));
+                    } else {
+                        Log.d("NO_SUBJECT", messageXMPP.getFrom().getResourceOrEmpty().toString());
+                        if (mAppDatabase.deleteAllDao().isExist(messageXMPP.getStanzaId()) != null) {
+                            isEmpty = false;
+                            break;
+                        } else if (mAppDatabase.deleteDao().isExist(messageXMPP.getStanzaId()) != null) {
+                            if (initMax == 1) {
+                                initMax = 10;
+                                break;
+                            } else {
+                                initMax = initMax + 5;
+                            }
+                            continue;
+                        } else {
+                            String from;
+                            if (messageXMPP.getType().equals(Message.Type.groupchat)) {
+                                /**from = messageXMPP.getFrom().getResourceOrEmpty().toString().contains(ServerConstants.XMPP_SERVER)? messageXMPP.getFrom().getResourceOrEmpty().toString() : messageXMPP.getFrom().getResourceOrEmpty().toString() + "@" + ServerConstants.XMPP_SERVER;
+                                 try {
+                                 chatJid = JidCreate.entityBareFrom(messageXMPP.getFrom().asBareJid().toString());
+                                 } catch (XmppStringprepException e) {
+                                 e.printStackTrace();
+                                 }
+                                 if(initMax>forwardedList.size()) {
+                                 if(forwardedList.indexOf(forwarded)==forwardedList.size()-1) {
+                                 isEmpty = false;
+                                 break;
+                                 }
+                                 }
+                                 if (initMax == 1) {
+                                 initMax = 10;
+                                 break;
+                                 } else {
+                                 initMax = initMax + 5;
+                                 }**/
+                                continue;
+                            } else {
+                                from = messageXMPP.getFrom().asBareJid().toString();
+                            }
+
+                            String messageBody = messageXMPP.getBody();
 //                                String messageBody = decryptMessage(messageXMPP.getBody());
 //                                Log.d("MESSAGE_BODY", messageBody);
 
-                                try {
+                            try {
 
-                                    if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
-                                        String remove = messageBody.substring(0, 10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":image%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("voice") && messageBody.contains(ChatMessageFragment.VOICE_PREFIX)) {
-                                        String remove = messageBody.substring(0, 10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":voice%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("location") && messageBody.contains(ChatMessageFragment.MAP_PREFIX)) {
-                                        String remove = messageBody.substring(0, 8);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":map%", "");
-                                    } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
-                                        String remove = messageBody.substring(0,10);
-                                        Log.d("REMOVE", remove);
-                                        messageBody = messageBody.replace(remove, "");
-                                        messageBody = messageBody.replace(":stamp%", "");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
+                                if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("image") && messageBody.contains(ChatMessageFragment.IMAGE_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":image%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("voice") && messageBody.contains(ChatMessageFragment.VOICE_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":voice%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("location") && messageBody.contains(ChatMessageFragment.MAP_PREFIX)) {
+                                    String remove = messageBody.substring(0, 8);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":map%", "");
+                                } else if (messageXMPP.getSubject() != null && messageXMPP.getSubject().equals("stamp") && messageBody.contains(ChatMessageFragment.STAMP_PREFIX)) {
+                                    String remove = messageBody.substring(0, 10);
+                                    Log.d("REMOVE", remove);
+                                    messageBody = messageBody.replace(remove, "");
+                                    messageBody = messageBody.replace(":stamp%", "");
                                 }
-
-                                com.wrappy.android.db.entity.Message message =
-                                        new com.wrappy.android.db.entity.Message(messageXMPP.getStanzaId(),
-                                                chatJid.asBareJid().toString(),
-                                                messageType,
-                                                messageBody,
-                                                messageXMPP.getSubject(),
-                                                from,
-                                                delayInformation.getStamp(),
-                                                2);
-                                if (mamResultExtension != null) {
-                                    if (mamResultExtension.getId() != null) {
-                                        message.setArchiveId(mamResultExtension.getId());
-                                    }
-                                }
-                                Log.d("INSERT_MESSAGE", messageXMPP.getFrom().toString());
-                                mAppDatabase.messageDao().upsert(message);
-
-                                if (messageXMPP.getSubject() != null) {
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        mAppDatabase.chatDao().changeChatLastMessage(
-                                                messageXMPP.getSubject(),
-                                                delayInformation.getStamp(),
-                                                chatJid.asBareJid().toString());
-                                    }
-                                    Log.d("HAS_ITEM", messageXMPP.getFrom().toString());
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        isEmpty = false;
-                                    }
-                                } else {
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        mAppDatabase.chatDao().changeChatLastMessage(messageBody,
-                                                delayInformation.getStamp(),
-                                                chatJid.asBareJid().toString());
-                                    }
-                                    Log.d("HAS_ITEM", messageXMPP.getFrom().toString());
-                                    if(messageXMPP.getType().equals(Message.Type.chat)) {
-                                        isEmpty = false;
-                                    }
-                                }
-                                Log.d("MAM", messageXMPP.toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }
-                        Log.d("CHATJID", chatJid.asBareJid().toString());
-                        Log.d("COUNT", String.valueOf(initMax));
-                    }
-                } catch (XMPPException.XMPPErrorException e) {
-                    isEmpty = false;
-                    e.printStackTrace();
-                } catch (SmackException.NotLoggedInException e) {
-                    isEmpty = false;
-                    e.printStackTrace();
-                } catch (SmackException.NotConnectedException e) {
-                    isEmpty = false;
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (SmackException.NoResponseException e) {
-                    e.printStackTrace();
-                }
 
-            } while (isEmpty);
+                            com.wrappy.android.db.entity.Message message =
+                                    new com.wrappy.android.db.entity.Message(messageXMPP.getStanzaId(),
+                                            chatJid.asBareJid().toString(),
+                                            messageType,
+                                            messageBody,
+                                            messageXMPP.getSubject(),
+                                            from,
+                                            delayInformation.getStamp(),
+                                            2);
+                            if (mamResultExtension != null) {
+                                if (mamResultExtension.getId() != null) {
+                                    message.setArchiveId(mamResultExtension.getId());
+                                }
+                            }
+                            Log.d("INSERT_MESSAGE", messageXMPP.getFrom().toString());
+                            mAppDatabase.messageDao().upsert(message);
+
+                            if (messageXMPP.getSubject() != null) {
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    mAppDatabase.chatDao().changeChatLastMessage(
+                                            messageXMPP.getSubject(),
+                                            delayInformation.getStamp(),
+                                            chatJid.asBareJid().toString());
+                                }
+                                Log.d("HAS_ITEM", messageXMPP.getFrom().toString());
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    isEmpty = false;
+                                }
+                            } else {
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    mAppDatabase.chatDao().changeChatLastMessage(messageBody,
+                                            delayInformation.getStamp(),
+                                            chatJid.asBareJid().toString());
+                                }
+                                Log.d("HAS_ITEM", messageXMPP.getFrom().toString());
+                                if (messageXMPP.getType().equals(Message.Type.chat)) {
+                                    isEmpty = false;
+                                }
+                            }
+                            Log.d("MAM", messageXMPP.toString());
+                        }
+                    }
+                    Log.d("CHATJID", chatJid.asBareJid().toString());
+                    Log.d("COUNT", String.valueOf(initMax));
+                }
+            } catch (XMPPException.XMPPErrorException e) {
+                isEmpty = false;
+                e.printStackTrace();
+            } catch (SmackException.NotLoggedInException e) {
+                isEmpty = false;
+                e.printStackTrace();
+            } catch (SmackException.NotConnectedException e) {
+                isEmpty = false;
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (SmackException.NoResponseException e) {
+                e.printStackTrace();
+            }
+
+        } while (isEmpty);
         //}
 
     }
@@ -867,7 +868,7 @@ public class ContactManager {
             } else {
                 contact.setContactIsBlocked(false);
             }
-            if(contact.getContactType()==0) {
+            if (contact.getContactType() == 0) {
                 String contactName = name;
                 mAppExecutors.networkIO().execute(() -> {
                     setInitialMessage(rosterEntry.getJid().asEntityBareJidOrThrow(), contactName);
@@ -884,7 +885,7 @@ public class ContactManager {
     }
 
     public void setContactStatus(BareJid jid, Presence presence) {
-        mAppDatabase.contactDao().setContactStatus(jid.toString(),presence.getType().toString());
+        mAppDatabase.contactDao().setContactStatus(jid.toString(), presence.getType().toString());
     }
 
     public String searchContact(String userJid) {
@@ -897,36 +898,33 @@ public class ContactManager {
             result = "self";
         } else {
 
-                /**DomainBareJid searchService = JidCreate.domainBareFrom(USER_SEARCH_SERVICE);
-                Form answerForm = mUserSearchManager.getSearchForm(searchService)
-                        .createAnswerForm();
-                answerForm.getField("Username").addValue("1");
-                answerForm.setAnswer("search", userJid);
+            /**DomainBareJid searchService = JidCreate.domainBareFrom(USER_SEARCH_SERVICE);
+             Form answerForm = mUserSearchManager.getSearchForm(searchService)
+             .createAnswerForm();
+             answerForm.getField("Username").addValue("1");
+             answerForm.setAnswer("search", userJid);
 
-                ReportedData resultData = mUserSearchManager.getSearchResults(answerForm, searchService);
+             ReportedData resultData = mUserSearchManager.getSearchResults(answerForm, searchService);
 
-                for (ReportedData.Row row : resultData.getRows()) {
-                    result = row.getValues("jid").get(0).toString();
-                    break;
-                }**/
-                result = userJid;
-                Log.d("DOMAIN", mXMPPManager.getConnection().getXMPPServiceDomain().toString());
-                if (!result.equals("")) {
-                    result = result + "@" + mXMPPManager.getConnection().getXMPPServiceDomain().toString();
-                    Contact contact = mAppDatabase.contactDao().getContact(result.toLowerCase());
-                    Log.d("CONTACT", result.toString());
-                    if (contact != null) {
-                        Log.d("CONTACT0", String.valueOf(contact.getContactType()));
-                        result = result + "," + String.valueOf(contact.getContactType());
-                    } else {
-                        result = result + ",-1";
-                    }
+             for (ReportedData.Row row : resultData.getRows()) {
+             result = row.getValues("jid").get(0).toString();
+             break;
+             }**/
+            result = userJid;
+            Log.d("DOMAIN", mXMPPManager.getConnection().getXMPPServiceDomain().toString());
+            if (!result.equals("")) {
+                result = result + "@" + mXMPPManager.getConnection().getXMPPServiceDomain().toString();
+                Contact contact = mAppDatabase.contactDao().getContact(result.toLowerCase());
+                Log.d("CONTACT", result.toString());
+                if (contact != null) {
+                    Log.d("CONTACT0", String.valueOf(contact.getContactType()));
+                    result = result + "," + String.valueOf(contact.getContactType());
+                } else {
+                    result = result + ",-1";
                 }
-
-
+            }
         }
         return result;
-
     }
 
     public void addRequest(Jid jidFrom) {
@@ -941,7 +939,6 @@ public class ContactManager {
                 //Contact contact = new Contact(jid.toString(), "", jid.getLocalpartOrNull().toString(), 2);
                 //mAppDatabase.contactDao().insert(contact);
             } else {
-
                 mRoster.createEntry(jidFrom.asBareJid(), getUserName(jidFrom.asBareJid().toString()), null);
                 Contact contact = new Contact(jid.toString(), "", jid.getLocalpartOrNull().toString(), 1);
                 mAppDatabase.contactDao().insert(contact);
@@ -987,8 +984,6 @@ public class ContactManager {
             subscribed.setFrom(mXMPPManager.getConnection().getUser().asBareJid());
             mXMPPManager.getConnection().sendStanza(subscribed);
             mRoster.createEntry(userJid, null, null);
-
-
             Contact contact = new Contact(userJid.toString(), mRoster.getPresence(userJid).toString(), userJid.getLocalpartOrNull().toString(), 0);
             mRoster.reloadAndWait();
         } catch (InterruptedException e) {
@@ -1014,11 +1009,10 @@ public class ContactManager {
             mRoster.createEntry(toBareJid(userJid), getUserName(userJid), null);
             //mRoster.reloadAndWait();
             mAppExecutors.diskIO().execute(() -> {
-                Contact contact = new Contact(userJid, "unavailable", getUserName(userJid),0);
+                Contact contact = new Contact(userJid, "unavailable", getUserName(userJid), 0);
                 contact.setContactIsBlocked(false);
                 mAppDatabase.contactDao().insert(contact);
                 Chat chat = new Chat();
-
             });
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -1072,9 +1066,7 @@ public class ContactManager {
                 mXMPPManager.getConnection().sendStanza(unsubscribed);
                 if (mRoster.getEntry(toBareJid(userJid)) != null) {
                     mRoster.removeEntry(mRoster.getEntry(toBareJid(userJid)));
-
                 }
-
                 //mRoster.reloadAndWait();
             }
         } catch (InterruptedException e) {
@@ -1088,7 +1080,6 @@ public class ContactManager {
         } catch (SmackException.NoResponseException e) {
             e.printStackTrace();
         }
-
     }
 
     public void blockContact(String userJid, String name) {
@@ -1120,20 +1111,20 @@ public class ContactManager {
             /**mBCManager.blockContacts(blockList);**/
             IQJidSetPushFlag iqJidSetPushFlag = new IQJidSetPushFlag(0, ContactManager.toBareJid(userJid));
 
-                mXMPPManager.getConnection().sendStanzaWithResponseCallback(iqJidSetPushFlag, new IQResultReplyFilter(iqJidSetPushFlag, mXMPPManager.getConnection()),
-                        new StanzaListener() {
-                            @Override
-                            public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
-                                if (packet instanceof IQJidResultPushFlag) {
-                                    IQJidResultPushFlag iqJidResultPushFlag = (IQJidResultPushFlag) packet;
-                                    if (iqJidResultPushFlag.getStatusResult()) {
-                                        mAppDatabase.chatDao().toggleNotif(false, userJid);
-                                    } else {
+            mXMPPManager.getConnection().sendStanzaWithResponseCallback(iqJidSetPushFlag, new IQResultReplyFilter(iqJidSetPushFlag, mXMPPManager.getConnection()),
+                    new StanzaListener() {
+                        @Override
+                        public void processStanza(Stanza packet) throws SmackException.NotConnectedException, InterruptedException, SmackException.NotLoggedInException {
+                            if (packet instanceof IQJidResultPushFlag) {
+                                IQJidResultPushFlag iqJidResultPushFlag = (IQJidResultPushFlag) packet;
+                                if (iqJidResultPushFlag.getStatusResult()) {
+                                    mAppDatabase.chatDao().toggleNotif(false, userJid);
+                                } else {
 
-                                    }
                                 }
                             }
-                        });
+                        }
+                    });
 
             mAppExecutors.diskIO().execute(() -> {
                 mAppDatabase.contactDao().blockContact(userJid);
@@ -1177,7 +1168,7 @@ public class ContactManager {
         List<Jid> blockList = new ArrayList<>();
         try {
             List<PrivacyItem> privacyItemList = new ArrayList<>();
-            if(mPrivacyListManager.getPrivacyLists().isEmpty()) {
+            if (mPrivacyListManager.getPrivacyLists().isEmpty()) {
                 return blockList;
             }
 
@@ -1212,9 +1203,11 @@ public class ContactManager {
 
     }
 
-    /**public LiveData<List<Block>> {
-
-    }**/
+    /**
+     * public LiveData<List<Block>> {
+     * <p>
+     * }
+     **/
 
     public void unblockContact(List<Block> userJid) {
         //mAppExecutors.diskIO().execute(() -> {
@@ -1236,7 +1229,7 @@ public class ContactManager {
             privacyItemList.removeAll(toRemoveList);
             mPrivacyListManager.updatePrivacyList(BLOCK, privacyItemList);
             /**mBCManager.unblockContacts(userJid);**/
-            for(Block unblock : userJid) {
+            for (Block unblock : userJid) {
                 IQJidSetPushFlag iqJidSetPushFlag = new IQJidSetPushFlag(1, ContactManager.toBareJid(unblock.getBlockId()));
 
                 mXMPPManager.getConnection().sendStanzaWithResponseCallback(iqJidSetPushFlag, new IQResultReplyFilter(iqJidSetPushFlag, mXMPPManager.getConnection()),
@@ -1257,7 +1250,7 @@ public class ContactManager {
 
             //mRoster.reloadAndWait();
             mAppExecutors.diskIO().execute(() -> {
-                for(Block unblock : unblockList) {
+                for (Block unblock : unblockList) {
                     mAppDatabase.contactDao().unblockContact(unblock.getBlockId());
                     mAppDatabase.blockDao().delete(unblock);
                     Log.d("UNBLOCKED", unblock.getBlockId());

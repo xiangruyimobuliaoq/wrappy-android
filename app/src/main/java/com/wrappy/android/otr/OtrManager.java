@@ -4,7 +4,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
-import com.wrappy.android.common.Resource;
 import com.wrappy.android.entity.NestedMap;
 import com.wrappy.android.xmpp.XMPPManager;
 
@@ -45,6 +44,7 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     private final NestedMap<MutableLiveData<Boolean>> sessionStatus;
 
     public OtrManager(XMPPManager xmppManager) {
+        Log.e("123", "new了对象");
         mXMPPManager = xmppManager;
         sessions = new NestedMap<>();
         sessionStatus = new NestedMap<>();
@@ -66,6 +66,7 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
             ld = new MutableLiveData<>();
             sessionStatus.put(mXMPPManager.getConnection().getUser().asEntityBareJidString(), user, ld);
         }
+        ld.postValue(getSession(mXMPPManager.getConnection().getUser().asEntityBareJidString(), user).getSessionStatus() == SessionStatus.ENCRYPTED);
         return ld;
     }
 
@@ -140,43 +141,36 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     @Override
     public void unreadableMessageReceived(SessionID sessionID) throws OtrException {
         Log.e("unreadableReceived", "unreadableMessageReceived");
-
     }
 
     @Override
     public void unencryptedMessageReceived(SessionID sessionID, String msg) throws OtrException {
         Log.e("unencryptedReceived", "unencryptedMessageReceived");
-
     }
 
     @Override
     public void showError(SessionID sessionID, String error) throws OtrException {
         Log.e("showError", "showError");
-
     }
 
     @Override
     public void smpError(SessionID sessionID, int tlvType, boolean cheated) throws OtrException {
         Log.e("smpError", "smpError");
-
     }
 
     @Override
     public void smpAborted(SessionID sessionID) throws OtrException {
         Log.e("smpAborted", "smpAborted");
-
     }
 
     @Override
     public void finishedSessionMessage(SessionID sessionID, String msgText) throws OtrException {
         Log.e("finishedSessionMessage", "finishedSessionMessage");
-
     }
 
     @Override
     public void requireEncryptedMessage(SessionID sessionID, String msgText) throws OtrException {
         Log.e("requireEncryptedMessage", "requireEncryptedMessage");
-
     }
 
     @Override
@@ -217,13 +211,11 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     @Override
     public void verify(SessionID sessionID, String fingerprint, boolean approved) {
         Log.e("verify", approved + "fingerprint");
-
     }
 
     @Override
     public void unverify(SessionID sessionID, String fingerprint) {
         Log.e("unverify", fingerprint);
-
     }
 
     @Override
@@ -235,14 +227,12 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
     @Override
     public String getFallbackMessage(SessionID sessionID) {
         Log.e("getFallbackMessage", "getFallbackMessage");
-
         return null;
     }
 
     @Override
     public void messageFromAnotherInstanceReceived(SessionID sessionID) {
         Log.e("FromAnotherInstance", "messageFromAnotherInstanceReceived");
-
     }
 
     @Override
@@ -251,21 +241,18 @@ public class OtrManager implements OtrEngineHost, OtrEngineListener {
         MutableLiveData<Boolean> mld = sessionStatus.get(sessionID.getAccountID(), sessionID.getUserID());
         if (null == mld) {
             mld = new MutableLiveData<>();
+            sessionStatus.put(sessionID.getAccountID(), sessionID.getUserID(), mld);
         }
-        mld.postValue(sessions.get(sessionID.getAccountID(), sessionID.getUserID()).getSessionStatus() == SessionStatus.ENCRYPTED);
+        mld.postValue(getSession(sessionID.getAccountID(), sessionID.getUserID()).getSessionStatus() == SessionStatus.ENCRYPTED);
     }
 
     @Override
     public void multipleInstancesDetected(SessionID sessionID) {
         Log.e("multipleInstances", "multipleInstances");
-
     }
 
     @Override
     public void outgoingSessionChanged(SessionID sessionID) {
         Log.e("outgoingSessionChanged", "outgoingSessionChanged");
-
     }
-
-
 }
